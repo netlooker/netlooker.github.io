@@ -1,5 +1,5 @@
 +++
-title = "Setting Up a Personal Blog using Hugo Static Site Generator and GitHub Pages"
+title = "Setting Up a Web Site using Hugo and GitHub Pages"
 date = "2023-04-10T19:51:20+02:00"
 author = "Netlooker"
 authorTwitter = "" #do not include @
@@ -28,7 +28,7 @@ In my case as I'm using Mac i just typed:
 ```shell-session
 brew install hugo
 ```
-Check if everything went fine checking the version of Hugo using the command:
+See if everything went fine checking the version of Hugo using the command:
 ```shell-session
 hugo version
 ```
@@ -68,6 +68,23 @@ Run the following command that will make your project accessible under http://lo
 hugo server
 ```
 I hope that everything went fine and you can jump to the next step.
+
+### 6 - Do the Git & Hugo magic 
+Create a new repository on GitHub and copy its URL.
+In your Hugo project directory, run
+```shell-session
+git remote add origin <URL-of-new-repo>
+```
+Generate static content by running
+```shell-session
+hugo
+```
+And now push it to the GitHub repo
+```shell-session
+git add .
+git commit -m "#001 - First Post"
+git push origin main
+```
 
 ### 6 - Host on GitHub Pages
 Follow Hugo' documentation about [setting up hosting on GitHub](https://gohugo.io/hosting-and-deployment/hosting-on-github/).
