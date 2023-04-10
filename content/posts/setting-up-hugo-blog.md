@@ -86,7 +86,7 @@ git commit -m "#001 - First Post"
 git push origin main
 ```
 
-### 6 - Host on GitHub Pages
+### 7 - Host on GitHub Pages
 Follow Hugo' documentation about [setting up hosting on GitHub](https://gohugo.io/hosting-and-deployment/hosting-on-github/).
 **Bear in mind** that if you used the git submodule solution for installing a theme, you must adjust a part of .github/workflows/hugo.yaml file.
 I will let you discover it (the source of some new grey hairs), providing the one which works [.github/workflows/hugo.yaml](https://gist.github.com/netlooker/4d19b2cfed33599911bc6debd43629d1).
