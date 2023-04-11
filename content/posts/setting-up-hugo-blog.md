@@ -3,7 +3,7 @@ title = "Setting Up a Web Site using Hugo and GitHub Pages"
 date = "2023-04-10T19:51:20+02:00"
 author = "Netlooker"
 authorTwitter = "" #do not include @
-cover = ""
+cover = "/img/ai-generated-nerd.jpeg"
 tags = ["hugo", "github"]
 keywords = ["hugo", "github pages", "static site generator"]
 description = "A post about setting up a personal blog using Hugo Static Site Generator and GitHub Pages."
@@ -33,7 +33,7 @@ See if everything went fine checking the version of Hugo using the command:
 hugo version
 ```
 ### 2. Init the Personal Blog Project
-This part is also smooth and easy, just copy paste the following command that will create a project folder "blog" in the terminal. 
+This part is also smooth and easy, just copy paste the following command that will create a project folder "blog". 
 ```shell-session
 hugo new site blog
 ```
@@ -52,11 +52,11 @@ I suggest reading specific theme documentation to understand how it works and ge
 ### 4. Create Hugo' Configuration File - hugo.yaml
 I spent some time understanding how the configuration file works and the formats that can be used to encode it. If you wish to get more insights, I advise you to check [this page](https://gohugo.io/getting-started/configuration/).
 
-To proceed faster, please find a template of the *".yaml"* format of the configuration [file]((https://gist.github.com/netlooker/dad86a321324e8aadd9425386fa3dbf1)) I created based on various sources and my preferences.Adjust its content to reflect your project' properties.
+To proceed faster, please find a template of the *".yaml"* format of the configuration [file](https://gist.github.com/netlooker/dad86a321324e8aadd9425386fa3dbf1) I created based on various sources and my preferences. Adjust its content to reflect your project' properties.
 
 ### 5. Create the First Post
 Now it's time to take Hugo for a ride. I recommend using VS Code as your editor due to the quality extensions you can use to make your relationship with Hugo easier :)
-To create your first post placeholder following a template that the theme delivers (get familiar with [Archetypes]((https://gohugo.io/content-management/archetypes/)) paste the following command:
+To create your first post placeholder following a template that the theme delivers (get familiar with [Archetypes](https://gohugo.io/content-management/archetypes/)) paste the following command:
 ```shell-session
 hugo new posts/the-first-post.md
 ```
