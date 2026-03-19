@@ -1,73 +1,104 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Posts on Netlooker&#39;s Notes</title>
-    <link>http://localhost:1313/posts/</link>
-    <description>Recent content in Posts on Netlooker&#39;s Notes</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
-    <lastBuildDate>Mon, 10 Apr 2023 19:51:20 +0200</lastBuildDate><atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Setting Up a Web Site using Hugo and GitHub Pages</title>
-      <link>http://localhost:1313/posts/setting-up-hugo-blog/</link>
-      <pubDate>Mon, 10 Apr 2023 19:51:20 +0200</pubDate>
-      
-      <guid>http://localhost:1313/posts/setting-up-hugo-blog/</guid>
-      <description>&lt;h2 id=&#34;the-background&#34;&gt;The Background&lt;/h2&gt;
-&lt;p&gt;As I was searching for the perfect solution to host my personal blog website, I found myself faced with a tough decision: should I go with the popular choice of WordPress or try something new with a static site generator?
-After weighing the pros and cons of both options, I decided to take a leap and try out a static site generator. And that&amp;rsquo;s when I discovered the &lt;a href=&#34;https://gohugo.io&#34;&gt;&lt;strong&gt;Hugo Static Site Generator&lt;/strong&gt;&lt;/a&gt; - a project that immediately caught my attention and sparked my curiosity. With excitement and a bit of apprehension, I dive in and begin to explore all that this innovative tool has to offer.&lt;/p&gt;</description>
-      <content>&lt;h2 id=&#34;the-background&#34;&gt;The Background&lt;/h2&gt;
-&lt;p&gt;As I was searching for the perfect solution to host my personal blog website, I found myself faced with a tough decision: should I go with the popular choice of WordPress or try something new with a static site generator?
-After weighing the pros and cons of both options, I decided to take a leap and try out a static site generator. And that&amp;rsquo;s when I discovered the &lt;a href=&#34;https://gohugo.io&#34;&gt;&lt;strong&gt;Hugo Static Site Generator&lt;/strong&gt;&lt;/a&gt; - a project that immediately caught my attention and sparked my curiosity. With excitement and a bit of apprehension, I dive in and begin to explore all that this innovative tool has to offer.&lt;/p&gt;
-&lt;h2 id=&#34;first-success-in-my-journey-back-to-coding&#34;&gt;First Success in My Journey Back to Coding&lt;/h2&gt;
-&lt;p&gt;I embarked on my coding journey after a too long break, being confident that it would be a relatively simple and well-documented process. However, Google Search and ChatGPT quickly reminded me that I was in for a bumpy ride. I spent some time learning and understanding each component of the puzzle. But finally, after getting a few more grey hairs and dedication, I succeeded! And to save you time, I&amp;rsquo;ll cut to the chase and share my findings on how I made everything work.&lt;/p&gt;
-&lt;h3 id=&#34;1-install-hugo&#34;&gt;1. Install Hugo&lt;/h3&gt;
-&lt;p&gt;This step is simple when you follow &lt;a href=&#34;https://gohugo.io/installation/&#34;&gt;Installation Guide&lt;/a&gt; that is a part of quality documentation of Hugo Project.
-In my case as I&amp;rsquo;m using Mac i just typed:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell-session&#34; data-lang=&#34;shell-session&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;brew install hugo
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;See if everything went fine checking the version of Hugo using the command:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell-session&#34; data-lang=&#34;shell-session&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hugo version
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;2-init-the-personal-blog-project&#34;&gt;2. Init the Personal Blog Project&lt;/h3&gt;
-&lt;p&gt;This part is also smooth and easy, just copy paste the following command that will create a project folder &amp;ldquo;blog&amp;rdquo;.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell-session&#34; data-lang=&#34;shell-session&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hugo new site blog
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Next thing on the list is to initialize a Git repository using (I assume that you have Git already installed)&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell-session&#34; data-lang=&#34;shell-session&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git init
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;3-pick-up-the-starter-theme&#34;&gt;3. Pick up the Starter Theme&lt;/h3&gt;
-&lt;p&gt;To go further, a theme is required. Visit &lt;a href=&#34;https://themes.gohugo.io/&#34;&gt;Themes Page&lt;/a&gt; and select one you like. I am using &lt;a href=&#34;https://themes.gohugo.io/themes/hugo-theme-terminal/#how-to-start&#34;&gt;Terminal&lt;/a&gt; for its minimalistic and clean look.
-To use a theme, it must end up in the &lt;strong&gt;themes&lt;/strong&gt; directory of the Hugo project. For ease of future updates, I found the git submodule technic the most convenient to follow.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell-session&#34; data-lang=&#34;shell-session&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git submodule add -f https://github.com/panr/hugo-theme-terminal.git themes/terminal
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;I suggest reading specific theme documentation to understand how it works and get more insights.&lt;/p&gt;
-&lt;h3 id=&#34;4-create-hugo-configuration-file---hugoyaml&#34;&gt;4. Create Hugo&amp;rsquo; Configuration File - hugo.yaml&lt;/h3&gt;
-&lt;p&gt;I spent some time understanding how the configuration file works and the formats that can be used to encode it. If you wish to get more insights, I advise you to check &lt;a href=&#34;https://gohugo.io/getting-started/configuration/&#34;&gt;this page&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;To proceed faster, please find a template of the &lt;em&gt;&amp;quot;.yaml&amp;quot;&lt;/em&gt; format of the configuration &lt;a href=&#34;https://gist.github.com/netlooker/dad86a321324e8aadd9425386fa3dbf1&#34;&gt;file&lt;/a&gt; I created based on various sources and my preferences. Adjust its content to reflect your project&amp;rsquo; properties.&lt;/p&gt;
-&lt;h3 id=&#34;5-create-the-first-post&#34;&gt;5. Create the First Post&lt;/h3&gt;
-&lt;p&gt;Now it&amp;rsquo;s time to take Hugo for a ride. I recommend using VS Code as your editor due to the quality extensions you can use to make your relationship with Hugo easier :)
-To create your first post placeholder following a template that the theme delivers (get familiar with &lt;a href=&#34;https://gohugo.io/content-management/archetypes/&#34;&gt;Archetypes&lt;/a&gt;) paste the following command:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell-session&#34; data-lang=&#34;shell-session&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hugo new posts/the-first-post.md
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;You will find a new file, &amp;ldquo;&lt;em&gt;the-first-post.md&lt;/em&gt;&amp;rdquo; in the &lt;em&gt;content/posts&lt;/em&gt; folder ready for your MarkDown formatted input.
-You can also explore the &lt;em&gt;exampleSite&lt;/em&gt; folder located in the Terminal theme to get some inspiration.
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Netlooker's Notes</title><link>http://netlooker.github.io/posts/</link><description>Recent content in Posts on Netlooker's Notes</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Thu, 19 Mar 2026 00:00:00 +0000</lastBuildDate><atom:link href="http://netlooker.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>The Ultimate Local AI Setup for Apple Silicon</title><link>http://netlooker.github.io/posts/local-ai-apple-silicon/</link><pubDate>Thu, 19 Mar 2026 00:00:00 +0000</pubDate><guid>http://netlooker.github.io/posts/local-ai-apple-silicon/</guid><description>&lt;h2 id="1-get-the-tools">1. Get the Tools&lt;/h2>
+&lt;p>Alright mates, let&amp;rsquo;s get our environment sorted. We will use Homebrew to install the Hugging Face CLI (&lt;code>hf&lt;/code>), the &lt;code>llama.cpp&lt;/code> engine, and the &lt;code>qwen-code&lt;/code> terminal agent. Run this command and let your Mac do the heavy lifting:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>brew install hf llama.cpp qwen-code
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="2-download-the-models-to-the-cache">2. Download the Models to the Cache&lt;/h2>
+&lt;p>Instead of cluttering your project folders, we will use the &lt;code>hf&lt;/code> tool to download the models securely into a hidden central cache on your Mac. Run these two commands:&lt;/p></description><content>&lt;h2 id="1-get-the-tools">1. Get the Tools&lt;/h2>
+&lt;p>Alright mates, let&amp;rsquo;s get our environment sorted. We will use Homebrew to install the Hugging Face CLI (&lt;code>hf&lt;/code>), the &lt;code>llama.cpp&lt;/code> engine, and the &lt;code>qwen-code&lt;/code> terminal agent. Run this command and let your Mac do the heavy lifting:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>brew install hf llama.cpp qwen-code
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="2-download-the-models-to-the-cache">2. Download the Models to the Cache&lt;/h2>
+&lt;p>Instead of cluttering your project folders, we will use the &lt;code>hf&lt;/code> tool to download the models securely into a hidden central cache on your Mac. Run these two commands:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>hf download unsloth/Qwen3.5-9B-GGUF Qwen3.5-9B-UD-Q4_K_XL.gguf
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>hf download unsloth/Qwen3.5-9B-GGUF mmproj-F16.gguf
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>When they finish downloading, your terminal will print out a long path showing exactly where it stored the files (usually looking something like &lt;code>/Users/your_username/.cache/huggingface/hub/...&lt;/code>). Copy those long paths, because you need them for the next step!&lt;/p>
+&lt;blockquote>
+&lt;p>&lt;strong>A quick tip for your RAM:&lt;/strong> I chose the 9B &lt;code>Q4_K_XL&lt;/code> version because it fits perfectly on a 36GB Mac. If you have 16GB or 18GB of RAM, no worries! Try changing the filename in the download command to a smaller compressed version from the &lt;a href="https://huggingface.co/unsloth/Qwen3.5-9B-GGUF">9B repository&lt;/a> or even test the much smaller &lt;a href="https://huggingface.co/unsloth/Qwen3.5-4B-GGUF">4B version&lt;/a> to avoid slowing down your machine. Experiment with different model sizes and context window limits (&lt;code>-c&lt;/code>) to see what runs best on your hardware.&lt;/p>&lt;/blockquote>
+&lt;h2 id="3-start-the-server">3. Start the Server&lt;/h2>
+&lt;p>Time to push your GPU. We are going to run the &lt;code>llama-server&lt;/code> command. You will need to swap out the placeholder paths below with the actual long paths you copied in Step 2.&lt;/p>
+&lt;p>I have set up these exact flags to squeeze every drop of memory bandwidth out of your Mac&amp;rsquo;s chip:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>llama-server &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> -m /path/to/your/copied/Qwen3.5-9B-UD-Q4_K_XL.gguf &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> --mmproj /path/to/your/copied/Qwen3.5-9B-UD-mmproj-f16.gguf &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> --ctx-size &lt;span style="color:#ae81ff">32768&lt;/span> &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> --n-gpu-layers &lt;span style="color:#ae81ff">99&lt;/span> &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> --flash-attn on &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> --cache-type-k q8_0 &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> --cache-type-v q8_0 &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> --batch-size &lt;span style="color:#ae81ff">512&lt;/span> &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> --threads &lt;span style="color:#ae81ff">6&lt;/span> &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> --prio &lt;span style="color:#ae81ff">2&lt;/span> &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> --port &lt;span style="color:#ae81ff">8080&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;blockquote>
+&lt;p>&lt;strong>Important:&lt;/strong> Keep this terminal open. Your server is now humming along in the background.&lt;/p>&lt;/blockquote>
+&lt;h2 id="4-the-browser-plot-twist">4. The Browser Plot Twist&lt;/h2>
+&lt;p>Here is a fun trick. You might think your server is just a hidden background process waiting for code. But if you open your web browser and go to &lt;strong>&lt;code>http://localhost:8080&lt;/code>&lt;/strong>, you get a fully private chat interface built right into the system!&lt;/p>
+&lt;p>It gets better. Because we added the &lt;code>mmproj&lt;/code> vision file, you can drag and drop images or even PDFs directly into the chat. The system processes PDFs as images incredibly fast, meaning you can ask the AI to extract data or explain diagrams for you. If you want to read the deep lore on how this brilliant UI works, check out the &lt;a href="https://github.com/ggml-org/llama.cpp/discussions/16938">llama.cpp developer discussion&lt;/a>.&lt;/p>
+&lt;h2 id="5-setting-up-qwen-code">5. Setting up Qwen Code&lt;/h2>
+&lt;p>But what if you want a taste of agentic engineering? What if you want a local alternative to Claude Code that runs entirely on your own machine? Bam. Enter Qwen Code.&lt;/p>
+&lt;p>By default, most coding tools try to connect to cloud servers. We need to point &lt;code>qwen-code&lt;/code> to your new local setup. Open your settings file (usually located at &lt;code>~/.qwen/settings.json&lt;/code>) and add this configuration:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-json" data-lang="json">&lt;span style="display:flex;">&lt;span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;modelProviders&amp;#34;&lt;/span>: {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;openai&amp;#34;&lt;/span>: {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;baseUrl&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;http://localhost:8080/v1&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;apiKey&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;local-key&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;models&amp;#34;&lt;/span>: [&lt;span style="color:#e6db74">&amp;#34;qwen&amp;#34;&lt;/span>]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> },
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;defaultModel&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;openai/qwen&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Quick alternative: if you want to test it right now without editing any files, just set these variables when you start the programme:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>OPENAI_BASE_URL&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;http://localhost:8080/v1&amp;#34;&lt;/span> OPENAI_API_KEY&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;local&amp;#34;&lt;/span> OPENAI_MODEL&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;qwen&amp;#34;&lt;/span> qwen
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="6-get-to-hacking">6. Get to Hacking&lt;/h2>
+&lt;p>Open a new terminal window in your project folder and wake up your local AI agent:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>qwen
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>You are in. Use the &lt;code>@&lt;/code> symbol to tag local files, share software diagrams, and let it write code for you. It all runs privately and super fast on your own Apple Silicon. Happy hacking!&lt;/p></content></item><item><title>Setting Up a Web Site using Hugo and GitHub Pages</title><link>http://netlooker.github.io/posts/setting-up-hugo-blog/</link><pubDate>Mon, 10 Apr 2023 19:51:20 +0200</pubDate><guid>http://netlooker.github.io/posts/setting-up-hugo-blog/</guid><description>&lt;h2 id="the-background">The Background&lt;/h2>
+&lt;p>As I was searching for the perfect solution to host my personal blog website, I found myself faced with a tough decision: should I go with the popular choice of WordPress or try something new with a static site generator?
+After weighing the pros and cons of both options, I decided to take a leap and try out a static site generator. And that&amp;rsquo;s when I discovered the &lt;a href="https://gohugo.io">&lt;strong>Hugo Static Site Generator&lt;/strong>&lt;/a> - a project that immediately caught my attention and sparked my curiosity. With excitement and a bit of apprehension, I dive in and begin to explore all that this innovative tool has to offer.&lt;/p></description><content>&lt;h2 id="the-background">The Background&lt;/h2>
+&lt;p>As I was searching for the perfect solution to host my personal blog website, I found myself faced with a tough decision: should I go with the popular choice of WordPress or try something new with a static site generator?
+After weighing the pros and cons of both options, I decided to take a leap and try out a static site generator. And that&amp;rsquo;s when I discovered the &lt;a href="https://gohugo.io">&lt;strong>Hugo Static Site Generator&lt;/strong>&lt;/a> - a project that immediately caught my attention and sparked my curiosity. With excitement and a bit of apprehension, I dive in and begin to explore all that this innovative tool has to offer.&lt;/p>
+&lt;h2 id="first-success-in-my-journey-back-to-coding">First Success in My Journey Back to Coding&lt;/h2>
+&lt;p>I embarked on my coding journey after a too long break, being confident that it would be a relatively simple and well-documented process. However, Google Search and ChatGPT quickly reminded me that I was in for a bumpy ride. I spent some time learning and understanding each component of the puzzle. But finally, after getting a few more grey hairs and dedication, I succeeded! And to save you time, I&amp;rsquo;ll cut to the chase and share my findings on how I made everything work.&lt;/p>
+&lt;h3 id="1-install-hugo">1. Install Hugo&lt;/h3>
+&lt;p>This step is simple when you follow &lt;a href="https://gohugo.io/installation/">Installation Guide&lt;/a> that is a part of quality documentation of Hugo Project.
+In my case as I&amp;rsquo;m using Mac i just typed:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell-session" data-lang="shell-session">&lt;span style="display:flex;">&lt;span>brew install hugo
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>See if everything went fine checking the version of Hugo using the command:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell-session" data-lang="shell-session">&lt;span style="display:flex;">&lt;span>hugo version
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="2-init-the-personal-blog-project">2. Init the Personal Blog Project&lt;/h3>
+&lt;p>This part is also smooth and easy, just copy paste the following command that will create a project folder &amp;ldquo;blog&amp;rdquo;.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell-session" data-lang="shell-session">&lt;span style="display:flex;">&lt;span>hugo new site blog
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Next thing on the list is to initialize a Git repository using (I assume that you have Git already installed)&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell-session" data-lang="shell-session">&lt;span style="display:flex;">&lt;span>git init
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="3-pick-up-the-starter-theme">3. Pick up the Starter Theme&lt;/h3>
+&lt;p>To go further, a theme is required. Visit &lt;a href="https://themes.gohugo.io/">Themes Page&lt;/a> and select one you like. I am using &lt;a href="https://themes.gohugo.io/themes/hugo-theme-terminal/#how-to-start">Terminal&lt;/a> for its minimalistic and clean look.
+To use a theme, it must end up in the &lt;strong>themes&lt;/strong> directory of the Hugo project. For ease of future updates, I found the git submodule technic the most convenient to follow.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell-session" data-lang="shell-session">&lt;span style="display:flex;">&lt;span>git submodule add -f https://github.com/panr/hugo-theme-terminal.git themes/terminal
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>I suggest reading specific theme documentation to understand how it works and get more insights.&lt;/p>
+&lt;h3 id="4-create-hugo-configuration-file---hugoyaml">4. Create Hugo&amp;rsquo; Configuration File - hugo.yaml&lt;/h3>
+&lt;p>I spent some time understanding how the configuration file works and the formats that can be used to encode it. If you wish to get more insights, I advise you to check &lt;a href="https://gohugo.io/getting-started/configuration/">this page&lt;/a>.&lt;/p>
+&lt;p>To proceed faster, please find a template of the &lt;em>&amp;quot;.yaml&amp;quot;&lt;/em> format of the configuration &lt;a href="https://gist.github.com/netlooker/dad86a321324e8aadd9425386fa3dbf1">file&lt;/a> I created based on various sources and my preferences. Adjust its content to reflect your project&amp;rsquo; properties.&lt;/p>
+&lt;h3 id="5-create-the-first-post">5. Create the First Post&lt;/h3>
+&lt;p>Now it&amp;rsquo;s time to take Hugo for a ride. I recommend using VS Code as your editor due to the quality extensions you can use to make your relationship with Hugo easier :)
+To create your first post placeholder following a template that the theme delivers (get familiar with &lt;a href="https://gohugo.io/content-management/archetypes/">Archetypes&lt;/a>) paste the following command:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell-session" data-lang="shell-session">&lt;span style="display:flex;">&lt;span>hugo new posts/the-first-post.md
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>You will find a new file, &amp;ldquo;&lt;em>the-first-post.md&lt;/em>&amp;rdquo; in the &lt;em>content/posts&lt;/em> folder ready for your MarkDown formatted input.
+You can also explore the &lt;em>exampleSite&lt;/em> folder located in the Terminal theme to get some inspiration.
 When you finish run the magic Hugo local server to see the outcomes of your work in your browser.
-Run the following command that will make your project accessible under http://localhost:1313/ address:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell-session&#34; data-lang=&#34;shell-session&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hugo server
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;I hope that everything went fine and you can jump to the next step.&lt;/p&gt;
-&lt;h3 id=&#34;6---do-the-git--hugo-magic&#34;&gt;6 - Do the Git &amp;amp; Hugo magic&lt;/h3&gt;
-&lt;p&gt;Create a new repository on GitHub and copy its URL.
-In your Hugo project directory, run&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell-session&#34; data-lang=&#34;shell-session&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git remote add origin &amp;lt;URL-of-new-repo&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Generate static content by running&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell-session&#34; data-lang=&#34;shell-session&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hugo
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;And now push it to the GitHub repo&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell-session&#34; data-lang=&#34;shell-session&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git add .
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git commit -m &amp;#34;#001 - First Post&amp;#34;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git push origin main
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;7---host-on-github-pages&#34;&gt;7 - Host on GitHub Pages&lt;/h3&gt;
-&lt;p&gt;Follow Hugo&amp;rsquo; documentation about &lt;a href=&#34;https://gohugo.io/hosting-and-deployment/hosting-on-github/&#34;&gt;setting up hosting on GitHub&lt;/a&gt;.
-&lt;strong&gt;Bear in mind&lt;/strong&gt; that if you used the git submodule solution for installing a theme, you must adjust a part of .github/workflows/hugo.yaml file.
-I will let you discover it (the source of some new grey hairs), providing the one which works &lt;a href=&#34;https://gist.github.com/netlooker/4d19b2cfed33599911bc6debd43629d1&#34;&gt;.github/workflows/hugo.yaml&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;You can run GitHub Actions manually from the Actions menu.&lt;/p&gt;
-&lt;h2 id=&#34;enjoy-your-free-statically-generated-blog&#34;&gt;Enjoy your free statically generated blog!&lt;/h2&gt;
-</content>
-    </item>
-    
-  </channel>
-</rss>
+Run the following command that will make your project accessible under http://localhost:1313/ address:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell-session" data-lang="shell-session">&lt;span style="display:flex;">&lt;span>hugo server
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>I hope that everything went fine and you can jump to the next step.&lt;/p>
+&lt;h3 id="6---do-the-git--hugo-magic">6 - Do the Git &amp;amp; Hugo magic&lt;/h3>
+&lt;p>Create a new repository on GitHub and copy its URL.
+In your Hugo project directory, run&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell-session" data-lang="shell-session">&lt;span style="display:flex;">&lt;span>git remote add origin &amp;lt;URL-of-new-repo&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Generate static content by running&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell-session" data-lang="shell-session">&lt;span style="display:flex;">&lt;span>hugo
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>And now push it to the GitHub repo&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell-session" data-lang="shell-session">&lt;span style="display:flex;">&lt;span>git add .
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>git commit -m &amp;#34;#001 - First Post&amp;#34;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>git push origin main
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="7---host-on-github-pages">7 - Host on GitHub Pages&lt;/h3>
+&lt;p>Follow Hugo&amp;rsquo; documentation about &lt;a href="https://gohugo.io/hosting-and-deployment/hosting-on-github/">setting up hosting on GitHub&lt;/a>.
+&lt;strong>Bear in mind&lt;/strong> that if you used the git submodule solution for installing a theme, you must adjust a part of .github/workflows/hugo.yaml file.
+I will let you discover it (the source of some new grey hairs), providing the one which works &lt;a href="https://gist.github.com/netlooker/4d19b2cfed33599911bc6debd43629d1">.github/workflows/hugo.yaml&lt;/a>.&lt;/p>
+&lt;p>You can run GitHub Actions manually from the Actions menu.&lt;/p>
+&lt;h2 id="enjoy-your-free-statically-generated-blog">Enjoy your free statically generated blog!&lt;/h2></content></item></channel></rss>
