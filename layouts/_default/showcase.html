@@ -1,0 +1,112 @@
+{{ define "main" }}
+{{ $posts := where .Site.RegularPages "Section" "posts" }}
+{{ $projects := .Params.projects }}
+{{ $totalEntries := add (len $posts) (len $projects) }}
+<main class="site-main">
+
+  <!-- Header -->
+  <header class="showcase-header">
+    <div>
+      <div class="showcase-header-meta">DIRECTORY: /ROOT/PROJECT_DATABASE</div>
+      <h1 class="showcase-title">Project Database / Showcases</h1>
+    </div>
+    <div class="showcase-header-right">
+      <div class="status-dot"></div>
+      <span>SYSTEM_ACTIVE</span>
+      <span style="color:rgba(156,255,147,0.2)">|</span>
+      <span>TOTAL_ENTRIES: {{ printf "%02d" $totalEntries }}</span>
+    </div>
+  </header>
+
+  <!-- Filter bar -->
+  <div class="showcase-filter">
+    <div class="showcase-search">
+      <span class="material-symbols-outlined">search</span>
+      <input type="text" placeholder="grep project_name..." disabled>
+    </div>
+    <div class="showcase-filter-btns">
+      <button class="filter-btn is-active">ALL_FILES</button>
+      <button class="filter-btn">POSTS</button>
+      <button class="filter-btn">PROJECTS</button>
+    </div>
+  </div>
+
+  <!-- Project grid -->
+  <div class="project-grid">
+
+    <!-- Blog posts as project cards (hero card first) -->
+    {{ range $i, $p := $posts }}
+    <div class="project-card {{ if eq $i 0 }}project-card-hero{{ else }}project-card-sm{{ end }}">
+      <div class="project-card-image" style="{{ if eq $i 0 }}height:256px{{ else }}height:176px{{ end }}">
+        {{ if eq $i 0 }}
+        <img src="{{ "img/post-cover.jpg" | absURL }}" alt="{{ $p.Title }}">
+        {{ else }}
+        <img src="{{ "img/hardware-monitor.jpg" | absURL }}" alt="{{ $p.Title }}">
+        {{ end }}
+        <div class="project-card-scanline"></div>
+        <div class="project-card-uid">UID: POST-{{ $p.Date.Format "2006-01" }}</div>
+      </div>
+      <div class="project-card-body">
+        <div class="project-card-head">
+          <div class="project-card-name">{{ $p.Title | upper }}</div>
+          <div class="project-card-status">STATUS: PUBLISHED</div>
+        </div>
+        <p class="project-card-desc">{{ $p.Summary }}</p>
+        <div class="project-card-techs">
+          {{ range $p.Params.tags }}<span class="project-tech">{{ . }}</span>{{ end }}
+        </div>
+        <a href="{{ $p.Permalink }}" class="project-card-link">&gt; READ_POST</a>
+      </div>
+    </div>
+    {{ end }}
+
+    <!-- Static showcase projects from front matter -->
+    {{ range $projects }}
+    {{ $p := . }}
+    <div class="project-card {{ if .wide }}project-card-wide{{ else if .hero }}project-card-hero{{ else }}project-card-sm{{ end }}">
+      {{ with .image }}
+      <div class="project-card-image"{{ if $p.wide }} style="height:auto;min-height:240px"{{ end }}>
+        <img src="{{ . | absURL }}" alt="{{ $p.name }}">
+        <div class="project-card-scanline"></div>
+        {{ with $p.uid }}<div class="project-card-uid">UID: {{ . }}</div>{{ end }}
+      </div>
+      {{ end }}
+      <div class="project-card-body">
+        {{ if .wide }}
+        <div class="project-section-label">{{ with .label }}{{ . }}{{ end }}</div>
+        {{ end }}
+        <div class="project-card-head">
+          <div class="project-card-name">{{ .name }}</div>
+          <div class="project-card-status">STATUS: {{ with .status }}{{ . }}{{ else }}STABLE{{ end }}</div>
+        </div>
+        {{ if .wide }}
+          {{ with .stats }}
+          <div class="project-stats">
+            {{ range . }}
+            <div class="project-stat">
+              <div class="project-stat-label">{{ .label }}</div>
+              <div class="project-stat-val">{{ .value }}</div>
+            </div>
+            {{ end }}
+          </div>
+          {{ end }}
+        {{ end }}
+        <p class="project-card-desc">{{ .desc }}</p>
+        {{ if not .wide }}
+        <div class="project-card-meta-row">{{ with .meta }}{{ . }}{{ end }}</div>
+        <div class="project-card-techs">
+          {{ range .techs }}<span class="project-tech">{{ . }}</span>{{ end }}
+        </div>
+        {{ end }}
+        {{ with .link }}<a href="{{ . }}" class="project-card-link">&gt; EXECUTE_LOGS</a>{{ end }}
+        {{ if .wide }}
+          <a href="{{ with .link }}{{ . }}{{ else }}#{{ end }}" class="btn-access">ACCESS_TERMINAL</a>
+        {{ end }}
+      </div>
+    </div>
+    {{ end }}
+
+  </div>
+
+</main>
+{{ end }}

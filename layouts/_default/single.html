@@ -1,0 +1,124 @@
+{{ define "main" }}
+{{ $related := first 3 (where (where .Site.RegularPages "Section" "posts") "Permalink" "ne" .Permalink) }}
+<main class="site-main">
+
+  <!-- Breadcrumbs -->
+  <div class="breadcrumbs">
+    <a href="{{ "/" | absURL }}">HOME</a>
+    <span>::</span>
+    <a href="{{ "/posts" | absURL }}">POSTS</a>
+    <span>::</span>
+    <span class="bc-current">{{ with .File }}{{ .BaseFileName }}{{ end }}.md</span>
+  </div>
+
+  <div class="post-grid">
+
+    <!-- Article -->
+    <article class="post-article">
+      <div class="post-doc-type">DOC_TYPE: {{ with .Params.tags }}{{ index . 0 | upper }}{{ else }}ARTICLE{{ end }}</div>
+
+      <h1 class="post-title">{{ .Title }}</h1>
+
+      <div class="post-meta">
+        <div class="post-meta-item">
+          <span class="material-symbols-outlined">calendar_today</span>
+          <span>Date: {{ .Date.Format "2006.01.02" }}</span>
+        </div>
+        <div class="post-meta-item">
+          <span class="material-symbols-outlined">timer</span>
+          <span>EST_READ: {{ .ReadingTime }} min</span>
+        </div>
+        <div class="post-meta-item">
+          <span class="material-symbols-outlined">visibility</span>
+          <span>Status: Public</span>
+        </div>
+      </div>
+
+      {{ with .Params.cover }}
+      <div class="post-cover">
+        <img src="{{ . | absURL }}" alt="{{ $.Title }}">
+      </div>
+      {{ else }}
+      <div class="post-cover">
+        <img src="{{ "img/post-cover.jpg" | absURL }}" alt="{{ .Title }}">
+      </div>
+      {{ end }}
+
+      <div class="post-body">
+        {{ .Content }}
+      </div>
+
+      {{ with .Params.tags }}
+      <div class="post-tags">
+        {{ range . }}<span class="tag tag-outline">TAG: {{ . | upper }}</span>{{ end }}
+      </div>
+      {{ end }}
+    </article>
+
+    <!-- Sidebar -->
+    <aside class="post-sidebar">
+
+      <!-- Author card -->
+      <div class="sidebar-card">
+        <div class="sidebar-card-title">
+          <span class="material-symbols-outlined">database</span>
+          AUTHOR_METADATA
+        </div>
+        <div class="author-wrap">
+          <div class="author-avatar">
+            <img src="{{ "img/avatar-author.jpg" | absURL }}" alt="Author">
+          </div>
+          <div>
+            <div class="author-name">ROOT@NETLOOKER</div>
+            <div class="author-role">SYSTEM ARCHITECT</div>
+          </div>
+        </div>
+        <p class="author-bio">Obsessed with static web performance and monospaced interfaces. Currently optimizing recursive logic.</p>
+        <div class="author-stats">
+          <div class="author-stat">
+            <div class="author-stat-val">{{ len (where .Site.RegularPages "Section" "posts") }}</div>
+            <div class="author-stat-label">POSTS</div>
+          </div>
+          <div class="author-stat">
+            <div class="author-stat-val">1.2K</div>
+            <div class="author-stat-label">COMMITS</div>
+          </div>
+          <div class="author-stat">
+            <div class="author-stat-val">99</div>
+            <div class="author-stat-label">UPTIME</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Table of contents -->
+      {{ if .TableOfContents }}
+      <div class="sidebar-card">
+        <div class="sidebar-card-title">
+          <span class="material-symbols-outlined">list_alt</span>
+          DOCUMENT_INDEX
+        </div>
+        {{ .TableOfContents }}
+      </div>
+      {{ end }}
+
+      <!-- Related posts -->
+      {{ if $related }}
+      <div class="sidebar-card">
+        <div class="sidebar-card-title">
+          <span class="material-symbols-outlined">history</span>
+          RECENT_RECORDS
+        </div>
+        {{ range $related }}
+        <a href="{{ .Permalink }}" class="related-post">
+          <div class="related-post-date">RECORD: {{ .Date.Format "2006.01.02" }}</div>
+          <div class="related-post-title">{{ .Title | upper }}</div>
+        </a>
+        {{ end }}
+      </div>
+      {{ end }}
+
+    </aside>
+  </div>
+
+</main>
+{{ end }}

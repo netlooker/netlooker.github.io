@@ -1,0 +1,107 @@
+{{ define "main" }}
+<main class="site-main">
+
+  <!-- Breadcrumbs -->
+  <div class="breadcrumbs">
+    ROOT :: HOME :: USER :: <span class="bc-current">WHOAMI</span>
+  </div>
+
+  <div class="about-grid">
+
+    <!-- Profile card -->
+    <div class="profile-card">
+      <div class="profile-card-uid">UID: 0</div>
+      <div class="profile-avatar-wrap">
+        <div class="profile-avatar-inner">
+          <div class="profile-avatar">
+            <img src="{{ "img/avatar-about.jpg" | absURL }}" alt="NET_LOOKER">
+          </div>
+          <div class="profile-avatar-glitch"></div>
+        </div>
+      </div>
+      <h1 class="profile-name">NET_LOOKER</h1>
+      <div class="profile-role">{{ with .Params.role }}{{ . }}{{ else }}System Architect / Void Navigator{{ end }}</div>
+      <div class="profile-stats">
+        <div class="profile-stat-row">
+          <span class="profile-stat-label">Status:</span>
+          <span class="profile-stat-val is-online">ONLINE</span>
+        </div>
+        <div class="profile-stat-row">
+          <span class="profile-stat-label">Uptime:</span>
+          <span class="profile-stat-val">412:12:04:98</span>
+        </div>
+        <div class="profile-stat-row">
+          <span class="profile-stat-label">Location:</span>
+          <span class="profile-stat-val">{{ with .Params.location }}{{ . }}{{ else }}NULL_SPACE{{ end }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main content -->
+    <div class="about-main">
+
+      <!-- Biography -->
+      <section class="about-section">
+        <h2 class="about-section-title">
+          <span class="material-symbols-outlined">description</span>
+          BIOGRAPHY
+        </h2>
+        <div class="bio-content">
+          {{ .Content }}
+        </div>
+      </section>
+
+      <!-- Tech stack + Security -->
+      <div class="about-two-col">
+        <div class="tech-card">
+          <div class="tech-card-title">
+            <span class="material-symbols-outlined">terminal</span>
+            TECH_STACK
+          </div>
+          <ul class="tech-list">
+            {{ range .Params.tech_stack }}
+            <li class="tech-item">
+              <span class="tech-dot"></span>
+              <span>{{ . }}</span>
+            </li>
+            {{ else }}
+            <li class="tech-item"><span class="tech-dot"></span><span>Hugo / Static Sites</span></li>
+            <li class="tech-item"><span class="tech-dot"></span><span>NixOS Infrastructure</span></li>
+            <li class="tech-item"><span class="tech-dot"></span><span>GitHub Actions CI/CD</span></li>
+            <li class="tech-item"><span class="tech-dot"></span><span>Markdown / MDX</span></li>
+            {{ end }}
+          </ul>
+        </div>
+
+        <div class="security-card">
+          <h3 class="security-title">
+            <span class="material-symbols-outlined">lock</span>
+            SECURITY_CLEARANCE
+          </h3>
+          <div class="security-badge">LEVEL: OMEGA_IV</div>
+          <div class="security-text">
+            [RESTRICTED] ACCESS GRANTED TO SYSTEM_CORE.<br>
+            UNAUTHORIZED LOGS WILL BE PURGED ON SIGHT.
+          </div>
+          <div class="security-bars">
+            <div class="security-bar"></div>
+            <div class="security-bar"></div>
+            <div class="security-bar"></div>
+            <div class="security-bar dim"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Terminal output -->
+      <div class="terminal-output">
+        <div><span class="t-prompt">netlooker@root:~$</span> whoami --details</div>
+        <div>Searching metadata database... OK</div>
+        <div>Identity verification... SUCCESS</div>
+        <div>Waiting for next command_</div>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+{{ end }}

@@ -1,0 +1,17 @@
+{{ $isHome     := .IsHome }}
+{{ $section    := .Section }}
+{{ $slug       := "" }}
+{{ with .File }}{{ $slug = .BaseFileName }}{{ end }}
+
+<nav class="nav-top">
+  <a href="{{ "/" | absURL }}" class="nav-logo">NETLOOKER_NOTES</a>
+
+  <div class="nav-top-links">
+    <a href="{{ "/about" | absURL }}"    class="{{ if eq $slug "about"    }}is-active{{ end }}">cd /about</a>
+    <a href="{{ "/posts" | absURL }}"    class="{{ if eq $section "posts" }}is-active{{ end }}">cat /posts</a>
+    <a href="{{ "/showcase" | absURL }}" class="{{ if eq $slug "showcase" }}is-active{{ end }}">ls /showcase</a>
+    <a href="#">./contact</a>
+  </div>
+
+  <span class="material-symbols-outlined nav-top-icon">terminal</span>
+</nav>

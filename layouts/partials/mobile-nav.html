@@ -1,0 +1,23 @@
+{{ $isHome  := .IsHome }}
+{{ $section := .Section }}
+{{ $slug    := "" }}
+{{ with .File }}{{ $slug = .BaseFileName }}{{ end }}
+
+<nav class="mobile-nav">
+  <a href="{{ "/" | absURL }}"        class="{{ if $isHome            }}is-active{{ end }}">
+    <span class="material-symbols-outlined">home</span>
+    <span class="mobile-nav-label">HOME</span>
+  </a>
+  <a href="{{ "/posts" | absURL }}"   class="{{ if eq $section "posts"}}is-active{{ end }}">
+    <span class="material-symbols-outlined">folder_open</span>
+    <span class="mobile-nav-label">POSTS</span>
+  </a>
+  <a href="{{ "/showcase" | absURL }}" class="{{ if eq $slug "showcase"}}is-active{{ end }}">
+    <span class="material-symbols-outlined">dns</span>
+    <span class="mobile-nav-label">SHOWCASE</span>
+  </a>
+  <a href="{{ "/about" | absURL }}"   class="{{ if eq $slug "about"   }}is-active{{ end }}">
+    <span class="material-symbols-outlined">memory</span>
+    <span class="mobile-nav-label">ABOUT</span>
+  </a>
+</nav>

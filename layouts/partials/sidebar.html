@@ -1,0 +1,39 @@
+{{ $isHome  := .IsHome }}
+{{ $section := .Section }}
+{{ $slug    := "" }}
+{{ with .File }}{{ $slug = .BaseFileName }}{{ end }}
+
+<aside class="nav-side">
+  <div class="nav-side-user">
+    <div class="nav-side-avatar">
+      <img src="{{ "img/avatar-sidebar.jpg" | absURL }}" alt="ROOT_USER">
+    </div>
+    <div>
+      <div class="nav-side-name">ROOT_USER</div>
+      <div class="nav-side-ip">IP: 127.0.0.1</div>
+    </div>
+  </div>
+
+  <nav class="nav-side-links">
+    <a href="{{ "/" | absURL }}" class="{{ if $isHome }}is-active{{ end }}">
+      <span class="material-symbols-outlined">home</span>
+      HOME
+    </a>
+    <a href="{{ "/posts" | absURL }}" class="{{ if eq $section "posts" }}is-active{{ end }}">
+      <span class="material-symbols-outlined">folder_open</span>
+      POSTS
+    </a>
+    <a href="{{ "/showcase" | absURL }}" class="{{ if eq $slug "showcase" }}is-active{{ end }}">
+      <span class="material-symbols-outlined">dns</span>
+      SHOWCASE
+    </a>
+    <a href="{{ "/about" | absURL }}" class="{{ if eq $slug "about" }}is-active{{ end }}">
+      <span class="material-symbols-outlined">memory</span>
+      ABOUT
+    </a>
+  </nav>
+
+  <div class="nav-side-footer">
+    <a href="{{ "/posts" | absURL }}" class="btn-execute">EXECUTE_NEW_POST</a>
+  </div>
+</aside>

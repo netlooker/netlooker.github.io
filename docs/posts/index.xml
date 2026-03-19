@@ -2,30 +2,70 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Netlooker&#39;s Notes</title>
-    <link>http://netlooker.github.io/posts/</link>
+    <link>http://localhost:1313/posts/</link>
     <description>Recent content in Posts on Netlooker&#39;s Notes</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Fri, 25 Jan 2019 00:00:00 +0000</lastBuildDate><atom:link href="http://netlooker.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <language>en</language>
+    <lastBuildDate>Mon, 10 Apr 2023 19:51:20 +0200</lastBuildDate><atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Hello Friend</title>
-      <link>http://netlooker.github.io/posts/hello/</link>
-      <pubDate>Fri, 25 Jan 2019 00:00:00 +0000</pubDate>
+      <title>Setting Up a Web Site using Hugo and GitHub Pages</title>
+      <link>http://localhost:1313/posts/setting-up-hugo-blog/</link>
+      <pubDate>Mon, 10 Apr 2023 19:51:20 +0200</pubDate>
       
-      <guid>http://netlooker.github.io/posts/hello/</guid>
-      <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec interdum metus. Aenean rutrum ligula sodales ex auctor, sed tempus dui mollis. Curabitur ipsum dui, aliquet nec commodo at, tristique eget ante. Donec quis dolor nec nunc mollis interdum vel in purus. Sed vitae leo scelerisque, sollicitudin elit sed, congue ante. In augue nisl, vestibulum commodo est a, tristique porttitor est. Proin laoreet iaculis ornare. Nullam ut neque quam.
-Fusce pharetra suscipit orci nec tempor.</description>
-      <content>&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec interdum metus. Aenean rutrum ligula sodales ex auctor, sed tempus dui mollis. Curabitur ipsum dui, aliquet nec commodo at, tristique eget ante. &lt;strong&gt;Donec quis dolor nec nunc mollis interdum vel in purus&lt;/strong&gt;. Sed vitae leo scelerisque, sollicitudin elit sed, congue ante. In augue nisl, vestibulum commodo est a, tristique porttitor est. Proin laoreet iaculis ornare. Nullam ut neque quam.&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Fusce pharetra suscipit orci nec tempor. Quisque vitae sem sit amet sem mollis consequat. Sed at imperdiet lorem. Vestibulum pharetra faucibus odio, ac feugiat tellus sollicitudin at. Pellentesque varius tristique mi imperdiet dapibus. Duis orci odio, sodales lacinia venenatis sit amet, feugiat et diam.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;Sed a leo id risus venenatis vulputate non quis nulla. Aenean nisl quam, lacinia pulvinar orci sit amet, eleifend eleifend dui. Nulla tempor ligula leo, eu vehicula quam condimentum a. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla gravida tristique nunc sed semper. Morbi nec felis odio.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Sed efficitur, lacus ac scelerisque pellentesque, lectus risus dignissim nisl, fermentum semper lectus diam eget lacus.&lt;/li&gt;
-&lt;li&gt;Nunc ornare purus enim, id eleifend mauris vestibulum volutpat.&lt;/li&gt;
-&lt;li&gt;Aenean facilisis ut ipsum condimentum ultrices.&lt;/li&gt;
-&lt;li&gt;Fusce sed metus vulputate, lobortis purus et, finibus purus. Suspendisse quis posuere lorem. Vivamus vulputate nec risus in pulvinar.&lt;/li&gt;
-&lt;/ul&gt;
+      <guid>http://localhost:1313/posts/setting-up-hugo-blog/</guid>
+      <description>&lt;h2 id=&#34;the-background&#34;&gt;The Background&lt;/h2&gt;
+&lt;p&gt;As I was searching for the perfect solution to host my personal blog website, I found myself faced with a tough decision: should I go with the popular choice of WordPress or try something new with a static site generator?
+After weighing the pros and cons of both options, I decided to take a leap and try out a static site generator. And that&amp;rsquo;s when I discovered the &lt;a href=&#34;https://gohugo.io&#34;&gt;&lt;strong&gt;Hugo Static Site Generator&lt;/strong&gt;&lt;/a&gt; - a project that immediately caught my attention and sparked my curiosity. With excitement and a bit of apprehension, I dive in and begin to explore all that this innovative tool has to offer.&lt;/p&gt;</description>
+      <content>&lt;h2 id=&#34;the-background&#34;&gt;The Background&lt;/h2&gt;
+&lt;p&gt;As I was searching for the perfect solution to host my personal blog website, I found myself faced with a tough decision: should I go with the popular choice of WordPress or try something new with a static site generator?
+After weighing the pros and cons of both options, I decided to take a leap and try out a static site generator. And that&amp;rsquo;s when I discovered the &lt;a href=&#34;https://gohugo.io&#34;&gt;&lt;strong&gt;Hugo Static Site Generator&lt;/strong&gt;&lt;/a&gt; - a project that immediately caught my attention and sparked my curiosity. With excitement and a bit of apprehension, I dive in and begin to explore all that this innovative tool has to offer.&lt;/p&gt;
+&lt;h2 id=&#34;first-success-in-my-journey-back-to-coding&#34;&gt;First Success in My Journey Back to Coding&lt;/h2&gt;
+&lt;p&gt;I embarked on my coding journey after a too long break, being confident that it would be a relatively simple and well-documented process. However, Google Search and ChatGPT quickly reminded me that I was in for a bumpy ride. I spent some time learning and understanding each component of the puzzle. But finally, after getting a few more grey hairs and dedication, I succeeded! And to save you time, I&amp;rsquo;ll cut to the chase and share my findings on how I made everything work.&lt;/p&gt;
+&lt;h3 id=&#34;1-install-hugo&#34;&gt;1. Install Hugo&lt;/h3&gt;
+&lt;p&gt;This step is simple when you follow &lt;a href=&#34;https://gohugo.io/installation/&#34;&gt;Installation Guide&lt;/a&gt; that is a part of quality documentation of Hugo Project.
+In my case as I&amp;rsquo;m using Mac i just typed:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell-session&#34; data-lang=&#34;shell-session&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;brew install hugo
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;See if everything went fine checking the version of Hugo using the command:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell-session&#34; data-lang=&#34;shell-session&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hugo version
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;2-init-the-personal-blog-project&#34;&gt;2. Init the Personal Blog Project&lt;/h3&gt;
+&lt;p&gt;This part is also smooth and easy, just copy paste the following command that will create a project folder &amp;ldquo;blog&amp;rdquo;.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell-session&#34; data-lang=&#34;shell-session&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hugo new site blog
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Next thing on the list is to initialize a Git repository using (I assume that you have Git already installed)&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell-session&#34; data-lang=&#34;shell-session&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git init
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;3-pick-up-the-starter-theme&#34;&gt;3. Pick up the Starter Theme&lt;/h3&gt;
+&lt;p&gt;To go further, a theme is required. Visit &lt;a href=&#34;https://themes.gohugo.io/&#34;&gt;Themes Page&lt;/a&gt; and select one you like. I am using &lt;a href=&#34;https://themes.gohugo.io/themes/hugo-theme-terminal/#how-to-start&#34;&gt;Terminal&lt;/a&gt; for its minimalistic and clean look.
+To use a theme, it must end up in the &lt;strong&gt;themes&lt;/strong&gt; directory of the Hugo project. For ease of future updates, I found the git submodule technic the most convenient to follow.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell-session&#34; data-lang=&#34;shell-session&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git submodule add -f https://github.com/panr/hugo-theme-terminal.git themes/terminal
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;I suggest reading specific theme documentation to understand how it works and get more insights.&lt;/p&gt;
+&lt;h3 id=&#34;4-create-hugo-configuration-file---hugoyaml&#34;&gt;4. Create Hugo&amp;rsquo; Configuration File - hugo.yaml&lt;/h3&gt;
+&lt;p&gt;I spent some time understanding how the configuration file works and the formats that can be used to encode it. If you wish to get more insights, I advise you to check &lt;a href=&#34;https://gohugo.io/getting-started/configuration/&#34;&gt;this page&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;To proceed faster, please find a template of the &lt;em&gt;&amp;quot;.yaml&amp;quot;&lt;/em&gt; format of the configuration &lt;a href=&#34;https://gist.github.com/netlooker/dad86a321324e8aadd9425386fa3dbf1&#34;&gt;file&lt;/a&gt; I created based on various sources and my preferences. Adjust its content to reflect your project&amp;rsquo; properties.&lt;/p&gt;
+&lt;h3 id=&#34;5-create-the-first-post&#34;&gt;5. Create the First Post&lt;/h3&gt;
+&lt;p&gt;Now it&amp;rsquo;s time to take Hugo for a ride. I recommend using VS Code as your editor due to the quality extensions you can use to make your relationship with Hugo easier :)
+To create your first post placeholder following a template that the theme delivers (get familiar with &lt;a href=&#34;https://gohugo.io/content-management/archetypes/&#34;&gt;Archetypes&lt;/a&gt;) paste the following command:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell-session&#34; data-lang=&#34;shell-session&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hugo new posts/the-first-post.md
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;You will find a new file, &amp;ldquo;&lt;em&gt;the-first-post.md&lt;/em&gt;&amp;rdquo; in the &lt;em&gt;content/posts&lt;/em&gt; folder ready for your MarkDown formatted input.
+You can also explore the &lt;em&gt;exampleSite&lt;/em&gt; folder located in the Terminal theme to get some inspiration.
+When you finish run the magic Hugo local server to see the outcomes of your work in your browser.
+Run the following command that will make your project accessible under http://localhost:1313/ address:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell-session&#34; data-lang=&#34;shell-session&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hugo server
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;I hope that everything went fine and you can jump to the next step.&lt;/p&gt;
+&lt;h3 id=&#34;6---do-the-git--hugo-magic&#34;&gt;6 - Do the Git &amp;amp; Hugo magic&lt;/h3&gt;
+&lt;p&gt;Create a new repository on GitHub and copy its URL.
+In your Hugo project directory, run&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell-session&#34; data-lang=&#34;shell-session&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git remote add origin &amp;lt;URL-of-new-repo&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Generate static content by running&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell-session&#34; data-lang=&#34;shell-session&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hugo
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;And now push it to the GitHub repo&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell-session&#34; data-lang=&#34;shell-session&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git add .
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git commit -m &amp;#34;#001 - First Post&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git push origin main
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;7---host-on-github-pages&#34;&gt;7 - Host on GitHub Pages&lt;/h3&gt;
+&lt;p&gt;Follow Hugo&amp;rsquo; documentation about &lt;a href=&#34;https://gohugo.io/hosting-and-deployment/hosting-on-github/&#34;&gt;setting up hosting on GitHub&lt;/a&gt;.
+&lt;strong&gt;Bear in mind&lt;/strong&gt; that if you used the git submodule solution for installing a theme, you must adjust a part of .github/workflows/hugo.yaml file.
+I will let you discover it (the source of some new grey hairs), providing the one which works &lt;a href=&#34;https://gist.github.com/netlooker/4d19b2cfed33599911bc6debd43629d1&#34;&gt;.github/workflows/hugo.yaml&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;You can run GitHub Actions manually from the Actions menu.&lt;/p&gt;
+&lt;h2 id=&#34;enjoy-your-free-statically-generated-blog&#34;&gt;Enjoy your free statically generated blog!&lt;/h2&gt;
 </content>
     </item>
     

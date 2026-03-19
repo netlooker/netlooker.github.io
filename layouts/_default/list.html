@@ -1,0 +1,66 @@
+{{ define "main" }}
+{{ $pages := .Pages }}
+<main class="site-main">
+
+  <!-- Header -->
+  <header class="showcase-header">
+    <div>
+      <div class="showcase-header-meta">DIRECTORY: /ROOT/{{ .Title | upper }}</div>
+      <h1 class="showcase-title">{{ .Title }}</h1>
+    </div>
+    <div class="showcase-header-right">
+      <div class="status-dot"></div>
+      <span>SYSTEM_ACTIVE</span>
+      <span style="color:rgba(156,255,147,0.2)">|</span>
+      <span>TOTAL_ENTRIES: {{ printf "%02d" (len $pages) }}</span>
+    </div>
+  </header>
+
+  <!-- Filter bar -->
+  <div class="showcase-filter">
+    <div class="showcase-search">
+      <span class="material-symbols-outlined">search</span>
+      <input type="text" placeholder="grep post_title..." disabled>
+    </div>
+    <div class="showcase-filter-btns">
+      <button class="filter-btn is-active">ALL_POSTS</button>
+      {{ range $.Site.Taxonomies.tags.ByCount | first 3 }}
+      <button class="filter-btn">{{ .Page.Title | upper }}</button>
+      {{ end }}
+    </div>
+  </div>
+
+  <!-- Post grid -->
+  <div class="project-grid">
+    {{ range $i, $p := $pages }}
+    <div class="project-card {{ if eq $i 0 }}project-card-hero{{ else }}project-card-sm{{ end }}">
+      <div class="project-card-image" style="{{ if eq $i 0 }}height:256px{{ else }}height:176px{{ end }}">
+        {{ with $p.Params.cover }}
+        <img src="{{ . | absURL }}" alt="{{ $p.Title }}">
+        {{ else }}
+        <img src="{{ "img/post-cover.jpg" | absURL }}" alt="{{ $p.Title }}">
+        {{ end }}
+        <div class="project-card-scanline"></div>
+        <div class="project-card-uid">{{ $p.Date.Format "2006.01.02" }}</div>
+      </div>
+      <div class="project-card-body">
+        <div class="project-card-head">
+          <div class="project-card-name">{{ $p.Title }}</div>
+          <div class="project-card-status">{{ $p.ReadingTime }} MIN READ</div>
+        </div>
+        <p class="project-card-desc">{{ $p.Summary }}</p>
+        <div class="project-card-techs">
+          {{ range $p.Params.tags }}<span class="project-tech">{{ . }}</span>{{ end }}
+        </div>
+        <a href="{{ $p.Permalink }}" class="project-card-link">&gt; READ_POST</a>
+      </div>
+    </div>
+    {{ else }}
+    <div style="padding:48px 0; color:rgba(156,255,147,0.4); font-size:0.875rem;">
+      // no posts found — execute_new_post to begin
+    </div>
+    {{ end }}
+  </div>
+
+</main>
+{{ end }}
