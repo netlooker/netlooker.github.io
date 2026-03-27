@@ -732,6 +732,15 @@ body {
    RESPONSIVE
    ============================================================ */
 
+/* xs < 768px */
+@media (max-width: 767px) {
+  .post-table-header { display: none; }
+  .post-row { grid-template-columns: 1fr auto; gap: 12px; }
+  .post-row-perms { display: none; }
+  .post-row-size  { display: none; }
+  .post-row-date  { align-self: start; padding-top: 2px; white-space: nowrap; }
+}
+
 /* md ≥ 768px */
 @media (min-width: 768px) {
   .nav-top-links { display: flex; }
