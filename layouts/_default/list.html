@@ -16,34 +16,32 @@
     </div>
   </header>
 
-  <!-- Post grid -->
-  <div class="project-grid">
-    {{ range $i, $p := $pages }}
-    <div class="project-card {{ if eq $i 0 }}project-card-hero{{ else }}project-card-sm{{ end }}">
-      <a href="{{ $p.Permalink }}" class="project-card-image" style="{{ if eq $i 0 }}height:256px{{ else }}height:176px{{ end }}">
-        {{ with $p.Params.cover }}
-        <img src="{{ . | absURL }}" alt="{{ $p.Title }}">
+  <!-- Post list -->
+  <div class="post-table">
+    {{ range $pages }}
+    <a href="{{ .Permalink }}" class="post-row post-row-media">
+      <div class="post-row-thumb">
+        {{ with .Params.cover }}
+        <img src="{{ . | absURL }}" alt="{{ $.Title }}">
         {{ else }}
-        <img src="{{ "img/post-cover.jpg" | absURL }}" alt="{{ $p.Title }}">
+        <img src="{{ "img/post-cover.jpg" | absURL }}" alt="{{ .Title }}">
         {{ end }}
-        <div class="project-card-scanline"></div>
-        <div class="project-card-uid">{{ $p.Date.Format "2006.01.02" }}</div>
-      </a>
-      <div class="project-card-body">
-        <div class="project-card-head">
-          <div class="project-card-name">{{ $p.Title }}</div>
-          <div class="project-card-status">{{ $p.ReadingTime }} MIN READ</div>
-        </div>
-        <p class="project-card-desc">{{ $p.Summary }}</p>
-        <div class="project-card-techs">
-          {{ range $p.Params.tags }}<span class="project-tech">{{ . }}</span>{{ end }}
-        </div>
-        <a href="{{ $p.Permalink }}" class="project-card-link">&gt; READ_POST</a>
       </div>
-    </div>
+      <div class="post-row-main">
+        <div class="post-row-title">{{ .Title }}</div>
+        {{ with .Description }}<div class="post-row-desc">{{ . }}</div>{{ end }}
+        <div class="post-row-tags">
+          {{ range .Params.tags }}<span class="tag tag-primary">{{ . }}</span>{{ end }}
+        </div>
+      </div>
+      <div class="post-row-meta">
+        <div class="post-row-date">{{ .Date.Format "2006.01.02" }}</div>
+        <div class="post-row-size">{{ .ReadingTime }} MIN</div>
+      </div>
+    </a>
     {{ else }}
-    <div style="padding:48px 0; color:rgba(156,255,147,0.4); font-size:0.875rem;">
-      // no posts found — execute_new_post to begin
+    <div style="padding:24px;font-size:0.875rem;color:rgba(156,255,147,0.4);">
+      // no posts found
     </div>
     {{ end }}
   </div>
