@@ -20,7 +20,7 @@
   <div class="project-grid">
     {{ range $i, $p := $pages }}
     <div class="project-card {{ if eq $i 0 }}project-card-hero{{ else }}project-card-sm{{ end }}">
-      <div class="project-card-image" style="{{ if eq $i 0 }}height:256px{{ else }}height:176px{{ end }}">
+      <a href="{{ $p.Permalink }}" class="project-card-image" style="{{ if eq $i 0 }}height:256px{{ else }}height:176px{{ end }}">
         {{ with $p.Params.cover }}
         <img src="{{ . | absURL }}" alt="{{ $p.Title }}">
         {{ else }}
@@ -28,7 +28,7 @@
         {{ end }}
         <div class="project-card-scanline"></div>
         <div class="project-card-uid">{{ $p.Date.Format "2006.01.02" }}</div>
-      </div>
+      </a>
       <div class="project-card-body">
         <div class="project-card-head">
           <div class="project-card-name">{{ $p.Title }}</div>
