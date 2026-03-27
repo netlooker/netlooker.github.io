@@ -58,38 +58,6 @@
     <!-- Sidebar -->
     <aside class="post-sidebar">
 
-      <!-- Author card -->
-      <div class="sidebar-card">
-        <div class="sidebar-card-title">
-          <span class="material-symbols-outlined">database</span>
-          AUTHOR_METADATA
-        </div>
-        <div class="author-wrap">
-          <div class="author-avatar">
-            <img src="{{ "img/avatar-author.jpg" | absURL }}" alt="Author">
-          </div>
-          <div>
-            <div class="author-name">ROOT@NETLOOKER</div>
-            <div class="author-role">SYSTEM ARCHITECT</div>
-          </div>
-        </div>
-        <p class="author-bio">Obsessed with static web performance and monospaced interfaces. Currently optimizing recursive logic.</p>
-        <div class="author-stats">
-          <div class="author-stat">
-            <div class="author-stat-val">{{ len (where .Site.RegularPages "Section" "posts") }}</div>
-            <div class="author-stat-label">POSTS</div>
-          </div>
-          <div class="author-stat">
-            <div class="author-stat-val">1.2K</div>
-            <div class="author-stat-label">COMMITS</div>
-          </div>
-          <div class="author-stat">
-            <div class="author-stat-val">99</div>
-            <div class="author-stat-label">UPTIME</div>
-          </div>
-        </div>
-      </div>
-
       <!-- Table of contents -->
       {{ if .TableOfContents }}
       <div class="sidebar-card">

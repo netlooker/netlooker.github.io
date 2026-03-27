@@ -23,17 +23,9 @@
       <span class="material-symbols-outlined">folder_open</span>
       POSTS
     </a>
-    <a href="{{ "/showcase" | absURL }}" class="{{ if eq $slug "showcase" }}is-active{{ end }}">
-      <span class="material-symbols-outlined">dns</span>
-      SHOWCASE
-    </a>
     <a href="{{ "/about" | absURL }}" class="{{ if eq $slug "about" }}is-active{{ end }}">
       <span class="material-symbols-outlined">memory</span>
       ABOUT
     </a>
   </nav>
-
-  <div class="nav-side-footer">
-    <a href="{{ "/posts" | absURL }}" class="btn-execute">EXECUTE_NEW_POST</a>
-  </div>
 </aside>

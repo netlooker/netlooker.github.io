@@ -16,20 +16,6 @@
     </div>
   </header>
 
-  <!-- Filter bar -->
-  <div class="showcase-filter">
-    <div class="showcase-search">
-      <span class="material-symbols-outlined">search</span>
-      <input type="text" placeholder="grep post_title..." disabled>
-    </div>
-    <div class="showcase-filter-btns">
-      <button class="filter-btn is-active">ALL_POSTS</button>
-      {{ range $.Site.Taxonomies.tags.ByCount | first 3 }}
-      <button class="filter-btn">{{ .Page.Title | upper }}</button>
-      {{ end }}
-    </div>
-  </div>
-
   <!-- Post grid -->
   <div class="project-grid">
     {{ range $i, $p := $pages }}
