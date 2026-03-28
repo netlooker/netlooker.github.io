@@ -53,7 +53,7 @@
         </div>
         <p class="project-card-desc">{{ $p.Summary }}</p>
         <div class="project-card-techs">
-          {{ range $p.Params.tags }}<span class="project-tech">{{ . }}</span>{{ end }}
+          {{ range $p.Params.tags }}<a href="{{ (printf "/tags/%s/" .) | urlize | absURL }}" class="project-tech">{{ . }}</a>{{ end }}
         </div>
         <a href="{{ $p.Permalink }}" class="project-card-link">&gt; READ_POST</a>
       </div>
