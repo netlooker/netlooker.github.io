@@ -1,0 +1,33 @@
+{{ define "main" }}
+<main class="site-main">
+
+  <!-- Header -->
+  <header class="showcase-header">
+    <div>
+      <div class="showcase-header-meta">DIRECTORY: /ROOT/TAGS</div>
+      <h1 class="showcase-title">Tags</h1>
+    </div>
+    <div class="showcase-header-right">
+      <div class="status-dot"></div>
+      <span>SYSTEM_ACTIVE</span>
+      <span style="color:rgba(156,255,147,0.2)">|</span>
+      <span>TOTAL_TAGS: {{ printf "%02d" (len .Data.Terms) }}</span>
+    </div>
+  </header>
+
+  <!-- Tag cloud -->
+  <div class="post-table">
+    {{ range .Data.Terms.ByCount }}
+    <a href="{{ .Page.Permalink }}" class="post-row">
+      <div class="post-row-main">
+        <div class="post-row-title">{{ .Page.Title | upper }}</div>
+      </div>
+      <div class="post-row-meta">
+        <div class="post-row-date">{{ len .Pages }} {{ if eq (len .Pages) 1 }}POST{{ else }}POSTS{{ end }}</div>
+      </div>
+    </a>
+    {{ end }}
+  </div>
+
+</main>
+{{ end }}

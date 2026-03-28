@@ -23,6 +23,10 @@
       <span class="material-symbols-outlined">folder_open</span>
       POSTS
     </a>
+    <a href="{{ "/tags"  | absURL }}" class="{{ if eq $section "tags"  }}is-active{{ end }}">
+      <span class="material-symbols-outlined">label</span>
+      TAGS
+    </a>
     <a href="{{ "/about" | absURL }}" class="{{ if eq $slug "about" }}is-active{{ end }}">
       <span class="material-symbols-outlined">memory</span>
       ABOUT
