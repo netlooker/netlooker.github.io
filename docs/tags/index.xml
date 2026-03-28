@@ -6,13 +6,83 @@
     <description>Recent content in Tags on Netlooker&#39;s Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 28 Mar 2026 00:00:00 +0000</lastBuildDate><atom:link href="http://netlooker.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 29 Mar 2026 00:00:00 +0000</lastBuildDate><atom:link href="http://netlooker.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Ai</title>
       <link>http://netlooker.github.io/tags/ai/</link>
-      <pubDate>Sat, 28 Mar 2026 00:00:00 +0000</pubDate>
+      <pubDate>Sun, 29 Mar 2026 00:00:00 +0000</pubDate>
       
       <guid>http://netlooker.github.io/tags/ai/</guid>
+      <description></description>
+      <content></content>
+    </item>
+    
+    <item>
+      <title>Apple-Silicon</title>
+      <link>http://netlooker.github.io/tags/apple-silicon/</link>
+      <pubDate>Sun, 29 Mar 2026 00:00:00 +0000</pubDate>
+      
+      <guid>http://netlooker.github.io/tags/apple-silicon/</guid>
+      <description></description>
+      <content></content>
+    </item>
+    
+    <item>
+      <title>Docker</title>
+      <link>http://netlooker.github.io/tags/docker/</link>
+      <pubDate>Sun, 29 Mar 2026 00:00:00 +0000</pubDate>
+      
+      <guid>http://netlooker.github.io/tags/docker/</guid>
+      <description></description>
+      <content></content>
+    </item>
+    
+    <item>
+      <title>Llm</title>
+      <link>http://netlooker.github.io/tags/llm/</link>
+      <pubDate>Sun, 29 Mar 2026 00:00:00 +0000</pubDate>
+      
+      <guid>http://netlooker.github.io/tags/llm/</guid>
+      <description></description>
+      <content></content>
+    </item>
+    
+    <item>
+      <title>Nix</title>
+      <link>http://netlooker.github.io/tags/nix/</link>
+      <pubDate>Sun, 29 Mar 2026 00:00:00 +0000</pubDate>
+      
+      <guid>http://netlooker.github.io/tags/nix/</guid>
+      <description></description>
+      <content></content>
+    </item>
+    
+    <item>
+      <title>Privacy</title>
+      <link>http://netlooker.github.io/tags/privacy/</link>
+      <pubDate>Sun, 29 Mar 2026 00:00:00 +0000</pubDate>
+      
+      <guid>http://netlooker.github.io/tags/privacy/</guid>
+      <description></description>
+      <content></content>
+    </item>
+    
+    <item>
+      <title>Self-Hosted</title>
+      <link>http://netlooker.github.io/tags/self-hosted/</link>
+      <pubDate>Sun, 29 Mar 2026 00:00:00 +0000</pubDate>
+      
+      <guid>http://netlooker.github.io/tags/self-hosted/</guid>
+      <description></description>
+      <content></content>
+    </item>
+    
+    <item>
+      <title>Telegram</title>
+      <link>http://netlooker.github.io/tags/telegram/</link>
+      <pubDate>Sun, 29 Mar 2026 00:00:00 +0000</pubDate>
+      
+      <guid>http://netlooker.github.io/tags/telegram/</guid>
       <description></description>
       <content></content>
     </item>
@@ -58,16 +128,6 @@
     </item>
     
     <item>
-      <title>Docker</title>
-      <link>http://netlooker.github.io/tags/docker/</link>
-      <pubDate>Sat, 28 Mar 2026 00:00:00 +0000</pubDate>
-      
-      <guid>http://netlooker.github.io/tags/docker/</guid>
-      <description></description>
-      <content></content>
-    </item>
-    
-    <item>
       <title>Embeddings</title>
       <link>http://netlooker.github.io/tags/embeddings/</link>
       <pubDate>Sat, 28 Mar 2026 00:00:00 +0000</pubDate>
@@ -93,16 +153,6 @@
       <pubDate>Sat, 28 Mar 2026 00:00:00 +0000</pubDate>
       
       <guid>http://netlooker.github.io/tags/linux/</guid>
-      <description></description>
-      <content></content>
-    </item>
-    
-    <item>
-      <title>Llm</title>
-      <link>http://netlooker.github.io/tags/llm/</link>
-      <pubDate>Sat, 28 Mar 2026 00:00:00 +0000</pubDate>
-      
-      <guid>http://netlooker.github.io/tags/llm/</guid>
       <description></description>
       <content></content>
     </item>
@@ -173,16 +223,6 @@
       <pubDate>Fri, 27 Mar 2026 00:00:00 +0000</pubDate>
       
       <guid>http://netlooker.github.io/tags/serotonin-patch/</guid>
-      <description></description>
-      <content></content>
-    </item>
-    
-    <item>
-      <title>Apple-Silicon</title>
-      <link>http://netlooker.github.io/tags/apple-silicon/</link>
-      <pubDate>Thu, 19 Mar 2026 00:00:00 +0000</pubDate>
-      
-      <guid>http://netlooker.github.io/tags/apple-silicon/</guid>
       <description></description>
       <content></content>
     </item>

@@ -6,7 +6,148 @@
     <description>Recent content in Ai on Netlooker&#39;s Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 28 Mar 2026 00:00:00 +0000</lastBuildDate><atom:link href="http://netlooker.github.io/tags/ai/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 29 Mar 2026 00:00:00 +0000</lastBuildDate><atom:link href="http://netlooker.github.io/tags/ai/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>// OPERATION: NYX CORTEX</title>
+      <link>http://netlooker.github.io/posts/operation-nyx-cortex/</link>
+      <pubDate>Sun, 29 Mar 2026 00:00:00 +0000</pubDate>
+      
+      <guid>http://netlooker.github.io/posts/operation-nyx-cortex/</guid>
+      <description>&lt;h2 id=&#34;-target-architecture-apple-silicon-aarch64&#34;&gt;// TARGET ARCHITECTURE: APPLE SILICON (AARCH64)&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;PAYLOAD:&lt;/strong&gt; OPENCLAW AGENT + QWEN-CODER + GH CLI
+&lt;strong&gt;ENGINE:&lt;/strong&gt; NIX MULTI-STAGE DOCKER (MATHEMATICALLY DETERMINISTIC)
+&lt;strong&gt;OPERATOR:&lt;/strong&gt; NETRUNNER&lt;/p&gt;
+&lt;p&gt;Wake up, netrunner. You&amp;rsquo;re tired of your AI agent phoning home to corporate servers, leaking your codebase into some faceless training pipeline, going dark when the subscription lapses. You want a ghost that runs on &lt;em&gt;your&lt;/em&gt; silicon, speaks through your encrypted channels, and answers only to you.&lt;/p&gt;
+&lt;p&gt;This is &lt;strong&gt;Nyx&lt;/strong&gt;. A self-sovereign AI cortex. Reproducible to the hash. Deployed in four moves.&lt;/p&gt;</description>
+      <content>&lt;h2 id=&#34;-target-architecture-apple-silicon-aarch64&#34;&gt;// TARGET ARCHITECTURE: APPLE SILICON (AARCH64)&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;PAYLOAD:&lt;/strong&gt; OPENCLAW AGENT + QWEN-CODER + GH CLI
+&lt;strong&gt;ENGINE:&lt;/strong&gt; NIX MULTI-STAGE DOCKER (MATHEMATICALLY DETERMINISTIC)
+&lt;strong&gt;OPERATOR:&lt;/strong&gt; NETRUNNER&lt;/p&gt;
+&lt;p&gt;Wake up, netrunner. You&amp;rsquo;re tired of your AI agent phoning home to corporate servers, leaking your codebase into some faceless training pipeline, going dark when the subscription lapses. You want a ghost that runs on &lt;em&gt;your&lt;/em&gt; silicon, speaks through your encrypted channels, and answers only to you.&lt;/p&gt;
+&lt;p&gt;This is &lt;strong&gt;Nyx&lt;/strong&gt;. A self-sovereign AI cortex. Reproducible to the hash. Deployed in four moves.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-phase-1-the-clone-pull-the-blueprint&#34;&gt;// PHASE 1: THE CLONE (PULL THE BLUEPRINT)&lt;/h2&gt;
+&lt;p&gt;The entire cortex is codified. Every dependency locked to a cryptographic hash in &lt;code&gt;flake.lock&lt;/code&gt;. No version drift. No supply chain surprises. Pull the blueprint and enter the Nix dev shell — it drops you into a hardened environment with every local tool you need, pinned to the bit:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git clone https://github.com/netlooker/nyx.git
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cd nyx
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nix develop
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;You&amp;rsquo;ll see:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;nyx dev shell (aarch64-darwin)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;You&amp;rsquo;re in. The shell carries &lt;code&gt;just&lt;/code&gt;, &lt;code&gt;node&lt;/code&gt;, &lt;code&gt;python&lt;/code&gt;, &lt;code&gt;age&lt;/code&gt;. From here you control the cortex.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-phase-2-the-config-wire-the-neural-link&#34;&gt;// PHASE 2: THE CONFIG (WIRE THE NEURAL LINK)&lt;/h2&gt;
+&lt;p&gt;The agent is blind until you feed it credentials. The config file is gitignored by design — your keys never touch the network:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cp secrets/openclaw.json5.example secrets/openclaw.json5
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$EDITOR secrets/openclaw.json5
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;[MINIMUM CONFIG — TELEGRAM UPLINK:]&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-json5&#34; data-lang=&#34;json5&#34;&gt;channels: {
+  telegram: {
+    enabled: true,
+    botToken: &amp;#39;your-token-from-@BotFather&amp;#39;,
+    dmPolicy: &amp;#39;pairing&amp;#39;,   // nobody talks to your agent without your approval
+  },
+},
+agents: {
+  defaults: {
+    workspace: &amp;#39;/data/workspace&amp;#39;,  // survives rebuilds — mounted from your Mac
+  },
+},
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;[OPTIONAL — WIRE IN A LOCAL INFERENCE NODE:]&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-json5&#34; data-lang=&#34;json5&#34;&gt;models: {
+  mode: &amp;#39;merge&amp;#39;,
+  providers: {
+    llamacpp: {
+      baseUrl: &amp;#39;http://192.168.1.x:8008/v1&amp;#39;,
+      api: &amp;#39;openai-completions&amp;#39;,
+      apiKey: &amp;#39;local_inference&amp;#39;,
+      models: [
+        { id: &amp;#39;your-model.gguf&amp;#39;, name: &amp;#39;Local Model&amp;#39; },
+      ],
+    },
+  },
+},
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;No cloud endpoint required. Point it at Ollama, llama.cpp, or any OpenAI-compatible socket on your LAN. The agent routes its inference entirely within your subnet.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-phase-3-the-forge-bake-the-cortex&#34;&gt;// PHASE 3: THE FORGE (BAKE THE CORTEX)&lt;/h2&gt;
+&lt;p&gt;One command. Two stages. Zero ambiguity.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;just build
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;Stage 1 — Nix Builder:&lt;/strong&gt; Spins up &lt;code&gt;nixos/nix&lt;/code&gt; inside Docker. Nix resolves the full dependency graph — Node.js, Python 3, gcc, cmake, ripgrep, bat, gh CLI — and pins every binary to a cryptographic hash. Deterministic. Auditable. A cryptographic SBOM ships baked into &lt;code&gt;/app/sbom-base.json&lt;/code&gt; so you can prove exactly what&amp;rsquo;s running inside.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Stage 2 — Cortex:&lt;/strong&gt; Drops the Nix store into a clean &lt;code&gt;debian:bookworm-slim&lt;/code&gt;. Layers openclaw and qwen-coder on top using the pinned Node.js. Configures the entrypoint to symlink tool configs into your persistent &lt;code&gt;/data&lt;/code&gt; volume before the agent boots.&lt;/p&gt;
+&lt;p&gt;Docker caches Stage 1. It only reruns when &lt;code&gt;flake.nix&lt;/code&gt; or &lt;code&gt;flake.lock&lt;/code&gt; change — hot-swapping OpenClaw versions hits Stage 2 only and is nearly instant.&lt;/p&gt;
+&lt;p&gt;When the dust settles, you&amp;rsquo;re holding a hardened image: &lt;code&gt;nyx-cortex:latest&lt;/code&gt;.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-phase-4-boot-sequence-ignite-the-cortex&#34;&gt;// PHASE 4: BOOT SEQUENCE (IGNITE THE CORTEX)&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;just up
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;just logs
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;[EXPECTED BOOT OUTPUT:]&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[*] INITIATING NYX CORTEX...
+[*] Config loaded from /config/openclaw.json5
+[*] Telegram uplink: ONLINE
+[+] Gateway listening on :18789
+[+] Agent cortex: READY
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Two volumes keep the agent alive across rebuilds and power cycles:&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;Host Path&lt;/th&gt;
+          &lt;th&gt;Container Path&lt;/th&gt;
+          &lt;th&gt;What Lives There&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;secrets/&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;/config&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;Hot-reloadable config — edit on your Mac, agent reloads live&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;data/&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;/data&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;Agent workspace, sessions, gh auth, qwen-coder state&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Edit &lt;code&gt;secrets/openclaw.json5&lt;/code&gt; on your Mac and the agent picks it up instantly. No rebuild. No restart. The directory mount bypasses the &lt;code&gt;EBUSY&lt;/code&gt; inode lock that file mounts trigger on atomic renames.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-phase-5-jack-in-telegram-pairing&#34;&gt;// PHASE 5: JACK IN (TELEGRAM PAIRING)&lt;/h2&gt;
+&lt;p&gt;With &lt;code&gt;dmPolicy: &#39;pairing&#39;&lt;/code&gt;, the agent is a ghost — invisible to everyone until &lt;em&gt;you&lt;/em&gt; authorize them. First contact:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Fire a message at your bot on Telegram — anything, &lt;code&gt;/start&lt;/code&gt; works&lt;/li&gt;
+&lt;li&gt;Rip the pairing PIN from the logs:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker compose -f cortex/docker-compose.yml logs | grep -iE &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;pairing|pin|code&amp;#34;&lt;/span&gt; | tail -5
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;Authorize the uplink:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker compose -f cortex/docker-compose.yml exec cortex &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  openclaw pairing approve telegram YOUR-PIN-HERE
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The bot responds. You&amp;rsquo;re wired in. The cortex is yours.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-phase-6-persistence-your-data-survives-the-rebuild&#34;&gt;// PHASE 6: PERSISTENCE (YOUR DATA SURVIVES THE REBUILD)&lt;/h2&gt;
+&lt;p&gt;The cortex is stateless by design — nuke and rebuild the image at any time. Everything that matters lives in &lt;code&gt;~/projects/nyx/data/&lt;/code&gt; on your Mac:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;data/
+  workspace/     ← agent files, reports, code it wrote
+  gh/            ← GitHub CLI auth (GH_CONFIG_DIR)
+  qwen/          ← qwen-coder config (symlinked from /root/.qwen on boot)
+  sessions/      ← Telegram/WhatsApp sessions
+  agents/        ← agent sandboxes
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Run &lt;code&gt;just rebuild&lt;/code&gt; — full no-cache bake from scratch. The agent boots, the entrypoint symlinks &lt;code&gt;/root/.qwen → /data/qwen&lt;/code&gt;, and it picks up exactly where it left off. No re-auth. No lost state. No lost work.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-system-status&#34;&gt;// SYSTEM STATUS&lt;/h2&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[+] CORTEX: ONLINE
+[+] UPLINK: TELEGRAM / WHATSAPP
+[+] INFERENCE: LOCAL LAN NODE
+[+] STATE: PERSISTENT (/data)
+[+] TOOLCHAIN: CRYPTOGRAPHICALLY PINNED
+[+] SBOM: /app/sbom-base.json
+[+] DATA EXFIL: ZERO
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Your agent is sovereign, netrunner. It lives on your silicon, thinks on your hardware, and backs up to your disk. The corporate grid has no reach here.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;just up
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;(C) 2026 NETLOOKER_OS // END OF FILE&lt;/em&gt;&lt;/p&gt;
+</content>
+    </item>
+    
     <item>
       <title>// OPERATION: CHROME ARCHIVE</title>
       <link>http://netlooker.github.io/posts/operation-chrome-archive/</link>
