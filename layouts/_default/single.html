@@ -50,7 +50,7 @@
 
       {{ with .Params.tags }}
       <div class="post-tags">
-        {{ range . }}<span class="tag tag-outline">TAG: {{ . | upper }}</span>{{ end }}
+        {{ range . }}<a href="{{ (printf "/tags/%s/" .) | urlize | absURL }}" class="tag tag-outline">TAG: {{ . | upper }}</a>{{ end }}
       </div>
       {{ end }}
     </article>
