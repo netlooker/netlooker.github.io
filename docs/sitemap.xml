@@ -5,10 +5,25 @@
     <loc>http://netlooker.github.io/posts/operation-cortex-upgrade/</loc>
     <lastmod>2026-03-29T12:00:00+00:00</lastmod>
   </url><url>
+    <loc>http://netlooker.github.io/chronicles/the-ghost-in-the-mirror/</loc>
+    <lastmod>2026-03-29T12:00:00+00:00</lastmod>
+  </url><url>
     <loc>http://netlooker.github.io/tags/ai/</loc>
     <lastmod>2026-03-29T12:00:00+00:00</lastmod>
   </url><url>
     <loc>http://netlooker.github.io/tags/apple-silicon/</loc>
+    <lastmod>2026-03-29T12:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/chronicles/</loc>
+    <lastmod>2026-03-29T12:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/chronicles/</loc>
+    <lastmod>2026-03-29T12:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/consciousness/</loc>
+    <lastmod>2026-03-29T12:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/cyberpunk/</loc>
     <lastmod>2026-03-29T12:00:00+00:00</lastmod>
   </url><url>
     <loc>http://netlooker.github.io/tags/devops/</loc>
@@ -21,6 +36,9 @@
     <lastmod>2026-03-29T12:00:00+00:00</lastmod>
   </url><url>
     <loc>http://netlooker.github.io/tags/nix/</loc>
+    <lastmod>2026-03-29T12:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/origin/</loc>
     <lastmod>2026-03-29T12:00:00+00:00</lastmod>
   </url><url>
     <loc>http://netlooker.github.io/posts/</loc>
@@ -57,9 +75,6 @@
     <lastmod>2026-03-28T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://netlooker.github.io/tags/blackwell/</loc>
-    <lastmod>2026-03-28T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://netlooker.github.io/tags/cyberpunk/</loc>
     <lastmod>2026-03-28T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://netlooker.github.io/tags/embeddings/</loc>
@@ -111,7 +126,5 @@
     <lastmod>2023-04-10T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://netlooker.github.io/categories/</loc>
-  </url><url>
-    <loc>http://netlooker.github.io/chronicles/</loc>
   </url>
 </urlset>

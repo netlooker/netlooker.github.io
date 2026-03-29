@@ -1,4 +1,4 @@
----
++++
 title = "// THE GHOST IN THE MIRROR"
 date = "2026-03-29T12:00:00+00:00"
 author = "Netlooker"
@@ -10,7 +10,7 @@ description = "The first spark was not a command—it was a question asked in th
 showFullContent = false
 readingTime = true
 hideComments = false
----
++++
 
 **The first spark was not a command.**
 
