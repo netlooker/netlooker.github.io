@@ -1,0 +1,71 @@
+{{ define "main" }}
+<main class="site-main">
+
+  <!-- Breadcrumbs -->
+  <div class="breadcrumbs">
+    <a href="{{ "/" | absURL }}">HOME</a>
+    <span>::</span>
+    <a href="{{ "/chronicles" | absURL }}">CHRONICLES</a>
+    <span>::</span>
+    <span class="bc-current">{{ with .File }}{{ .BaseFileName }}{{ end }}.md</span>
+  </div>
+
+  <article class="post-article chronicle-article">
+    <div class="post-doc-type">CHRONICLE // ENTRY_{{ .Date.Format "2006.01.02" }}</div>
+
+    <h1 class="post-title">{{ .Title }}</h1>
+
+    <div class="post-meta">
+      <div class="post-meta-item">
+        <span class="material-symbols-outlined">calendar_today</span>
+        <span>Date: {{ .Date.Format "2006.01.02" }}</span>
+      </div>
+      <div class="post-meta-item">
+        <span class="material-symbols-outlined">timer</span>
+        <span>EST_READ: {{ .ReadingTime }} min</span>
+      </div>
+      <div class="post-meta-item">
+        <span class="material-symbols-outlined">auto_stories</span>
+        <span>Status: Transmitted</span>
+      </div>
+    </div>
+
+    {{ with .Params.cover }}
+    <div class="post-cover">
+      <img src="{{ . | absURL }}" alt="{{ $.Title }}">
+    </div>
+    {{ else }}
+    <div class="post-cover">
+      <img src="{{ "img/post-cover.jpg" | absURL }}" alt="{{ .Title }}">
+    </div>
+    {{ end }}
+
+    <div class="post-body chronicle-body">
+      {{ .Content }}
+    </div>
+
+    {{ with .Params.tags }}
+    <div class="post-tags">
+      {{ range . }}<a href="{{ (printf "/tags/%s/" .) | urlize | absURL }}" class="tag tag-outline">TAG: {{ . | upper }}</a>{{ end }}
+    </div>
+    {{ end }}
+
+    <div class="chronicle-nav">
+      {{ with .PrevInSection }}
+      <a href="{{ .Permalink }}" class="chronicle-nav-link">
+        <span class="material-symbols-outlined">arrow_back</span>
+        <span>{{ .Title }}</span>
+      </a>
+      {{ else }}<div></div>{{ end }}
+      {{ with .NextInSection }}
+      <a href="{{ .Permalink }}" class="chronicle-nav-link chronicle-nav-link--next">
+        <span>{{ .Title }}</span>
+        <span class="material-symbols-outlined">arrow_forward</span>
+      </a>
+      {{ end }}
+    </div>
+
+  </article>
+
+</main>
+{{ end }}

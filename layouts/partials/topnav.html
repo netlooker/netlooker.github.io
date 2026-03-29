@@ -8,8 +8,9 @@
 
   <div class="nav-top-links">
     <a href="{{ "/posts" | absURL }}"    class="{{ if eq $section "posts" }}is-active{{ end }}">cat /posts</a>
-    <a href="{{ "/tags"  | absURL }}"    class="{{ if eq $section "tags"  }}is-active{{ end }}">ls /tags</a>
-    <a href="{{ "/about" | absURL }}"    class="{{ if eq $slug "about"    }}is-active{{ end }}">cd /about</a>
+    <a href="{{ "/tags"       | absURL }}"    class="{{ if eq $section "tags"       }}is-active{{ end }}">ls /tags</a>
+    <a href="{{ "/chronicles" | absURL }}"    class="{{ if eq $section "chronicles" }}is-active{{ end }}">read /chronicles</a>
+    <a href="{{ "/about"      | absURL }}"    class="{{ if eq $slug "about"         }}is-active{{ end }}">cd /about</a>
   </div>
 
   <span class="material-symbols-outlined nav-top-icon">terminal</span>

@@ -804,3 +804,53 @@ body {
   .post-title { font-size: 2.25rem; }
   .post-article { padding: 48px; }
 }
+
+/* ============================================================
+   CHRONICLES
+   ============================================================ */
+
+.chronicle-intro {
+  font-size: 0.8125rem;
+  color: rgba(156,255,147,0.4);
+  letter-spacing: 0.05em;
+  padding: 0 0 24px 0;
+  font-style: italic;
+}
+
+.chronicle-article {
+  max-width: 720px;
+}
+
+.chronicle-body {
+  font-size: 0.9375rem;
+  line-height: 2;
+}
+
+.chronicle-body > p:first-child {
+  font-size: 1.0625rem;
+  color: rgba(156,255,147,0.9);
+}
+
+.chronicle-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  gap: 16px;
+}
+
+.chronicle-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8125rem;
+  color: rgba(156,255,147,0.6);
+  text-decoration: none;
+  transition: color 0.2s;
+  max-width: 45%;
+}
+
+.chronicle-nav-link:hover { color: var(--primary); }
+.chronicle-nav-link--next { margin-left: auto; text-align: right; }

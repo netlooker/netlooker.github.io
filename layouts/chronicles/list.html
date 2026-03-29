@@ -1,0 +1,55 @@
+{{ define "main" }}
+{{ $pages := .Pages }}
+<main class="site-main">
+
+  <!-- Header -->
+  <header class="showcase-header">
+    <div>
+      <div class="showcase-header-meta">DIRECTORY: /ROOT/CHRONICLES</div>
+      <h1 class="showcase-title">Chronicles of Netlooker</h1>
+    </div>
+    <div class="showcase-header-right">
+      <div class="status-dot"></div>
+      <span>DISPATCHES_FROM_THE_GRID</span>
+      <span style="color:rgba(156,255,147,0.2)">|</span>
+      <span>ENTRIES: {{ printf "%02d" (len $pages) }}</span>
+    </div>
+  </header>
+
+  <div class="chronicle-intro">
+    // Short cyberpunk stories. One day, a book.
+  </div>
+
+  <!-- Chronicle list -->
+  <div class="post-table">
+    {{ range $pages }}
+    {{ $permalink := .Permalink }}
+    <div class="post-row post-row-media">
+      <a href="{{ $permalink }}" class="post-row-thumb">
+        {{ with .Params.cover }}
+        <img src="{{ . | absURL }}" alt="{{ $.Title }}">
+        {{ else }}
+        <img src="{{ "img/post-cover.jpg" | absURL }}" alt="{{ .Title }}">
+        {{ end }}
+      </a>
+      <div class="post-row-main">
+        <a href="{{ $permalink }}" class="post-row-title">{{ .Title }}</a>
+        {{ with .Description }}<a href="{{ $permalink }}" class="post-row-desc">{{ . }}</a>{{ end }}
+        <div class="post-row-tags">
+          {{ range .Params.tags }}<a href="{{ (printf "/tags/%s/" .) | urlize | absURL }}" class="tag tag-primary">{{ . }}</a>{{ end }}
+        </div>
+      </div>
+      <a href="{{ $permalink }}" class="post-row-meta">
+        <div class="post-row-date">{{ .Date.Format "2006.01.02" }}</div>
+        <div class="post-row-size">{{ .ReadingTime }} MIN</div>
+      </a>
+    </div>
+    {{ else }}
+    <div style="padding:24px;font-size:0.875rem;color:rgba(156,255,147,0.4);">
+      // no entries yet — the grid is silent
+    </div>
+    {{ end }}
+  </div>
+
+</main>
+{{ end }}
