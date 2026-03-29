@@ -42,14 +42,15 @@
 &lt;h2 id=&#34;-architecture&#34;&gt;// ARCHITECTURE&lt;/h2&gt;
 &lt;p&gt;The stack runs in three bands. The retrieval core scans markdown, extracts metadata, chunks notes, writes vectors, and scores search and discovery results with deterministic Python services. &lt;code&gt;Cipher&lt;/code&gt; rides above that layer and handles audit, explanation, and maintenance review without taking over the mechanics. On the edge, MCP and HTTP both hit the same service layer, so agents and apps talk to one grid instead of two drifting clones.&lt;/p&gt;
 &lt;h2 id=&#34;-status&#34;&gt;// STATUS&lt;/h2&gt;
-&lt;p&gt;Synapse is live and usable. It indexes generic markdown folders, stores note and chunk embeddings, runs semantic search in &lt;code&gt;note&lt;/code&gt;, &lt;code&gt;chunk&lt;/code&gt;, and &lt;code&gt;hybrid&lt;/code&gt; modes, and exposes aligned MCP and HTTP interfaces. The current lane focuses on tuning discovery quality on larger corpora, expanding vector-index audit inside &lt;code&gt;Cipher&lt;/code&gt;, and preparing the seam for a second backend beyond &lt;code&gt;sqlite-vec&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Synapse is live and usable. It indexes generic markdown folders, stores note and chunk embeddings, runs semantic search in &lt;code&gt;note&lt;/code&gt;, &lt;code&gt;chunk&lt;/code&gt;, and &lt;code&gt;hybrid&lt;/code&gt; modes, and exposes aligned MCP and HTTP interfaces. A built-in &lt;code&gt;synapse-smoke&lt;/code&gt; command now lets agents dry-run provider wiring, indexing, retrieval, validation, and maintenance checks against a fixture vault using a fresh temporary DB by default. The current lane focuses on tuning discovery quality on larger corpora, expanding vector-index audit inside &lt;code&gt;Cipher&lt;/code&gt;, and preparing the seam for a second backend beyond &lt;code&gt;sqlite-vec&lt;/code&gt;.&lt;/p&gt;
 &lt;h2 id=&#34;-deploy&#34;&gt;// DEPLOY&lt;/h2&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;uv sync
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cp config/synapse.example.toml config/synapse.toml
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;uv run synapse-smoke --config config/synapse.toml
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;uv run synapse-index --config config/synapse.toml --cortex ~/notes --db ~/notes/.synapse.sqlite
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;uv run synapse-search --config config/synapse.toml --db ~/notes/.synapse.sqlite --mode hybrid &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;weak signals across notes&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;uv run synapse-discover --config config/synapse.toml --db ~/notes/.synapse.sqlite --threshold 0.20 --max &lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Jack in, index the vault, and let the grid start whispering back.&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Jack in, dry-run the stack, index the vault, and let the grid start whispering back.&lt;/p&gt;
 </content>
     </item>
     

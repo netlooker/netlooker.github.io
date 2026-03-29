@@ -148,7 +148,7 @@
         
         <div class="post-meta-item">
           <span class="material-symbols-outlined">tag</span>
-          <span>UID: PX-2026-001</span>
+          <span>UID: PX-2026-002</span>
         </div>
         
         
@@ -181,14 +181,15 @@
 <h2 id="-architecture">// ARCHITECTURE</h2>
 <p>The stack runs in three bands. The retrieval core scans markdown, extracts metadata, chunks notes, writes vectors, and scores search and discovery results with deterministic Python services. <code>Cipher</code> rides above that layer and handles audit, explanation, and maintenance review without taking over the mechanics. On the edge, MCP and HTTP both hit the same service layer, so agents and apps talk to one grid instead of two drifting clones.</p>
 <h2 id="-status">// STATUS</h2>
-<p>Synapse is live and usable. It indexes generic markdown folders, stores note and chunk embeddings, runs semantic search in <code>note</code>, <code>chunk</code>, and <code>hybrid</code> modes, and exposes aligned MCP and HTTP interfaces. The current lane focuses on tuning discovery quality on larger corpora, expanding vector-index audit inside <code>Cipher</code>, and preparing the seam for a second backend beyond <code>sqlite-vec</code>.</p>
+<p>Synapse is live and usable. It indexes generic markdown folders, stores note and chunk embeddings, runs semantic search in <code>note</code>, <code>chunk</code>, and <code>hybrid</code> modes, and exposes aligned MCP and HTTP interfaces. A built-in <code>synapse-smoke</code> command now lets agents dry-run provider wiring, indexing, retrieval, validation, and maintenance checks against a fixture vault using a fresh temporary DB by default. The current lane focuses on tuning discovery quality on larger corpora, expanding vector-index audit inside <code>Cipher</code>, and preparing the seam for a second backend beyond <code>sqlite-vec</code>.</p>
 <h2 id="-deploy">// DEPLOY</h2>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>uv sync
 </span></span><span style="display:flex;"><span>cp config/synapse.example.toml config/synapse.toml
+</span></span><span style="display:flex;"><span>uv run synapse-smoke --config config/synapse.toml
 </span></span><span style="display:flex;"><span>uv run synapse-index --config config/synapse.toml --cortex ~/notes --db ~/notes/.synapse.sqlite
 </span></span><span style="display:flex;"><span>uv run synapse-search --config config/synapse.toml --db ~/notes/.synapse.sqlite --mode hybrid <span style="color:#e6db74">&#34;weak signals across notes&#34;</span>
 </span></span><span style="display:flex;"><span>uv run synapse-discover --config config/synapse.toml --db ~/notes/.synapse.sqlite --threshold 0.20 --max <span style="color:#ae81ff">10</span>
-</span></span></code></pre></div><p>Jack in, index the vault, and let the grid start whispering back.</p>
+</span></span></code></pre></div><p>Jack in, dry-run the stack, index the vault, and let the grid start whispering back.</p>
 
       </div>
 
