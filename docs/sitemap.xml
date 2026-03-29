@@ -2,13 +2,31 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>http://netlooker.github.io/tags/ai/</loc>
+    <lastmod>2026-03-29T14:24:52+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/markdown/</loc>
+    <lastmod>2026-03-29T14:24:52+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/</loc>
+    <lastmod>2026-03-29T14:24:52+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/projects/</loc>
+    <lastmod>2026-03-29T14:24:52+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/retrieval/</loc>
+    <lastmod>2026-03-29T14:24:52+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/projects/synapse/</loc>
+    <lastmod>2026-03-29T14:24:52+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/</loc>
+    <lastmod>2026-03-29T14:24:52+00:00</lastmod>
+  </url><url>
     <loc>http://netlooker.github.io/posts/operation-cortex-upgrade/</loc>
     <lastmod>2026-03-29T12:00:00+00:00</lastmod>
   </url><url>
     <loc>http://netlooker.github.io/chronicles/the-ghost-in-the-mirror/</loc>
-    <lastmod>2026-03-29T12:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://netlooker.github.io/tags/ai/</loc>
     <lastmod>2026-03-29T12:00:00+00:00</lastmod>
   </url><url>
     <loc>http://netlooker.github.io/tags/apple-silicon/</loc>
@@ -32,9 +50,6 @@
     <loc>http://netlooker.github.io/tags/docker/</loc>
     <lastmod>2026-03-29T12:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://netlooker.github.io/</loc>
-    <lastmod>2026-03-29T12:00:00+00:00</lastmod>
-  </url><url>
     <loc>http://netlooker.github.io/tags/nix/</loc>
     <lastmod>2026-03-29T12:00:00+00:00</lastmod>
   </url><url>
@@ -45,9 +60,6 @@
     <lastmod>2026-03-29T12:00:00+00:00</lastmod>
   </url><url>
     <loc>http://netlooker.github.io/tags/self-hosted/</loc>
-    <lastmod>2026-03-29T12:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://netlooker.github.io/tags/</loc>
     <lastmod>2026-03-29T12:00:00+00:00</lastmod>
   </url><url>
     <loc>http://netlooker.github.io/posts/operation-nyx-cortex/</loc>
@@ -126,7 +138,5 @@
     <lastmod>2023-04-10T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://netlooker.github.io/categories/</loc>
-  </url><url>
-    <loc>http://netlooker.github.io/projects/</loc>
   </url>
 </urlset>
