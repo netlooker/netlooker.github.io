@@ -355,7 +355,7 @@ body {
 .home-header h1 { font-size: 1.875rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: -0.05em; text-shadow: 0 0 10px rgba(156,255,147,0.4); }
 
 /* Post table (ls -la) */
-.post-table { background: var(--surface-lowest); border: 1px solid rgba(156,255,147,0.05); overflow: hidden; }
+.post-table { background: transparent; border: none; overflow: hidden; display: flex; flex-direction: column; gap: 4px; }
 
 .post-table-header {
   display: grid;
@@ -377,13 +377,13 @@ body {
   gap: 8px;
   align-items: center;
   padding: 20px 24px;
-  border-bottom: 1px solid rgba(156,255,147,0.05);
+  background: var(--surface-lowest);
+  border: 1px solid rgba(156,255,147,0.05);
   cursor: pointer;
   transition: background 0.15s;
   text-decoration: none;
   color: inherit;
 }
-.post-row:last-child { border-bottom: none; }
 .post-row:hover { background: rgba(156,255,147,0.03); }
 
 .post-row-perms { font-size: 0.625rem; color: rgba(0,236,59,0.6); align-self: start; padding-top: 2px; }
