@@ -16,30 +16,32 @@
     </div>
   </header>
 
-  <!-- Project grid -->
-  <div class="project-grid">
+  <!-- Project list -->
+  <div class="post-table">
     {{ range $pages }}
-    <div class="project-card project-card-sm">
-      <a href="{{ .Permalink }}" class="project-card-image" style="height:176px">
+    {{ $permalink := .Permalink }}
+    <div class="post-row post-row-media">
+      <a href="{{ $permalink }}" class="post-row-thumb">
         {{ with .Params.cover }}
         <img src="{{ . | absURL }}" alt="{{ $.Title }}">
         {{ else }}
         <img src="{{ "img/post-cover.jpg" | absURL }}" alt="{{ .Title }}">
         {{ end }}
-        <div class="project-card-scanline"></div>
-        {{ with .Params.uid }}<div class="project-card-uid">UID: {{ . }}</div>{{ end }}
       </a>
-      <div class="project-card-body">
-        <div class="project-card-head">
-          <div class="project-card-name">{{ .Title | upper }}</div>
-          <div class="project-card-status">STATUS: {{ with .Params.status }}{{ . | upper }}{{ else }}ACTIVE{{ end }}</div>
+      <div class="post-row-main">
+        <a href="{{ $permalink }}" class="post-row-title">{{ .Title }}</a>
+        <div class="post-row-desc" style="color:rgba(156,255,147,0.4);font-size:0.75rem;margin-bottom:8px">
+          STATUS: {{ with .Params.status }}{{ . | upper }}{{ else }}ACTIVE{{ end }}{{ with .Params.uid }} &nbsp;·&nbsp; UID: {{ . }}{{ end }}
         </div>
-        <p class="project-card-desc">{{ .Description }}</p>
-        <div class="project-card-techs">
-          {{ range .Params.tags }}<a href="{{ (printf "/tags/%s/" .) | urlize | absURL }}" class="project-tech">{{ . }}</a>{{ end }}
+        {{ with .Description }}<a href="{{ $permalink }}" class="post-row-desc">{{ . }}</a>{{ end }}
+        <div class="post-row-tags">
+          {{ range .Params.tags }}<a href="{{ (printf "/tags/%s/" .) | urlize | absURL }}" class="tag tag-primary">{{ . }}</a>{{ end }}
         </div>
-        <a href="{{ .Permalink }}" class="project-card-link">&gt; OPEN_PROJECT</a>
       </div>
+      <a href="{{ $permalink }}" class="post-row-meta">
+        <div class="post-row-date">{{ .Date.Format "2006.01.02" }}</div>
+        {{ with .Params.link }}<div class="post-row-size">SOURCE</div>{{ end }}
+      </a>
     </div>
     {{ else }}
     <div style="padding:24px;font-size:0.875rem;color:rgba(156,255,147,0.4);">
