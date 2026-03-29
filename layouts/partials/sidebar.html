@@ -19,9 +19,13 @@
       <span class="material-symbols-outlined">home</span>
       HOME
     </a>
-    <a href="{{ "/posts" | absURL }}" class="{{ if eq $section "posts" }}is-active{{ end }}">
+    <a href="{{ "/posts"    | absURL }}" class="{{ if eq $section "posts"    }}is-active{{ end }}">
       <span class="material-symbols-outlined">folder_open</span>
       POSTS
+    </a>
+    <a href="{{ "/projects" | absURL }}" class="{{ if eq $section "projects" }}is-active{{ end }}">
+      <span class="material-symbols-outlined">rocket_launch</span>
+      PROJECTS
     </a>
     <a href="{{ "/tags"       | absURL }}" class="{{ if eq $section "tags"       }}is-active{{ end }}">
       <span class="material-symbols-outlined">label</span>

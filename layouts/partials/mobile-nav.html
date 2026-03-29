@@ -8,9 +8,13 @@
     <span class="material-symbols-outlined">home</span>
     <span class="mobile-nav-label">HOME</span>
   </a>
-  <a href="{{ "/posts" | absURL }}"   class="{{ if eq $section "posts"}}is-active{{ end }}">
+  <a href="{{ "/posts"    | absURL }}"   class="{{ if eq $section "posts"    }}is-active{{ end }}">
     <span class="material-symbols-outlined">folder_open</span>
     <span class="mobile-nav-label">POSTS</span>
+  </a>
+  <a href="{{ "/projects" | absURL }}"   class="{{ if eq $section "projects" }}is-active{{ end }}">
+    <span class="material-symbols-outlined">rocket_launch</span>
+    <span class="mobile-nav-label">PROJECTS</span>
   </a>
   <a href="{{ "/tags"       | absURL }}"   class="{{ if eq $section "tags"       }}is-active{{ end }}">
     <span class="material-symbols-outlined">label</span>

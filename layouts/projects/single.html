@@ -1,0 +1,104 @@
+{{ define "main" }}
+{{ $related := first 3 (where (where .Site.RegularPages "Section" "projects") "Permalink" "ne" .Permalink) }}
+<main class="site-main">
+
+  <!-- Breadcrumbs -->
+  <div class="breadcrumbs">
+    <a href="{{ "/" | absURL }}">HOME</a>
+    <span>::</span>
+    <a href="{{ "/projects" | absURL }}">PROJECTS</a>
+    <span>::</span>
+    <span class="bc-current">{{ with .File }}{{ .BaseFileName }}{{ end }}.md</span>
+  </div>
+
+  <div class="post-grid">
+
+    <!-- Project article -->
+    <article class="post-article">
+      <div class="post-doc-type">PROJECT // STATUS: {{ with .Params.status }}{{ . | upper }}{{ else }}ACTIVE{{ end }}</div>
+
+      <h1 class="post-title">{{ .Title }}</h1>
+
+      <div class="post-meta">
+        <div class="post-meta-item">
+          <span class="material-symbols-outlined">calendar_today</span>
+          <span>Launched: {{ .Date.Format "2006.01.02" }}</span>
+        </div>
+        {{ with .Params.uid }}
+        <div class="post-meta-item">
+          <span class="material-symbols-outlined">tag</span>
+          <span>UID: {{ . }}</span>
+        </div>
+        {{ end }}
+        {{ with .Params.link }}
+        <div class="post-meta-item">
+          <span class="material-symbols-outlined">open_in_new</span>
+          <a href="{{ . }}" target="_blank" rel="noopener" style="color:var(--primary)">SOURCE</a>
+        </div>
+        {{ end }}
+      </div>
+
+      {{ with .Params.cover }}
+      <div class="post-cover">
+        <img src="{{ . | absURL }}" alt="{{ $.Title }}">
+      </div>
+      {{ else }}
+      <div class="post-cover">
+        <img src="{{ "img/post-cover.jpg" | absURL }}" alt="{{ .Title }}">
+      </div>
+      {{ end }}
+
+      <div class="post-body">
+        {{ .Content }}
+      </div>
+
+      {{ with .Params.tags }}
+      <div class="post-tags">
+        {{ range . }}<a href="{{ (printf "/tags/%s/" .) | urlize | absURL }}" class="tag tag-outline">TAG: {{ . | upper }}</a>{{ end }}
+      </div>
+      {{ end }}
+    </article>
+
+    <!-- Sidebar -->
+    <aside class="post-sidebar">
+
+      {{ with .Params.link }}
+      <div class="sidebar-card">
+        <div class="sidebar-card-title">
+          <span class="material-symbols-outlined">rocket_launch</span>
+          ACCESS
+        </div>
+        <a href="{{ . }}" target="_blank" rel="noopener" class="project-card-link" style="display:inline-block;margin-top:8px">&gt; OPEN_REPOSITORY</a>
+      </div>
+      {{ end }}
+
+      {{ if .TableOfContents }}
+      <div class="sidebar-card">
+        <div class="sidebar-card-title">
+          <span class="material-symbols-outlined">list_alt</span>
+          DOCUMENT_INDEX
+        </div>
+        {{ .TableOfContents }}
+      </div>
+      {{ end }}
+
+      {{ if $related }}
+      <div class="sidebar-card">
+        <div class="sidebar-card-title">
+          <span class="material-symbols-outlined">folder_open</span>
+          OTHER_PROJECTS
+        </div>
+        {{ range $related }}
+        <a href="{{ .Permalink }}" class="related-post">
+          <div class="related-post-date">STATUS: {{ with .Params.status }}{{ . | upper }}{{ else }}ACTIVE{{ end }}</div>
+          <div class="related-post-title">{{ .Title | upper }}</div>
+        </a>
+        {{ end }}
+      </div>
+      {{ end }}
+
+    </aside>
+  </div>
+
+</main>
+{{ end }}

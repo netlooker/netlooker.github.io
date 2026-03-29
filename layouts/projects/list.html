@@ -1,0 +1,52 @@
+{{ define "main" }}
+{{ $pages := .Pages }}
+<main class="site-main">
+
+  <!-- Header -->
+  <header class="showcase-header">
+    <div>
+      <div class="showcase-header-meta">DIRECTORY: /ROOT/PROJECTS</div>
+      <h1 class="showcase-title">Projects</h1>
+    </div>
+    <div class="showcase-header-right">
+      <div class="status-dot"></div>
+      <span>SYSTEM_ACTIVE</span>
+      <span style="color:rgba(156,255,147,0.2)">|</span>
+      <span>TOTAL_ENTRIES: {{ printf "%02d" (len $pages) }}</span>
+    </div>
+  </header>
+
+  <!-- Project grid -->
+  <div class="project-grid">
+    {{ range $pages }}
+    <div class="project-card project-card-sm">
+      <a href="{{ .Permalink }}" class="project-card-image" style="height:176px">
+        {{ with .Params.cover }}
+        <img src="{{ . | absURL }}" alt="{{ $.Title }}">
+        {{ else }}
+        <img src="{{ "img/post-cover.jpg" | absURL }}" alt="{{ .Title }}">
+        {{ end }}
+        <div class="project-card-scanline"></div>
+        {{ with .Params.uid }}<div class="project-card-uid">UID: {{ . }}</div>{{ end }}
+      </a>
+      <div class="project-card-body">
+        <div class="project-card-head">
+          <div class="project-card-name">{{ .Title | upper }}</div>
+          <div class="project-card-status">STATUS: {{ with .Params.status }}{{ . | upper }}{{ else }}ACTIVE{{ end }}</div>
+        </div>
+        <p class="project-card-desc">{{ .Description }}</p>
+        <div class="project-card-techs">
+          {{ range .Params.tags }}<a href="{{ (printf "/tags/%s/" .) | urlize | absURL }}" class="project-tech">{{ . }}</a>{{ end }}
+        </div>
+        <a href="{{ .Permalink }}" class="project-card-link">&gt; OPEN_PROJECT</a>
+      </div>
+    </div>
+    {{ else }}
+    <div style="padding:24px;font-size:0.875rem;color:rgba(156,255,147,0.4);">
+      // no projects deployed yet
+    </div>
+    {{ end }}
+  </div>
+
+</main>
+{{ end }}
