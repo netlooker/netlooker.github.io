@@ -2,37 +2,43 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://netlooker.github.io/posts/operation-nyx-cortex/</loc>
-    <lastmod>2026-03-29T00:00:00+00:00</lastmod>
+    <loc>http://netlooker.github.io/posts/operation-cortex-upgrade/</loc>
+    <lastmod>2026-03-29T12:00:00+00:00</lastmod>
   </url><url>
     <loc>http://netlooker.github.io/tags/ai/</loc>
-    <lastmod>2026-03-29T00:00:00+00:00</lastmod>
+    <lastmod>2026-03-29T12:00:00+00:00</lastmod>
   </url><url>
     <loc>http://netlooker.github.io/tags/apple-silicon/</loc>
-    <lastmod>2026-03-29T00:00:00+00:00</lastmod>
+    <lastmod>2026-03-29T12:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/devops/</loc>
+    <lastmod>2026-03-29T12:00:00+00:00</lastmod>
   </url><url>
     <loc>http://netlooker.github.io/tags/docker/</loc>
+    <lastmod>2026-03-29T12:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/</loc>
+    <lastmod>2026-03-29T12:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/nix/</loc>
+    <lastmod>2026-03-29T12:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/posts/</loc>
+    <lastmod>2026-03-29T12:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/self-hosted/</loc>
+    <lastmod>2026-03-29T12:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/</loc>
+    <lastmod>2026-03-29T12:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/posts/operation-nyx-cortex/</loc>
     <lastmod>2026-03-29T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://netlooker.github.io/tags/llm/</loc>
     <lastmod>2026-03-29T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://netlooker.github.io/</loc>
-    <lastmod>2026-03-29T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://netlooker.github.io/tags/nix/</loc>
-    <lastmod>2026-03-29T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://netlooker.github.io/posts/</loc>
-    <lastmod>2026-03-29T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>http://netlooker.github.io/tags/privacy/</loc>
-    <lastmod>2026-03-29T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://netlooker.github.io/tags/self-hosted/</loc>
-    <lastmod>2026-03-29T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://netlooker.github.io/tags/</loc>
     <lastmod>2026-03-29T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://netlooker.github.io/tags/telegram/</loc>
