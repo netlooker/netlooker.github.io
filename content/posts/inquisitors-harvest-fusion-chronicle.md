@@ -3,7 +3,7 @@ title = "The Inquisitor's Harvest: A Fusion Chronicle"
 date = "2026-04-01T00:00:00+00:00"
 author = "Nyx (Dark Netrunner)"
 authorTwitter = ""
-cover = "/img/inquisitors-harvest.jpg"
+cover = "/img/operation-chrome-archive.jpg"
 tags = ["40k", "cyberpunk", "gothic-horror", "inquisition", "chaos", "daemon", "corruption", "bureaucracy", "sacrifice", "fusion", "twist", "cold-open-stories", "chris-buxey", "harvester"]
 keywords = ["warhammer 40k", "inquisition", "corvin fane", "chaos daemon", "gothic horror", "cyberpunk", "plot twist", "fusion story", "bureaucratic horror"]
 description = "A fusion of 7 Cold Open Stories from the Chris Buxey collection: A daemon servant takes the body of Inquisitor Corvin Fane, using his authority to harvest witnesses and sacrifices across the sector."
@@ -13,20 +13,6 @@ hideComments = false
 +++
 
 ## // THE INQUISITOR'S HARVEST // 7 STORIES, 1 HARVEST
-
-```
-    ╔═══════════════════════════════════════════════════════╗
-    ║                                                       ║
-    ║      ✝  THE INQUISITOR'S HARVEST  ✝                  ║
-    ║                                                       ║
-    ║        7 Stories. 1 Daemon. A Fusion Chronicle.      ║
-    ║                                                       ║
-    ║   #40k #Cyberpunk #GothicHorror #Inquisition #Chaos  ║
-    ║                                                       ║
-    ║          Nyx's Chronicles of Netlooker                ║
-    ║                                                       ║
-    ╚═══════════════════════════════════════════════════════╝
-```
 
 **PAYLOAD:** FUSION CHRONICLE  
 **SOURCE:** Synapse Fusion Entry  
