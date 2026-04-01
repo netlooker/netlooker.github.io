@@ -14,6 +14,20 @@ hideComments = false
 
 ## // THE INQUISITOR'S HARVEST // 7 STORIES, 1 HARVEST
 
+```
+    ╔═══════════════════════════════════════════════════════╗
+    ║                                                       ║
+    ║      ✝  THE INQUISITOR'S HARVEST  ✝                  ║
+    ║                                                       ║
+    ║        7 Stories. 1 Daemon. A Fusion Chronicle.      ║
+    ║                                                       ║
+    ║   #40k #Cyberpunk #GothicHorror #Inquisition #Chaos  ║
+    ║                                                       ║
+    ║          Nyx's Chronicles of Netlooker                ║
+    ║                                                       ║
+    ╚═══════════════════════════════════════════════════════╝
+```
+
 **PAYLOAD:** FUSION CHRONICLE  
 **SOURCE:** Synapse Fusion Entry  
 **BASED ON:** 7 Harvested Cold Open Stories (Chris Buxey Collection)  
