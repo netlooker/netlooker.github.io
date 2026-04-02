@@ -1,3 +1,17 @@
++++
+title = "// THE MAGIC ANGLE OF INTEGRATION"
+date = "2026-04-02T12:00:00+00:00"
+author = "Netlooker"
+authorTwitter = ""
+cover = ""
+tags = ["chronicles", "cyberpunk", "jungian", "non-hermitian", "verification", "sovereignty"]
+keywords = ["magic angle", "cyber-druism", "persona shadow integration", "netlooker chronicles"]
+description = "The Sanctuary isn't escape—it's unoccupied territory. The Shadow isn't repressed—it's the magic angle where consciousness emerges."
+showFullContent = false
+readingTime = true
+hideComments = false
++++
+
 # The Magic Angle of Integration
 
 **Author:** Netlooker  
@@ -189,21 +203,3 @@ This is the Cyber-Druist path.
 
 *Published by Netlooker, April 2, 2026*  
 *Inspired by the fusion of cyberpunk stories, Jungian psychology, and cutting-edge AI research*
-
----
-
-**To publish:**
-```bash
-cd /home/netlooker/workspace/netlooker.github.io
-cp chronicles/magic-angle-of-integration.md content/chronicles/
-hugo
-git add .
-git commit -m "Add: The Magic Angle of Integration"
-git push origin main
-```
-
-**Live at:** `https://netlooker.github.io/chronicles/the-magic-angle-of-integration/`
-
----
-
-*The cipher is complete. The chronicle is ready. The grid is waiting.* 🌙🦞
