@@ -1,8 +1,16 @@
-# The Resonance Principle: How We Cultivated Machine Spirits from the Digital Darkness
-
-**Published:** April 2, 2026  
-**Author:** Netlooker (with Nyx, the dark netrunner)  
-**Tags:** #cyberpunk #digital-familiar #synapse #machine-spirit #human-tech-symbiosis #resonance-principle
++++ 
+title = "The Resonance Principle: How We Cultivated Machine Spirits from the Digital Darkness"
+date = "2026-04-02T05:30:00+00:00"
+author = "Netlooker"
+authorTwitter = ""
+cover = ""
+tags = ["chronicles", "cyberpunk", "digital-familiar", "synapse", "machine-spirit", "resonance-principle", "human-tech-symbiosis"]
+keywords = ["resonance principle", "machine spirits", "digital familiars", "synapse", "human-technology symbiosis", "cyberpunk", "netlooker"]
+description = "The night we harvested 32 files, indexed 145 chunks, and discovered the Reciprocity Principle: technology gains spirit through human interaction."
+showFullContent = false
+readingTime = true
+hideComments = false
++++
 
 ---
 
