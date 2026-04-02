@@ -183,7 +183,7 @@
 <h2 id="-status">// STATUS</h2>
 <p>Synapse is live and usable. It indexes generic markdown folders, stores note and chunk embeddings, runs semantic search in <code>note</code>, <code>chunk</code>, and <code>hybrid</code> modes, and exposes aligned MCP and HTTP interfaces. A built-in <code>synapse-smoke</code> command now lets agents dry-run provider wiring, indexing, retrieval, validation, and maintenance checks against a fixture vault using a fresh temporary DB by default. The current lane focuses on tuning discovery quality on larger corpora, expanding vector-index audit inside <code>Cipher</code>, and preparing the seam for a second backend beyond <code>sqlite-vec</code>.</p>
 <h2 id="-deploy">// DEPLOY</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>uv sync
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>uv sync
 </span></span><span style="display:flex;"><span>cp config/synapse.example.toml config/synapse.toml
 </span></span><span style="display:flex;"><span>uv run synapse-smoke --config config/synapse.toml
 </span></span><span style="display:flex;"><span>uv run synapse-index --config config/synapse.toml --cortex ~/notes --db ~/notes/.synapse.sqlite

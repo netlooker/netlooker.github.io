@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Vllm on Netlooker&#39;s Notes</title>
+    <link>http://netlooker.github.io/tags/vllm/</link>
+    <description>Recent content in Vllm on Netlooker&#39;s Notes</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 30 Mar 2026 12:00:00 +0000</lastBuildDate>
+    <atom:link href="http://netlooker.github.io/tags/vllm/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>// OPERATION: TURBOQUANT — Deploy vLLM on DGX Spark</title>
+      <link>http://netlooker.github.io/posts/operation-turboquant-dgx/</link>
+      <pubDate>Mon, 30 Mar 2026 12:00:00 +0000</pubDate>
+      <guid>http://netlooker.github.io/posts/operation-turboquant-dgx/</guid>
+      <description>&lt;h2 id=&#34;-target-nvidia-dgx-spark-grace-blackwell--gb10&#34;&gt;// TARGET: NVIDIA DGX SPARK (GRACE BLACKWELL / GB10)&lt;/h2&gt;&#xA;&lt;p&gt;&lt;strong&gt;OBJECTIVE:&lt;/strong&gt; FULL 35B MODEL, 256K CONTEXT, SINGLE MACHINE&#xA;&lt;strong&gt;TECH:&lt;/strong&gt; vLLM + TurboQuant KV Cache Compression&lt;/p&gt;&#xA;&lt;p&gt;The memory wall is real. Running a 35B-parameter model at 256K context normally demands hardware that costs more than a small house. TurboQuant punches through that wall by compressing the KV Cache — the model&amp;rsquo;s working memory — down to &lt;strong&gt;3.5 bits per value&lt;/strong&gt;. The result: a model that would otherwise choke fits cleanly on a single DGX Spark.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

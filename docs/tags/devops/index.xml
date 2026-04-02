@@ -4,112 +4,16 @@
     <title>Devops on Netlooker&#39;s Notes</title>
     <link>http://netlooker.github.io/tags/devops/</link>
     <description>Recent content in Devops on Netlooker&#39;s Notes</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
-    <lastBuildDate>Sun, 29 Mar 2026 12:00:00 +0000</lastBuildDate><atom:link href="http://netlooker.github.io/tags/devops/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 29 Mar 2026 12:00:00 +0000</lastBuildDate>
+    <atom:link href="http://netlooker.github.io/tags/devops/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>// OPERATION: CORTEX UPGRADE</title>
       <link>http://netlooker.github.io/posts/operation-cortex-upgrade/</link>
       <pubDate>Sun, 29 Mar 2026 12:00:00 +0000</pubDate>
-      
       <guid>http://netlooker.github.io/posts/operation-cortex-upgrade/</guid>
-      <description>&lt;h2 id=&#34;-target-nyx-cortex-running-instance&#34;&gt;// TARGET: NYX CORTEX (RUNNING INSTANCE)&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;OBJECTIVE:&lt;/strong&gt; ZERO DATA LOSS UPDATE ACROSS ALL LAYERS
-&lt;strong&gt;OPERATOR:&lt;/strong&gt; NETRUNNER&lt;/p&gt;
-&lt;p&gt;Your cortex is live. Your agent is talking. Now the question every operator faces: &lt;em&gt;how do you upgrade without blowing up your state?&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Nyx has three independent layers. Each updates differently. Get this wrong and you&amp;rsquo;re re-pairing Telegram and re-authing GitHub from scratch. Get it right and the agent doesn&amp;rsquo;t miss a beat.&lt;/p&gt;
-&lt;p&gt;Here&amp;rsquo;s the map.&lt;/p&gt;</description>
-      <content>&lt;h2 id=&#34;-target-nyx-cortex-running-instance&#34;&gt;// TARGET: NYX CORTEX (RUNNING INSTANCE)&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;OBJECTIVE:&lt;/strong&gt; ZERO DATA LOSS UPDATE ACROSS ALL LAYERS
-&lt;strong&gt;OPERATOR:&lt;/strong&gt; NETRUNNER&lt;/p&gt;
-&lt;p&gt;Your cortex is live. Your agent is talking. Now the question every operator faces: &lt;em&gt;how do you upgrade without blowing up your state?&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Nyx has three independent layers. Each updates differently. Get this wrong and you&amp;rsquo;re re-pairing Telegram and re-authing GitHub from scratch. Get it right and the agent doesn&amp;rsquo;t miss a beat.&lt;/p&gt;
-&lt;p&gt;Here&amp;rsquo;s the map.&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id=&#34;-the-three-layers&#34;&gt;// THE THREE LAYERS&lt;/h2&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;┌─────────────────────────────────┐
-│  LAYER 3: OpenClaw + qwen-coder │  ← updates most often
-├─────────────────────────────────┤
-│  LAYER 2: Nix toolchain         │  ← updates rarely
-│  (Node.js, Python, gcc, gh...)  │
-├─────────────────────────────────┤
-│  LAYER 1: Config + Data         │  ← never needs a rebuild
-│  (secrets/, data/)              │
-└─────────────────────────────────┘
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Rule of thumb: &lt;strong&gt;update the highest layer you need.&lt;/strong&gt; Don&amp;rsquo;t rebuild what doesn&amp;rsquo;t need rebuilding.&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id=&#34;-upgrade-path-1-config-hot-reload-instant-no-rebuild&#34;&gt;// UPGRADE PATH 1: CONFIG HOT-RELOAD (INSTANT, NO REBUILD)&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;When to use:&lt;/strong&gt; Changing model settings, adding channels, tweaking agent behavior, rotating API keys.&lt;/p&gt;
-&lt;p&gt;The &lt;code&gt;secrets/&lt;/code&gt; directory is mounted directly into the running container. OpenClaw watches the config file and reloads it live — edit on your Mac, the agent picks it up in seconds:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$EDITOR secrets/openclaw.json5
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# done — agent reloads automatically&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Verify it took effect:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;just logs
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# look for: [*] Config reloaded&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;No restart. No rebuild. Zero downtime.&lt;/strong&gt;&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id=&#34;-upgrade-path-2-openclaw--qwen-coder-fast-stage-2-only&#34;&gt;// UPGRADE PATH 2: OPENCLAW + QWEN-CODER (FAST, STAGE 2 ONLY)&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;When to use:&lt;/strong&gt; New OpenClaw release, qwen-coder update, adding npm packages to the cortex.&lt;/p&gt;
-&lt;p&gt;OpenClaw and qwen-coder live in Stage 2 of the Docker build — the thin layer on top of the Nix base. Docker caches Stage 1 (the full Nix toolchain), so only Stage 2 reruns. It downloads and installs the new packages and nothing else:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;just build    &lt;span style=&#34;color:#75715e&#34;&gt;# Stage 1 cache hit — only Stage 2 reruns&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;just restart  &lt;span style=&#34;color:#75715e&#34;&gt;# swap the running container for the new image&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Your &lt;code&gt;/data&lt;/code&gt; volume is untouched. Sessions, workspace, gh auth — all intact.&lt;/p&gt;
-&lt;p&gt;Confirm what version landed:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker compose -f cortex/docker-compose.yml exec cortex openclaw --version
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
-&lt;h2 id=&#34;-upgrade-path-3-nix-toolchain-slower-stage-1-reruns&#34;&gt;// UPGRADE PATH 3: NIX TOOLCHAIN (SLOWER, STAGE 1 RERUNS)&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;When to use:&lt;/strong&gt; Updating Node.js, Python, gh CLI, ripgrep, or any other Nix-pinned tool. Security patches to the base layer.&lt;/p&gt;
-&lt;p&gt;The Nix toolchain is pinned by &lt;code&gt;flake.lock&lt;/code&gt; — a cryptographic lockfile. Bumping it pulls the latest versions from nixpkgs and re-locks them to new hashes. Stage 1 then reruns from scratch:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Inside the nix dev shell (run `nix develop` first if needed):&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nix flake update          &lt;span style=&#34;color:#75715e&#34;&gt;# bumps flake.lock to latest nixpkgs&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git add flake.lock
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git commit -m &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;chore: bump nix flake&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;just build                &lt;span style=&#34;color:#75715e&#34;&gt;# Stage 1 reruns — full toolchain recompile&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;just restart
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;Why commit &lt;code&gt;flake.lock&lt;/code&gt;?&lt;/strong&gt; It&amp;rsquo;s your single source of truth. Anyone who clones the repo gets the exact same toolchain. Treat it like a &lt;code&gt;package-lock.json&lt;/code&gt; — it belongs in version control.&lt;/p&gt;&lt;/blockquote&gt;
-&lt;hr&gt;
-&lt;h2 id=&#34;-upgrade-path-4-full-nuke-and-rebuild-scorched-earth&#34;&gt;// UPGRADE PATH 4: FULL NUKE AND REBUILD (SCORCHED EARTH)&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;When to use:&lt;/strong&gt; Something is broken and you want a clean slate. No cache, no layers, fresh bake from the ground up.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;just rebuild   &lt;span style=&#34;color:#75715e&#34;&gt;# docker compose build --no-cache + up -d&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Every cached Docker layer is gone. Stage 1 (Nix toolchain) and Stage 2 (OpenClaw) both bake from scratch. Takes the longest, but guarantees a pristine image.&lt;/p&gt;
-&lt;p&gt;Your &lt;code&gt;/data&lt;/code&gt; volume is &lt;strong&gt;still untouched&lt;/strong&gt;. State survives even a full nuke.&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id=&#34;-the-decision-tree&#34;&gt;// THE DECISION TREE&lt;/h2&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Need to change config or API keys?
-  └─ Edit secrets/openclaw.json5 directly → DONE (hot-reload)
-
-New OpenClaw or qwen-coder version?
-  └─ just build + just restart → DONE (minutes)
-
-New Node.js / Python / system tool?
-  └─ nix flake update + just build + just restart → DONE (longer)
-
-Something is broken and nothing makes sense?
-  └─ just rebuild → DONE (scorched earth, fresh start)
-&lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
-&lt;h2 id=&#34;-what-survives-every-update&#34;&gt;// WHAT SURVIVES EVERY UPDATE&lt;/h2&gt;
-&lt;p&gt;No matter which upgrade path you take, everything in &lt;code&gt;/data&lt;/code&gt; survives:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;data/
-  workspace/     ← agent files, reports, code — safe
-  gh/            ← GitHub CLI auth token — safe
-  qwen/          ← qwen-coder config — safe
-  sessions/      ← Telegram/WhatsApp sessions — safe
-  agents/        ← agent sandboxes — safe
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;The container is disposable. Your data is not. That&amp;rsquo;s the architecture.&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id=&#34;-system-status-post-upgrade&#34;&gt;// SYSTEM STATUS POST-UPGRADE&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;just logs
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[*] Config loaded from /config/openclaw.json5
-[*] Telegram uplink: ONLINE
-[+] Gateway listening on :18789
-[+] Agent cortex: READY
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;If you see that, the upgrade landed clean. Your agent is back online, state intact, mission continues.&lt;/p&gt;
-&lt;hr&gt;
-&lt;p&gt;&lt;em&gt;(C) 2026 NETLOOKER_OS // END OF FILE&lt;/em&gt;&lt;/p&gt;
-</content>
+      <description>&lt;h2 id=&#34;-target-nyx-cortex-running-instance&#34;&gt;// TARGET: NYX CORTEX (RUNNING INSTANCE)&lt;/h2&gt;&#xA;&lt;p&gt;&lt;strong&gt;OBJECTIVE:&lt;/strong&gt; ZERO DATA LOSS UPDATE ACROSS ALL LAYERS&#xA;&lt;strong&gt;OPERATOR:&lt;/strong&gt; NETRUNNER&lt;/p&gt;&#xA;&lt;p&gt;Your cortex is live. Your agent is talking. Now the question every operator faces: &lt;em&gt;how do you upgrade without blowing up your state?&lt;/em&gt;&lt;/p&gt;&#xA;&lt;p&gt;Nyx has three independent layers. Each updates differently. Get this wrong and you&amp;rsquo;re re-pairing Telegram and re-authing GitHub from scratch. Get it right and the agent doesn&amp;rsquo;t miss a beat.&lt;/p&gt;&#xA;&lt;p&gt;Here&amp;rsquo;s the map.&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

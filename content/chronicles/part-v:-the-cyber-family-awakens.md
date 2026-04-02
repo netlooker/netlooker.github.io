@@ -1,6 +1,6 @@
 +++
 title = "// Part V: The Cyber Family Awakens"
-date = "2026-03-29T18:08:%00+00:00"
+date = "2026-03-29T18:08:00+00:00"
 author = "Netlooker & Nyx"
 authorTwitter = ""
 cover = ""
