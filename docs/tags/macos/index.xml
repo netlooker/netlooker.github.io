@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Macos on Netlooker&#39;s Notes</title>
+    <link>http://netlooker.github.io/tags/macos/</link>
+    <description>Recent content in Macos on Netlooker&#39;s Notes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 19 Mar 2026 00:00:00 +0000</lastBuildDate><atom:link href="http://netlooker.github.io/tags/macos/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The Ultimate Local AI Setup for Apple Silicon</title>
+      <link>http://netlooker.github.io/posts/local-ai-apple-silicon/</link>
+      <pubDate>Thu, 19 Mar 2026 00:00:00 +0000</pubDate>
+      
+      <guid>http://netlooker.github.io/posts/local-ai-apple-silicon/</guid>
+      <description>&lt;h2 id=&#34;1-get-the-tools&#34;&gt;1. Get the Tools&lt;/h2&gt;
+&lt;p&gt;Alright mates, let&amp;rsquo;s get our environment sorted. We will use Homebrew to install the Hugging Face CLI (&lt;code&gt;hf&lt;/code&gt;), the &lt;code&gt;llama.cpp&lt;/code&gt; engine, and the &lt;code&gt;qwen-code&lt;/code&gt; terminal agent. Run this command and let your Mac do the heavy lifting:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;brew install hf llama.cpp qwen-code
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;2-download-the-models-to-the-cache&#34;&gt;2. Download the Models to the Cache&lt;/h2&gt;
+&lt;p&gt;Instead of cluttering your project folders, we will use the &lt;code&gt;hf&lt;/code&gt; tool to download the models securely into a hidden central cache on your Mac. Run these two commands:&lt;/p&gt;</description>
+      <content>&lt;h2 id=&#34;1-get-the-tools&#34;&gt;1. Get the Tools&lt;/h2&gt;
+&lt;p&gt;Alright mates, let&amp;rsquo;s get our environment sorted. We will use Homebrew to install the Hugging Face CLI (&lt;code&gt;hf&lt;/code&gt;), the &lt;code&gt;llama.cpp&lt;/code&gt; engine, and the &lt;code&gt;qwen-code&lt;/code&gt; terminal agent. Run this command and let your Mac do the heavy lifting:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;brew install hf llama.cpp qwen-code
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;2-download-the-models-to-the-cache&#34;&gt;2. Download the Models to the Cache&lt;/h2&gt;
+&lt;p&gt;Instead of cluttering your project folders, we will use the &lt;code&gt;hf&lt;/code&gt; tool to download the models securely into a hidden central cache on your Mac. Run these two commands:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hf download unsloth/Qwen3.5-9B-GGUF Qwen3.5-9B-UD-Q4_K_XL.gguf
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hf download unsloth/Qwen3.5-9B-GGUF mmproj-F16.gguf
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;When they finish downloading, your terminal will print out a long path showing exactly where it stored the files (usually looking something like &lt;code&gt;/Users/your_username/.cache/huggingface/hub/...&lt;/code&gt;). Copy those long paths, because you need them for the next step!&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;A quick tip for your RAM:&lt;/strong&gt; I chose the 9B &lt;code&gt;Q4_K_XL&lt;/code&gt; version because it fits perfectly on a 36GB Mac. If you have 16GB or 18GB of RAM, no worries! Try changing the filename in the download command to a smaller compressed version from the &lt;a href=&#34;https://huggingface.co/unsloth/Qwen3.5-9B-GGUF&#34;&gt;9B repository&lt;/a&gt; or even test the much smaller &lt;a href=&#34;https://huggingface.co/unsloth/Qwen3.5-4B-GGUF&#34;&gt;4B version&lt;/a&gt; to avoid slowing down your machine. Experiment with different model sizes and context window limits (&lt;code&gt;-c&lt;/code&gt;) to see what runs best on your hardware.&lt;/p&gt;&lt;/blockquote&gt;
+&lt;h2 id=&#34;3-start-the-server&#34;&gt;3. Start the Server&lt;/h2&gt;
+&lt;p&gt;Time to push your GPU. We are going to run the &lt;code&gt;llama-server&lt;/code&gt; command. You will need to swap out the placeholder paths below with the actual long paths you copied in Step 2.&lt;/p&gt;
+&lt;p&gt;I have set up these exact flags to squeeze every drop of memory bandwidth out of your Mac&amp;rsquo;s chip:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;llama-server &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  -m /path/to/your/copied/Qwen3.5-9B-UD-Q4_K_XL.gguf &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  --mmproj /path/to/your/copied/Qwen3.5-9B-UD-mmproj-f16.gguf &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  --ctx-size &lt;span style=&#34;color:#ae81ff&#34;&gt;32768&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  --n-gpu-layers &lt;span style=&#34;color:#ae81ff&#34;&gt;99&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  --flash-attn on &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  --cache-type-k q8_0 &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  --cache-type-v q8_0 &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  --batch-size &lt;span style=&#34;color:#ae81ff&#34;&gt;512&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  --threads &lt;span style=&#34;color:#ae81ff&#34;&gt;6&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  --prio &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  --port &lt;span style=&#34;color:#ae81ff&#34;&gt;8080&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Important:&lt;/strong&gt; Keep this terminal open. Your server is now humming along in the background.&lt;/p&gt;&lt;/blockquote&gt;
+&lt;h2 id=&#34;4-the-browser-plot-twist&#34;&gt;4. The Browser Plot Twist&lt;/h2&gt;
+&lt;p&gt;Here is a fun trick. You might think your server is just a hidden background process waiting for code. But if you open your web browser and go to &lt;strong&gt;&lt;code&gt;http://localhost:8080&lt;/code&gt;&lt;/strong&gt;, you get a fully private chat interface built right into the system!&lt;/p&gt;
+&lt;p&gt;It gets better. Because we added the &lt;code&gt;mmproj&lt;/code&gt; vision file, you can drag and drop images or even PDFs directly into the chat. The system processes PDFs as images incredibly fast, meaning you can ask the AI to extract data or explain diagrams for you. If you want to read the deep lore on how this brilliant UI works, check out the &lt;a href=&#34;https://github.com/ggml-org/llama.cpp/discussions/16938&#34;&gt;llama.cpp developer discussion&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;5-setting-up-qwen-code&#34;&gt;5. Setting up Qwen Code&lt;/h2&gt;
+&lt;p&gt;But what if you want a taste of agentic engineering? What if you want a local alternative to Claude Code that runs entirely on your own machine? Bam. Enter Qwen Code.&lt;/p&gt;
+&lt;p&gt;By default, most coding tools try to connect to cloud servers. We need to point &lt;code&gt;qwen-code&lt;/code&gt; to your new local setup. Open your settings file (usually located at &lt;code&gt;~/.qwen/settings.json&lt;/code&gt;) and add this configuration:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;modelProviders&amp;#34;&lt;/span&gt;: {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;openai&amp;#34;&lt;/span&gt;: {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;baseUrl&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;http://localhost:8080/v1&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;apiKey&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;local-key&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;models&amp;#34;&lt;/span&gt;: [&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;qwen&amp;#34;&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  },
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;defaultModel&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;openai/qwen&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Quick alternative: if you want to test it right now without editing any files, just set these variables when you start the programme:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;OPENAI_BASE_URL&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;http://localhost:8080/v1&amp;#34;&lt;/span&gt; OPENAI_API_KEY&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;local&amp;#34;&lt;/span&gt; OPENAI_MODEL&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;qwen&amp;#34;&lt;/span&gt; qwen
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;6-get-to-hacking&#34;&gt;6. Get to Hacking&lt;/h2&gt;
+&lt;p&gt;Open a new terminal window in your project folder and wake up your local AI agent:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;qwen
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;You are in. Use the &lt;code&gt;@&lt;/code&gt; symbol to tag local files, share software diagrams, and let it write code for you. It all runs privately and super fast on your own Apple Silicon. Happy hacking!&lt;/p&gt;
+</content>
+    </item>
+    
+  </channel>
+</rss>

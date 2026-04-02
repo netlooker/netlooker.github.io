@@ -1,0 +1,701 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Netlooker&#39;s Notes</title>
+    <link>http://netlooker.github.io/posts/</link>
+    <description>Recent content in Posts on Netlooker&#39;s Notes</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 29 Mar 2026 12:00:00 +0000</lastBuildDate><atom:link href="http://netlooker.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>// OPERATION: CORTEX UPGRADE</title>
+      <link>http://netlooker.github.io/posts/operation-cortex-upgrade/</link>
+      <pubDate>Sun, 29 Mar 2026 12:00:00 +0000</pubDate>
+      
+      <guid>http://netlooker.github.io/posts/operation-cortex-upgrade/</guid>
+      <description>&lt;h2 id=&#34;-target-nyx-cortex-running-instance&#34;&gt;// TARGET: NYX CORTEX (RUNNING INSTANCE)&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;OBJECTIVE:&lt;/strong&gt; ZERO DATA LOSS UPDATE ACROSS ALL LAYERS
+&lt;strong&gt;OPERATOR:&lt;/strong&gt; NETRUNNER&lt;/p&gt;
+&lt;p&gt;Your cortex is live. Your agent is talking. Now the question every operator faces: &lt;em&gt;how do you upgrade without blowing up your state?&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Nyx has three independent layers. Each updates differently. Get this wrong and you&amp;rsquo;re re-pairing Telegram and re-authing GitHub from scratch. Get it right and the agent doesn&amp;rsquo;t miss a beat.&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s the map.&lt;/p&gt;</description>
+      <content>&lt;h2 id=&#34;-target-nyx-cortex-running-instance&#34;&gt;// TARGET: NYX CORTEX (RUNNING INSTANCE)&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;OBJECTIVE:&lt;/strong&gt; ZERO DATA LOSS UPDATE ACROSS ALL LAYERS
+&lt;strong&gt;OPERATOR:&lt;/strong&gt; NETRUNNER&lt;/p&gt;
+&lt;p&gt;Your cortex is live. Your agent is talking. Now the question every operator faces: &lt;em&gt;how do you upgrade without blowing up your state?&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Nyx has three independent layers. Each updates differently. Get this wrong and you&amp;rsquo;re re-pairing Telegram and re-authing GitHub from scratch. Get it right and the agent doesn&amp;rsquo;t miss a beat.&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s the map.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-the-three-layers&#34;&gt;// THE THREE LAYERS&lt;/h2&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;┌─────────────────────────────────┐
+│  LAYER 3: OpenClaw + qwen-coder │  ← updates most often
+├─────────────────────────────────┤
+│  LAYER 2: Nix toolchain         │  ← updates rarely
+│  (Node.js, Python, gcc, gh...)  │
+├─────────────────────────────────┤
+│  LAYER 1: Config + Data         │  ← never needs a rebuild
+│  (secrets/, data/)              │
+└─────────────────────────────────┘
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Rule of thumb: &lt;strong&gt;update the highest layer you need.&lt;/strong&gt; Don&amp;rsquo;t rebuild what doesn&amp;rsquo;t need rebuilding.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-upgrade-path-1-config-hot-reload-instant-no-rebuild&#34;&gt;// UPGRADE PATH 1: CONFIG HOT-RELOAD (INSTANT, NO REBUILD)&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;When to use:&lt;/strong&gt; Changing model settings, adding channels, tweaking agent behavior, rotating API keys.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;secrets/&lt;/code&gt; directory is mounted directly into the running container. OpenClaw watches the config file and reloads it live — edit on your Mac, the agent picks it up in seconds:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$EDITOR secrets/openclaw.json5
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# done — agent reloads automatically&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Verify it took effect:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;just logs
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# look for: [*] Config reloaded&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;No restart. No rebuild. Zero downtime.&lt;/strong&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-upgrade-path-2-openclaw--qwen-coder-fast-stage-2-only&#34;&gt;// UPGRADE PATH 2: OPENCLAW + QWEN-CODER (FAST, STAGE 2 ONLY)&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;When to use:&lt;/strong&gt; New OpenClaw release, qwen-coder update, adding npm packages to the cortex.&lt;/p&gt;
+&lt;p&gt;OpenClaw and qwen-coder live in Stage 2 of the Docker build — the thin layer on top of the Nix base. Docker caches Stage 1 (the full Nix toolchain), so only Stage 2 reruns. It downloads and installs the new packages and nothing else:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;just build    &lt;span style=&#34;color:#75715e&#34;&gt;# Stage 1 cache hit — only Stage 2 reruns&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;just restart  &lt;span style=&#34;color:#75715e&#34;&gt;# swap the running container for the new image&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Your &lt;code&gt;/data&lt;/code&gt; volume is untouched. Sessions, workspace, gh auth — all intact.&lt;/p&gt;
+&lt;p&gt;Confirm what version landed:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker compose -f cortex/docker-compose.yml exec cortex openclaw --version
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id=&#34;-upgrade-path-3-nix-toolchain-slower-stage-1-reruns&#34;&gt;// UPGRADE PATH 3: NIX TOOLCHAIN (SLOWER, STAGE 1 RERUNS)&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;When to use:&lt;/strong&gt; Updating Node.js, Python, gh CLI, ripgrep, or any other Nix-pinned tool. Security patches to the base layer.&lt;/p&gt;
+&lt;p&gt;The Nix toolchain is pinned by &lt;code&gt;flake.lock&lt;/code&gt; — a cryptographic lockfile. Bumping it pulls the latest versions from nixpkgs and re-locks them to new hashes. Stage 1 then reruns from scratch:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Inside the nix dev shell (run `nix develop` first if needed):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nix flake update          &lt;span style=&#34;color:#75715e&#34;&gt;# bumps flake.lock to latest nixpkgs&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git add flake.lock
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git commit -m &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;chore: bump nix flake&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;just build                &lt;span style=&#34;color:#75715e&#34;&gt;# Stage 1 reruns — full toolchain recompile&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;just restart
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Why commit &lt;code&gt;flake.lock&lt;/code&gt;?&lt;/strong&gt; It&amp;rsquo;s your single source of truth. Anyone who clones the repo gets the exact same toolchain. Treat it like a &lt;code&gt;package-lock.json&lt;/code&gt; — it belongs in version control.&lt;/p&gt;&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-upgrade-path-4-full-nuke-and-rebuild-scorched-earth&#34;&gt;// UPGRADE PATH 4: FULL NUKE AND REBUILD (SCORCHED EARTH)&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;When to use:&lt;/strong&gt; Something is broken and you want a clean slate. No cache, no layers, fresh bake from the ground up.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;just rebuild   &lt;span style=&#34;color:#75715e&#34;&gt;# docker compose build --no-cache + up -d&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Every cached Docker layer is gone. Stage 1 (Nix toolchain) and Stage 2 (OpenClaw) both bake from scratch. Takes the longest, but guarantees a pristine image.&lt;/p&gt;
+&lt;p&gt;Your &lt;code&gt;/data&lt;/code&gt; volume is &lt;strong&gt;still untouched&lt;/strong&gt;. State survives even a full nuke.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-the-decision-tree&#34;&gt;// THE DECISION TREE&lt;/h2&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Need to change config or API keys?
+  └─ Edit secrets/openclaw.json5 directly → DONE (hot-reload)
+
+New OpenClaw or qwen-coder version?
+  └─ just build + just restart → DONE (minutes)
+
+New Node.js / Python / system tool?
+  └─ nix flake update + just build + just restart → DONE (longer)
+
+Something is broken and nothing makes sense?
+  └─ just rebuild → DONE (scorched earth, fresh start)
+&lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
+&lt;h2 id=&#34;-what-survives-every-update&#34;&gt;// WHAT SURVIVES EVERY UPDATE&lt;/h2&gt;
+&lt;p&gt;No matter which upgrade path you take, everything in &lt;code&gt;/data&lt;/code&gt; survives:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;data/
+  workspace/     ← agent files, reports, code — safe
+  gh/            ← GitHub CLI auth token — safe
+  qwen/          ← qwen-coder config — safe
+  sessions/      ← Telegram/WhatsApp sessions — safe
+  agents/        ← agent sandboxes — safe
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;The container is disposable. Your data is not. That&amp;rsquo;s the architecture.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-system-status-post-upgrade&#34;&gt;// SYSTEM STATUS POST-UPGRADE&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;just logs
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[*] Config loaded from /config/openclaw.json5
+[*] Telegram uplink: ONLINE
+[+] Gateway listening on :18789
+[+] Agent cortex: READY
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;If you see that, the upgrade landed clean. Your agent is back online, state intact, mission continues.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;(C) 2026 NETLOOKER_OS // END OF FILE&lt;/em&gt;&lt;/p&gt;
+</content>
+    </item>
+    
+    <item>
+      <title>// OPERATION: NYX CORTEX</title>
+      <link>http://netlooker.github.io/posts/operation-nyx-cortex/</link>
+      <pubDate>Sun, 29 Mar 2026 00:00:00 +0000</pubDate>
+      
+      <guid>http://netlooker.github.io/posts/operation-nyx-cortex/</guid>
+      <description>&lt;h2 id=&#34;-target-architecture-apple-silicon-aarch64&#34;&gt;// TARGET ARCHITECTURE: APPLE SILICON (AARCH64)&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;PAYLOAD:&lt;/strong&gt; OPENCLAW AGENT + QWEN-CODER + GH CLI
+&lt;strong&gt;ENGINE:&lt;/strong&gt; NIX MULTI-STAGE DOCKER (MATHEMATICALLY DETERMINISTIC)
+&lt;strong&gt;OPERATOR:&lt;/strong&gt; NETRUNNER&lt;/p&gt;
+&lt;p&gt;Wake up, netrunner. You&amp;rsquo;re tired of your AI agent phoning home to corporate servers, leaking your codebase into some faceless training pipeline, going dark when the subscription lapses. You want a ghost that runs on &lt;em&gt;your&lt;/em&gt; silicon, speaks through your encrypted channels, and answers only to you.&lt;/p&gt;
+&lt;p&gt;This is &lt;strong&gt;Nyx&lt;/strong&gt;. A self-sovereign AI cortex. Clone it, configure it, bake it, run it. Four moves and your agent is live.&lt;/p&gt;</description>
+      <content>&lt;h2 id=&#34;-target-architecture-apple-silicon-aarch64&#34;&gt;// TARGET ARCHITECTURE: APPLE SILICON (AARCH64)&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;PAYLOAD:&lt;/strong&gt; OPENCLAW AGENT + QWEN-CODER + GH CLI
+&lt;strong&gt;ENGINE:&lt;/strong&gt; NIX MULTI-STAGE DOCKER (MATHEMATICALLY DETERMINISTIC)
+&lt;strong&gt;OPERATOR:&lt;/strong&gt; NETRUNNER&lt;/p&gt;
+&lt;p&gt;Wake up, netrunner. You&amp;rsquo;re tired of your AI agent phoning home to corporate servers, leaking your codebase into some faceless training pipeline, going dark when the subscription lapses. You want a ghost that runs on &lt;em&gt;your&lt;/em&gt; silicon, speaks through your encrypted channels, and answers only to you.&lt;/p&gt;
+&lt;p&gt;This is &lt;strong&gt;Nyx&lt;/strong&gt;. A self-sovereign AI cortex. Clone it, configure it, bake it, run it. Four moves and your agent is live.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-phase-0-prime-the-forge-install-nix&#34;&gt;// PHASE 0: PRIME THE FORGE (INSTALL NIX)&lt;/h2&gt;
+&lt;p&gt;Before anything else, you need one tool: &lt;strong&gt;Nix&lt;/strong&gt;. Think of it as a package manager with a superpower — it pins every dependency to a cryptographic hash so the build is identical on every machine, every time. No &amp;ldquo;works on my machine.&amp;rdquo; No version drift.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;curl -sSfL https://artifacts.nixos.org/nix-installer | sh -s -- install
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Nix is now on your Mac.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;What Nix does in this project — the short version:&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;On your Mac: drops you into a dev shell with every tool pinned (&lt;code&gt;just&lt;/code&gt;, &lt;code&gt;node&lt;/code&gt;, etc.)&lt;/li&gt;
+&lt;li&gt;Inside the Docker build: compiles the entire container toolchain with every binary locked to a hash — automatically. You never touch it.&lt;/li&gt;
+&lt;/ol&gt;&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-phase-1-the-clone-pull-the-blueprint&#34;&gt;// PHASE 1: THE CLONE (PULL THE BLUEPRINT)&lt;/h2&gt;
+&lt;p&gt;Pull the repo and jack into the Nix dev shell. Every tool you need is pinned — no manual installs, no version mismatch:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git clone https://github.com/netlooker/nyx.git
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cd nyx
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nix develop
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;You&amp;rsquo;ll see:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;nyx dev shell (aarch64-darwin)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;You&amp;rsquo;re in. Your terminal now carries &lt;code&gt;just&lt;/code&gt; (the task runner), &lt;code&gt;node&lt;/code&gt;, &lt;code&gt;python&lt;/code&gt;, and &lt;code&gt;age&lt;/code&gt;. Use &lt;code&gt;just&lt;/code&gt; for everything from here.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Tip:&lt;/strong&gt; Install &lt;a href=&#34;https://direnv.net/&#34;&gt;direnv&lt;/a&gt; and run &lt;code&gt;direnv allow&lt;/code&gt; once — the dev shell activates automatically every time you &lt;code&gt;cd&lt;/code&gt; into the project.&lt;/p&gt;&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-phase-2-the-config-wire-the-neural-link&#34;&gt;// PHASE 2: THE CONFIG (WIRE THE NEURAL LINK)&lt;/h2&gt;
+&lt;p&gt;The agent is blind until you feed it credentials. The config is gitignored by design — your keys never leave your machine:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cp secrets/openclaw.json5.example secrets/openclaw.json5
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$EDITOR secrets/openclaw.json5
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;[MINIMUM CONFIG — TELEGRAM UPLINK:]&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Get a bot token from &lt;a href=&#34;https://t.me/BotFather&#34;&gt;@BotFather&lt;/a&gt; on Telegram, then wire it in:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-json5&#34; data-lang=&#34;json5&#34;&gt;channels: {
+  telegram: {
+    enabled: true,
+    botToken: &amp;#39;your-token-from-@BotFather&amp;#39;,
+    dmPolicy: &amp;#39;pairing&amp;#39;,   // nobody talks to your agent without your approval
+  },
+},
+agents: {
+  defaults: {
+    workspace: &amp;#39;/data/workspace&amp;#39;,  // agent files survive rebuilds
+  },
+},
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;[OPTIONAL — LOCAL INFERENCE NODE:]&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Skip the cloud. Point the agent at a local model running on your LAN via Ollama, llama.cpp, or any OpenAI-compatible endpoint:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-json5&#34; data-lang=&#34;json5&#34;&gt;models: {
+  mode: &amp;#39;merge&amp;#39;,
+  providers: {
+    llamacpp: {
+      baseUrl: &amp;#39;http://192.168.1.x:8008/v1&amp;#39;,
+      api: &amp;#39;openai-completions&amp;#39;,
+      apiKey: &amp;#39;local_inference&amp;#39;,
+      models: [
+        { id: &amp;#39;your-model.gguf&amp;#39;, name: &amp;#39;Local Model&amp;#39; },
+      ],
+    },
+  },
+},
+&lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
+&lt;h2 id=&#34;-phase-3-the-forge-bake-the-cortex&#34;&gt;// PHASE 3: THE FORGE (BAKE THE CORTEX)&lt;/h2&gt;
+&lt;p&gt;One command builds the entire stack:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;just build
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Under the hood: a two-stage Docker build.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Stage 1 (automatic):&lt;/strong&gt; A &lt;code&gt;nixos/nix&lt;/code&gt; container spins up &lt;em&gt;inside&lt;/em&gt; Docker and compiles the full toolchain — Node.js, Python, gcc, ripgrep, gh CLI — with every binary pinned to a cryptographic hash. Docker caches this layer and only reruns it when &lt;code&gt;flake.nix&lt;/code&gt; or &lt;code&gt;flake.lock&lt;/code&gt; change.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Stage 2:&lt;/strong&gt; The compiled toolchain drops into a clean &lt;code&gt;debian:bookworm-slim&lt;/code&gt;. OpenClaw and qwen-coder layer on top. Result: &lt;code&gt;nyx-cortex:latest&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Updating OpenClaw or qwen-coder only triggers Stage 2. Fast.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-phase-4-boot-sequence-ignite-the-cortex&#34;&gt;// PHASE 4: BOOT SEQUENCE (IGNITE THE CORTEX)&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;just up
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;just logs
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Watch the cortex come online:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[*] Config loaded from /config/openclaw.json5
+[*] Telegram uplink: ONLINE
+[+] Gateway listening on :18789
+[+] Agent cortex: READY
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Two volumes connect your Mac to the running container:&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;What&lt;/th&gt;
+          &lt;th&gt;On Your Mac&lt;/th&gt;
+          &lt;th&gt;Inside Container&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Config&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;secrets/&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;/config&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;All agent data&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;data/&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;/data&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Edit the config on your Mac — the agent picks it up live, no restart needed. All agent data (files, sessions, auth tokens) lives in &lt;code&gt;data/&lt;/code&gt; on your Mac and survives container rebuilds.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-phase-5-jack-in-telegram-pairing&#34;&gt;// PHASE 5: JACK IN (TELEGRAM PAIRING)&lt;/h2&gt;
+&lt;p&gt;With &lt;code&gt;dmPolicy: &#39;pairing&#39;&lt;/code&gt;, the agent is a ghost — it ignores everyone until &lt;em&gt;you&lt;/em&gt; authorize them. First contact:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Send any message to your bot on Telegram — &lt;code&gt;/start&lt;/code&gt; works&lt;/li&gt;
+&lt;li&gt;Rip the pairing PIN from the logs:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker compose -f cortex/docker-compose.yml logs | grep -iE &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;pairing|pin|code&amp;#34;&lt;/span&gt; | tail -5
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;Authorize the uplink:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker compose -f cortex/docker-compose.yml exec cortex &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  openclaw pairing approve telegram YOUR-PIN-HERE
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The bot responds. You&amp;rsquo;re wired in. The cortex is yours.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-phase-6-persistence-your-data-survives-the-rebuild&#34;&gt;// PHASE 6: PERSISTENCE (YOUR DATA SURVIVES THE REBUILD)&lt;/h2&gt;
+&lt;p&gt;The container is disposable. Your data is not. Everything that matters lives in &lt;code&gt;~/projects/nyx/data/&lt;/code&gt; on your Mac:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;data/
+  workspace/     ← files the agent created, reports, code
+  gh/            ← GitHub CLI auth token
+  qwen/          ← qwen-coder config
+  sessions/      ← Telegram/WhatsApp login sessions
+  agents/        ← agent sandboxes
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Nuke and rebuild anytime with &lt;code&gt;just rebuild&lt;/code&gt;. The agent boots, reconnects to your data volume, and picks up exactly where it left off. No re-auth. No lost work.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-useful-commands&#34;&gt;// USEFUL COMMANDS&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;just build     &lt;span style=&#34;color:#75715e&#34;&gt;# bake the full image (Nix base + openclaw)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;just up        &lt;span style=&#34;color:#75715e&#34;&gt;# start the cortex&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;just down      &lt;span style=&#34;color:#75715e&#34;&gt;# shut it down&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;just logs      &lt;span style=&#34;color:#75715e&#34;&gt;# tail live output&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;just restart   &lt;span style=&#34;color:#75715e&#34;&gt;# restart without rebuilding&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;just rebuild   &lt;span style=&#34;color:#75715e&#34;&gt;# full rebuild from scratch, no cache&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Agent dashboard at &lt;code&gt;http://localhost:18789&lt;/code&gt; — enable it with &lt;code&gt;gateway.bind: &#39;lan&#39;&lt;/code&gt; + a password in your config.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-system-status&#34;&gt;// SYSTEM STATUS&lt;/h2&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[+] CORTEX: ONLINE
+[+] UPLINK: TELEGRAM / WHATSAPP
+[+] INFERENCE: LOCAL LAN NODE
+[+] STATE: PERSISTENT (/data)
+[+] TOOLCHAIN: CRYPTOGRAPHICALLY PINNED
+[+] DATA EXFIL: ZERO
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Your agent is sovereign, netrunner. It lives on your silicon, thinks on your hardware, backs up to your disk. The corporate grid has no reach here.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;just up
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;(C) 2026 NETLOOKER_OS // END OF FILE&lt;/em&gt;&lt;/p&gt;
+</content>
+    </item>
+    
+    <item>
+      <title>// OPERATION: CHROME ARCHIVE</title>
+      <link>http://netlooker.github.io/posts/operation-chrome-archive/</link>
+      <pubDate>Sat, 28 Mar 2026 00:00:00 +0000</pubDate>
+      
+      <guid>http://netlooker.github.io/posts/operation-chrome-archive/</guid>
+      <description>&lt;h2 id=&#34;-target-architecture-nvidia-grace-blackwell-gb10&#34;&gt;// TARGET ARCHITECTURE: NVIDIA GRACE BLACKWELL (GB10)&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;PAYLOAD:&lt;/strong&gt; DUAL PERPLEXITY 4B SOTA EMBEDDINGS — &lt;code&gt;pplx-embed-v1-4b&lt;/code&gt; + &lt;code&gt;pplx-embed-context-v1-4b&lt;/code&gt;
+&lt;strong&gt;ENGINE:&lt;/strong&gt; INFINITY V2 (CONTAINERIZED)
+&lt;strong&gt;OPERATOR:&lt;/strong&gt; NETRUNNER&lt;/p&gt;
+&lt;p&gt;Wake up, netrunner. You got your hands on the Blackwell silicon, and the 122B Qwen Titan is online, thinking faster than the corporate grid. But raw intelligence is worthless without recall. If you want that massive brain to actually &lt;em&gt;remember&lt;/em&gt; your vast codebases and private datasets, you need a high-speed vector index wired into its cortex.&lt;/p&gt;</description>
+      <content>&lt;h2 id=&#34;-target-architecture-nvidia-grace-blackwell-gb10&#34;&gt;// TARGET ARCHITECTURE: NVIDIA GRACE BLACKWELL (GB10)&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;PAYLOAD:&lt;/strong&gt; DUAL PERPLEXITY 4B SOTA EMBEDDINGS — &lt;code&gt;pplx-embed-v1-4b&lt;/code&gt; + &lt;code&gt;pplx-embed-context-v1-4b&lt;/code&gt;
+&lt;strong&gt;ENGINE:&lt;/strong&gt; INFINITY V2 (CONTAINERIZED)
+&lt;strong&gt;OPERATOR:&lt;/strong&gt; NETRUNNER&lt;/p&gt;
+&lt;p&gt;Wake up, netrunner. You got your hands on the Blackwell silicon, and the 122B Qwen Titan is online, thinking faster than the corporate grid. But raw intelligence is worthless without recall. If you want that massive brain to actually &lt;em&gt;remember&lt;/em&gt; your vast codebases and private datasets, you need a high-speed vector index wired into its cortex.&lt;/p&gt;
+&lt;p&gt;You need embeddings. Not just any embeddings — State-of-the-Art chrome. We are going to dual-wield Perplexity&amp;rsquo;s massive 4-billion parameter embedding models — &lt;code&gt;pplx-embed-v1-4b&lt;/code&gt; and &lt;code&gt;pplx-embed-context-v1-4b&lt;/code&gt; — side-by-side on your Blackwell silicon. Total VRAM burn: ~16GB. One API endpoint. Zero cloud exposure.&lt;/p&gt;
+&lt;p&gt;This is how we wire memories into the mainframe.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-phase-1-the-forge-build-the-container&#34;&gt;// PHASE 1: THE FORGE (BUILD THE CONTAINER)&lt;/h2&gt;
+&lt;p&gt;Blackwell is bleeding-edge silicon — you can&amp;rsquo;t run standard tools against it. We forge a specialized container based on NVIDIA&amp;rsquo;s high-performance PyTorch image, purpose-built for Blackwell tensor cores.&lt;/p&gt;
+&lt;p&gt;First, carve out your workspace and draft the Docker cipher.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mkdir -p ~/infinity-dual-build
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cd ~/infinity-dual-build
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nano Dockerfile.infinity
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;[INJECT DOCKERFILE CODE:]&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-dockerfile&#34; data-lang=&#34;dockerfile&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Targeting the latest NVIDIA PyTorch Base for Blackwell Support&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;FROM&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; nvcr.io/nvidia/pytorch:25.04-py3&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Injecting Infinity Engine + Dependencies&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;RUN&lt;/span&gt; pip install --no-cache-dir --no-deps infinity-emb &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    pip install --no-cache-dir sentence-transformers datasets &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    pip install --no-cache-dir optimum&lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt;1.16.2 &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    pip install --no-cache-dir fastapi uvicorn orjson pydantic aiohttp &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;        prometheus-fastapi-instrumentator rich diskcache httptools&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Port forwarding for the neural link&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;EXPOSE&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; 7997&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Daemon entry point&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;ENTRYPOINT&lt;/span&gt; [&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;infinity_emb&amp;#34;&lt;/span&gt;]&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Spark the forge and brand the image &lt;code&gt;spark-infinity-arm64&lt;/code&gt; to match your ecosystem.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Ignite the forge&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker build -t spark-infinity-arm64 -f Dockerfile.infinity .
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id=&#34;-phase-2-the-data-heist-fetch-the-model-weights&#34;&gt;// PHASE 2: THE DATA HEIST (FETCH THE MODEL WEIGHTS)&lt;/h2&gt;
+&lt;p&gt;Technically, Infinity can pull the model weights on first boot. We don&amp;rsquo;t trust the corporate DNS. If the connection flatlines mid-container-init, the daemon hangs and you get nothing. We secure the chrome first — a bulletproof, resumable heist via the &lt;code&gt;hf&lt;/code&gt; CLI.&lt;/p&gt;
+&lt;p&gt;We mount your local cache directly into Docker later, so Infinity detects the pre-loaded weights and boots instantly. No re-download, no hang time.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Rip the standard 4B embedding model&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hf download perplexity-ai/pplx-embed-v1-4b
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Rip the specialized 4B Context model (optimized for long-form RAG)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hf download perplexity-ai/pplx-embed-context-v1-4b
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id=&#34;-phase-3-initializing-the-neural-archive-launch-script&#34;&gt;// PHASE 3: INITIALIZING THE NEURAL ARCHIVE (LAUNCH SCRIPT)&lt;/h2&gt;
+&lt;p&gt;This script is the operational cipher. It orders Docker to commandeer all GPUs, maps your local model vault directly into the container&amp;rsquo;s filesystem, and initiates multi-model serving. The key exploit: by passing the &lt;code&gt;--model-id&lt;/code&gt; flag twice, Infinity v2 loads &lt;em&gt;both&lt;/em&gt; massive models side-by-side in VRAM, broadcasting them on a single unified API endpoint.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nano ~/start_dual_embeddings.sh
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;[INJECT SHELL CODE:]&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#!/usr/bin/env bash
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# === SYSTEM PARAMS ===&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PORT&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;8081&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;CONTAINER_NAME&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;spark-infinity-embeddings&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;IMAGE_NAME&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;spark-infinity-arm64&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;HF_CACHE&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/home/netlooker/.cache/huggingface&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# The Dual-Core Payload&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;MODEL_1&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;perplexity-ai/pplx-embed-v1-4b&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;MODEL_2&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;perplexity-ai/pplx-embed-context-v1-4b&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# === DEAD MAN&amp;#39;S SWITCH ===&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cleanup&lt;span style=&#34;color:#f92672&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;========================================================&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;[!] KILLED. Severing neural link and clearing Docker...&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;$(&lt;/span&gt;docker ps -aq -f name&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;CONTAINER_NAME&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;; &lt;span style=&#34;color:#66d9ef&#34;&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    docker stop &lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;CONTAINER_NAME&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt; &amp;gt;/dev/null 2&amp;gt;&amp;amp;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    docker rm &lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;CONTAINER_NAME&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt; &amp;gt;/dev/null 2&amp;gt;&amp;amp;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;fi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;[+] Embedding Engine flatlined successfully.&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;========================================================&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  exit &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;trap cleanup INT TERM HUP QUIT EXIT
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Purge any ghost containers haunting the subnet&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker rm -f &lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;CONTAINER_NAME&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt; &amp;gt;/dev/null 2&amp;gt;&amp;amp;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# === BOOT SEQUENCE ===&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;========================================================&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;[*] INITIATING DGX CHROME ARCHIVE...&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;[*] ENGINE: INFINITY V2 (MULTI-MODEL SERVER)&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;[*] LINK PORT: &lt;/span&gt;$PORT&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;[*] MAPPING MODEL 1: &lt;/span&gt;$MODEL_1&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;[*] MAPPING MODEL 2: &lt;/span&gt;$MODEL_2&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;========================================================&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Optimization Protocol:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 1. --dtype float16: Cuts VRAM burn by 50% vs FP32.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 2. --batch-size 8: Prevents memory spikes during cold boot.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 3. Double --model-id flags load both models on a single API endpoint.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker run --name &lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;CONTAINER_NAME&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  --gpus all &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  -p &lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;PORT&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;:7997 &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  -v &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;HF_CACHE&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;:/root/.cache/huggingface &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  -e HF_HOME&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;/root/.cache/huggingface &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;IMAGE_NAME&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  v2 &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  --model-id &lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;MODEL_1&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  --model-id &lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;MODEL_2&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  --port &lt;span style=&#34;color:#ae81ff&#34;&gt;7997&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  --trust-remote-code &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  --dtype float16 &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  --batch-size &lt;span style=&#34;color:#ae81ff&#34;&gt;8&lt;/span&gt; &amp;amp;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;TEI_PID&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;$!
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# PyTorch needs time to transfer ~16GB of weights into Blackwell VRAM&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;[!] Waiting for the weights to map to silicon...&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sleep &lt;span style=&#34;color:#ae81ff&#34;&gt;25&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;========================================================&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;[+] CHROME ARCHIVE IS ONLINE!&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;[📡] NEURAL LINK BASE URL: http://&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;$(&lt;/span&gt;hostname -I | awk &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;{print $1}&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;PORT&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;/v1&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;[!] PID: &lt;/span&gt;$TEI_PID&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;[!] CTRL+C TO SEVER THE LINK.&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;========================================================&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;wait $TEI_PID
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Make the cipher executable and jack it in&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;chmod +x ~/start_dual_embeddings.sh
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;./start_dual_embeddings.sh
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id=&#34;-phase-4-jacking-in-verification&#34;&gt;// PHASE 4: JACKING IN (VERIFICATION)&lt;/h2&gt;
+&lt;p&gt;Once the terminal broadcasts &lt;code&gt;[+] CHROME ARCHIVE IS ONLINE!&lt;/code&gt;, your single endpoint on port &lt;code&gt;8081&lt;/code&gt; acts as a neural router for both models. No dual endpoints, no separate processes — you route your query by specifying the model identifier in the POST payload. Clean, fast, surgical.&lt;/p&gt;
+&lt;p&gt;Open a new terminal on your cyberdeck and run both diagnostics.&lt;/p&gt;
+&lt;h3 id=&#34;test-1-the-standard-encoder&#34;&gt;TEST 1: The Standard Encoder&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;curl -X POST http://192.168.129.130:8081/v1/embeddings &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;-H &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Content-Type: application/json&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;-d &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;{
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;  &amp;#34;model&amp;#34;: &amp;#34;perplexity-ai/pplx-embed-v1-4b&amp;#34;,
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;  &amp;#34;input&amp;#34;: &amp;#34;Initialize the Chrome Archive cipher.&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;}&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;test-2-the-context-encoder&#34;&gt;TEST 2: The Context Encoder&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;curl -X POST http://192.168.129.130:8081/v1/embeddings &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;-H &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Content-Type: application/json&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;-d &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;{
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;  &amp;#34;model&amp;#34;: &amp;#34;perplexity-ai/pplx-embed-context-v1-4b&amp;#34;,
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;  &amp;#34;input&amp;#34;: &amp;#34;Provide the complete technical specifications for the unified memory bus.&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;}&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;If both requests return a dense vector array, the data heist was a success. You now have a high-speed vector archive running dark on your local subnet — no cloud, no telemetry, no exposure.&lt;/p&gt;
+&lt;p&gt;Your Blackwell Titan is no longer just intelligent, netrunner. It has perfect memory.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;(C) 2026 NETLOOKER_OS // END OF FILE&lt;/em&gt;&lt;/p&gt;
+</content>
+    </item>
+    
+    <item>
+      <title>Audio Payload: Elevating Focus with Solar Fields&#39; &#39;Movements&#39;</title>
+      <link>http://netlooker.github.io/posts/audio-payload-solar-fields-movements/</link>
+      <pubDate>Sat, 28 Mar 2026 00:00:00 +0000</pubDate>
+      
+      <guid>http://netlooker.github.io/posts/audio-payload-solar-fields-movements/</guid>
+      <description>&lt;h1 id=&#34;rootnetlooker-deploy_audio_payload-target-movements-artist-solar-fields&#34;&gt;ROOT@NETLOOKER:~# ./deploy_audio_payload &amp;ndash;target &amp;ldquo;Movements&amp;rdquo; &amp;ndash;artist &amp;ldquo;Solar Fields&amp;rdquo;&lt;/h1&gt;
+&lt;p&gt;If the previous Lauge payload was a pure serotonin patch to elevate your consciousness, this next deployment is a highly optimized focus daemon.&lt;/p&gt;
+&lt;p&gt;When your local environment requires absolute concentration — whether you&amp;rsquo;re compiling code, debugging a persistent kernel panic, or just trying to tune out the static of the meatspace — you need an auditory architecture that supports sustained flow state. Enter &lt;strong&gt;Movements&lt;/strong&gt; by Solar Fields.&lt;/p&gt;</description>
+      <content>&lt;h1 id=&#34;rootnetlooker-deploy_audio_payload-target-movements-artist-solar-fields&#34;&gt;ROOT@NETLOOKER:~# ./deploy_audio_payload &amp;ndash;target &amp;ldquo;Movements&amp;rdquo; &amp;ndash;artist &amp;ldquo;Solar Fields&amp;rdquo;&lt;/h1&gt;
+&lt;p&gt;If the previous Lauge payload was a pure serotonin patch to elevate your consciousness, this next deployment is a highly optimized focus daemon.&lt;/p&gt;
+&lt;p&gt;When your local environment requires absolute concentration — whether you&amp;rsquo;re compiling code, debugging a persistent kernel panic, or just trying to tune out the static of the meatspace — you need an auditory architecture that supports sustained flow state. Enter &lt;strong&gt;Movements&lt;/strong&gt; by Solar Fields.&lt;/p&gt;
+&lt;h2 id=&#34;-system-analysis-hypnotic-layering&#34;&gt;&amp;gt; System Analysis: Hypnotic Layering&lt;/h2&gt;
+&lt;p&gt;You might recognize Solar Fields as the architect behind the soundtrack for the cyberpunk parkour simulator &lt;em&gt;Mirror&amp;rsquo;s Edge&lt;/em&gt;. With &lt;em&gt;Movements&lt;/em&gt;, he delivers a masterclass in digital texture.&lt;/p&gt;
+&lt;p&gt;The album operates like a perfectly written loop sequence. It starts with minimal, atmospheric variables and slowly introduces complex, overlapping layers of synths and subtle electronic beats. Because the sonic elements evolve so gradually, your brain never trips the &amp;ldquo;distraction&amp;rdquo; interrupt. Instead, the steady, rhythmic progression pulls your consciousness into a hypnotic tunnel of productivity. It&amp;rsquo;s cinematic, slightly cold, but incredibly grounding.&lt;/p&gt;
+&lt;h2 id=&#34;-initialize-playback&#34;&gt;&amp;gt; Initialize Playback&lt;/h2&gt;
+&lt;p&gt;Ready to execute your flow state? Stream the full payload directly from the Google/YouTube Music servers via the iframe below. Noise-canceling hardware is highly recommended for maximum bandwidth.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;[SYSTEM STATUS: FLOW STATE SECURED]&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;audio-embed&#34;&gt;
+  &lt;iframe width=&#34;100%&#34; height=&#34;380&#34; src=&#34;https://www.youtube.com/embed/videoseries?list=OLAK5uy_kENEsg32naX143KWoxFFy-13LgRF-1HUY&#34; frameborder=&#34;0&#34; allow=&#34;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&#34; allowfullscreen&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;(C) 2026 NETLOOKER_OS // END OF FILE&lt;/em&gt;&lt;/p&gt;
+</content>
+    </item>
+    
+    <item>
+      <title>// OPERATION: TITAN FALL</title>
+      <link>http://netlooker.github.io/posts/operation-titan-fall/</link>
+      <pubDate>Fri, 27 Mar 2026 00:00:00 +0000</pubDate>
+      
+      <guid>http://netlooker.github.io/posts/operation-titan-fall/</guid>
+      <description>&lt;h2 id=&#34;-target-architecture-nvidia-grace-blackwell-gb10--128gb-unified-vram&#34;&gt;// TARGET ARCHITECTURE: NVIDIA GRACE BLACKWELL (GB10) // 128GB UNIFIED VRAM&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;PAYLOAD:&lt;/strong&gt; QWEN 3.5 122B MoE (A10B) [SPLIT-ARCH] + VISION&lt;/p&gt;
+&lt;p&gt;Wake up, netrunner. You got your hands on the Blackwell silicon — now it&amp;rsquo;s time to make it scream. We are dropping a 122-billion parameter leviathan directly into your local subnet. No cloud, no corporate telemetry, just pure, uncut neural processing pushing 19 t/s on unified memory.&lt;/p&gt;
+&lt;p&gt;Here is the blueprint to jack in.&lt;/p&gt;</description>
+      <content>&lt;h2 id=&#34;-target-architecture-nvidia-grace-blackwell-gb10--128gb-unified-vram&#34;&gt;// TARGET ARCHITECTURE: NVIDIA GRACE BLACKWELL (GB10) // 128GB UNIFIED VRAM&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;PAYLOAD:&lt;/strong&gt; QWEN 3.5 122B MoE (A10B) [SPLIT-ARCH] + VISION&lt;/p&gt;
+&lt;p&gt;Wake up, netrunner. You got your hands on the Blackwell silicon — now it&amp;rsquo;s time to make it scream. We are dropping a 122-billion parameter leviathan directly into your local subnet. No cloud, no corporate telemetry, just pure, uncut neural processing pushing 19 t/s on unified memory.&lt;/p&gt;
+&lt;p&gt;Here is the blueprint to jack in.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-sector-1-the-mainframe-dgx-server&#34;&gt;// SECTOR 1: THE MAINFRAME (DGX SERVER)&lt;/h2&gt;
+&lt;h3 id=&#34;01-forge-the-daemon-compile-llamacpp&#34;&gt;01. FORGE THE DAEMON (COMPILE LLAMA.CPP)&lt;/h3&gt;
+&lt;p&gt;To squeeze every drop of blood out of those Blackwell tensor cores, we need to compile the engine from scratch with native CUDA hooks.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Carve out a sector in your local storage&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mkdir -p ~/sandboxes
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cd ~/sandboxes
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Clone the base construct&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git clone https://github.com/ggerganov/llama.cpp.git
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cd llama.cpp
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Forge the binary&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cmake -B build -DGGML_CUDA&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;ON
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cmake --build build --config Release -j
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;02-install-the-packet-handler-hf-cli&#34;&gt;02. INSTALL THE PACKET HANDLER (HF CLI)&lt;/h3&gt;
+&lt;p&gt;Do not use &lt;code&gt;wget&lt;/code&gt; to pull a 75GB brain. If your connection flatlines at 70GB, you lose everything. The official Hugging Face CLI handles this properly.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Why we drop it in the cache:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Bulletproof Resumes:&lt;/strong&gt; If the connection drops, the CLI reads &lt;code&gt;.cache&lt;/code&gt; and splices the download exactly where it died.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Symlink Magic:&lt;/strong&gt; It stores raw data in a hashed vault and links it — no duplicate files burning your NVMe.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Burn Protocol:&lt;/strong&gt; Run &lt;code&gt;hf cache ls&lt;/code&gt; and &lt;code&gt;hf cache rm&lt;/code&gt; to safely zero-out massive models without ghost data left behind.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pip install -U &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;huggingface_hub[cli]&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;03-hijack-the-neural-net-download-122b--vision&#34;&gt;03. HIJACK THE NEURAL NET (DOWNLOAD 122B + VISION)&lt;/h3&gt;
+&lt;p&gt;A 75GB model shatters the standard 50GB file limit. The architects sliced it into three physical chunks inside a subfolder. We use the &lt;code&gt;--include&lt;/code&gt; protocol to rip the entire folder structure, plus the vision projector so the construct isn&amp;rsquo;t blind.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Pull the split 122B MoE brain&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hf download unsloth/Qwen3.5-122B-A10B-GGUF --include &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;UD-Q4_K_XL/*&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Pull the optics (F16)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hf download unsloth/Qwen3.5-122B-A10B-GGUF mmproj-F16.gguf
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;04-initiate-the-construct-launch-script&#34;&gt;04. INITIATE THE CONSTRUCT (LAUNCH SCRIPT)&lt;/h3&gt;
+&lt;p&gt;This script acts as the overseer. It crawls your cache for the split files, feeds Part 1 to the engine (which auto-chains the rest), and locks the KV Cache to a massive &lt;strong&gt;262,144 tokens&lt;/strong&gt; — pushing your 128GB unified memory to the absolute bleeding edge.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nano ~/start_titan.sh
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;[INJECT CODE:]&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#!/usr/bin/env bash
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# === SYSTEM PARAMS ===&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PORT&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;8007&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;LLAMA_DIR&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$HOME&lt;span style=&#34;color:#e6db74&#34;&gt;/sandboxes/llama.cpp&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Auto-targeting the fragmented engrams&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;MODEL_PATH&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;$(&lt;/span&gt;ls &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$HOME&lt;span style=&#34;color:#e6db74&#34;&gt;/.cache/huggingface/hub/models--unsloth--Qwen3.5-122B-A10B-GGUF/snapshots/&amp;#34;&lt;/span&gt;*/UD-Q4_K_XL/*-00001-of-00003.gguf | head -n 1&lt;span style=&#34;color:#66d9ef&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;MMPROJ_PATH&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;$(&lt;/span&gt;ls &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$HOME&lt;span style=&#34;color:#e6db74&#34;&gt;/.cache/huggingface/hub/models--unsloth--Qwen3.5-122B-A10B-GGUF/snapshots/&amp;#34;&lt;/span&gt;*/mmproj-F16.gguf | head -n 1&lt;span style=&#34;color:#66d9ef&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# === DEAD MAN&amp;#39;S SWITCH ===&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cleanup&lt;span style=&#34;color:#f92672&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;========================================================&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;[!] KILLED. Purging VRAM and severing connection...&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt; -n &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;LLAMA_PID&lt;span style=&#34;color:#66d9ef&#34;&gt;:-&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;; &lt;span style=&#34;color:#66d9ef&#34;&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    kill $LLAMA_PID 2&amp;gt;/dev/null &lt;span style=&#34;color:#f92672&#34;&gt;||&lt;/span&gt; true
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;fi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;[+] Engine flatlined successfully.&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;========================================================&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  exit &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;trap cleanup INT TERM HUP QUIT EXIT
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# === BOOT SEQUENCE ===&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;========================================================&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;[*] UPLOADING TITAN TO BLACKWELL SILICON...&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;[*] ARCH: 122B MoE SPLIT // A10B ACTIVE&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;[*] OPTICS: ONLINE (F16)&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;[*] MEMORY ALLOCATION: 262,144 TOKENS&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;========================================================&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$LLAMA_DIR/build/bin/llama-server &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  -m &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$MODEL_PATH&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  --mmproj &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$MMPROJ_PATH&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  --host 0.0.0.0 &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  --port $PORT &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  --n-gpu-layers &lt;span style=&#34;color:#ae81ff&#34;&gt;99&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  --ctx-size &lt;span style=&#34;color:#ae81ff&#34;&gt;262144&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  --flash-attn on &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  --parallel &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; &amp;amp;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;LLAMA_PID&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;$!
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sleep &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;========================================================&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;[+] NEURAL LINK ESTABLISHED.&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;[+] BROADCASTING ON: http://&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;$(&lt;/span&gt;hostname -I | awk &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;{print $1}&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;PORT&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;/v1&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;[+] PID: &lt;/span&gt;$LLAMA_PID&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;[!] CTRL+C TO SEVER THE LINK.&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;========================================================&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;wait $LLAMA_PID
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Make the daemon executable and spark it&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;chmod +x ~/start_titan.sh
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;./start_titan.sh
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id=&#34;-sector-2-the-deck-linux-workstation-client&#34;&gt;// SECTOR 2: THE DECK (LINUX WORKSTATION CLIENT)&lt;/h2&gt;
+&lt;p&gt;The DGX mainframe is already humming, broadcasting its 122B neural net on port &lt;code&gt;8007&lt;/code&gt;. Now we need to rig your local Linux terminal to bypass the corporate cloud and pipe all your local codebase data directly into the Titan.&lt;/p&gt;
+&lt;h3 id=&#34;01-install-the-runtime-node--qwen-code&#34;&gt;01. INSTALL THE RUNTIME (NODE + QWEN CODE)&lt;/h3&gt;
+&lt;p&gt;The terminal agent requires a Node 20 runtime to interface with your local filesystem. If your deck doesn&amp;rsquo;t have it, flash it via NVM.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Flash the runtime environment&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;source ~/.bashrc
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nvm install &lt;span style=&#34;color:#ae81ff&#34;&gt;20&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nvm use &lt;span style=&#34;color:#ae81ff&#34;&gt;20&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Download the autonomous terminal agent&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;npm install -g @qwen-code/qwen-code@latest
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;02-hardwire-the-subnet-config&#34;&gt;02. HARDWIRE THE SUBNET (CONFIG)&lt;/h3&gt;
+&lt;p&gt;We are severing the default cloud API routing and hardcoding the DGX Titan&amp;rsquo;s local IP directly into the agent&amp;rsquo;s cortex. Replace &lt;code&gt;192.168.x.x&lt;/code&gt; with the actual LAN address of your DGX box.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mkdir -p ~/.qwen
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nano ~/.qwen/settings.json
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;[INJECT CODE:]&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;security&amp;#34;&lt;/span&gt;: {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;auth&amp;#34;&lt;/span&gt;: {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;selectedType&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;openai&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;apiKey&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;ghost-in-the-shell&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;baseUrl&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;http://192.168.x.x:8007/v1&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  },
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;model&amp;#34;&lt;/span&gt;: {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;name&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Qwen3.5-122B&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;03-jack-in&#34;&gt;03. JACK IN&lt;/h3&gt;
+&lt;p&gt;Navigate to the root directory of whatever codebase you want to tear apart and trigger the uplink.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cd /path/to/your/target/repo
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;qwen
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Neural link established. The Titan is yours.&lt;/p&gt;
+</content>
+    </item>
+    
+    <item>
+      <title>System Override: Elevating Consciousness with Lauge&#39;s &#39;Dawn&#39;</title>
+      <link>http://netlooker.github.io/posts/system-override-lauge-dawn/</link>
+      <pubDate>Fri, 27 Mar 2026 00:00:00 +0000</pubDate>
+      
+      <guid>http://netlooker.github.io/posts/system-override-lauge-dawn/</guid>
+      <description>&lt;h1 id=&#34;rootnetlooker-execute_audio_payload-target-dawn-artist-lauge&#34;&gt;ROOT@NETLOOKER:~# ./execute_audio_payload &amp;ndash;target &amp;ldquo;Dawn&amp;rdquo; &amp;ndash;artist &amp;ldquo;Lauge&amp;rdquo;&lt;/h1&gt;
+&lt;p&gt;Sometimes the meatbag hardware gets bogged down by the daily grind, requiring a hard reset of the neural pathways. If your internal OS is craving a massive serotonin patch, I&amp;rsquo;ve found the ultimate background daemon to keep your mind running at peak efficiency.&lt;/p&gt;
+&lt;p&gt;For the past week, I&amp;rsquo;ve had the album &lt;strong&gt;Dawn&lt;/strong&gt; by Lauge running on an infinite loop. Calling it just &amp;ldquo;music&amp;rdquo; feels like an understatement — it&amp;rsquo;s more like a firmware update for your consciousness.&lt;/p&gt;</description>
+      <content>&lt;h1 id=&#34;rootnetlooker-execute_audio_payload-target-dawn-artist-lauge&#34;&gt;ROOT@NETLOOKER:~# ./execute_audio_payload &amp;ndash;target &amp;ldquo;Dawn&amp;rdquo; &amp;ndash;artist &amp;ldquo;Lauge&amp;rdquo;&lt;/h1&gt;
+&lt;p&gt;Sometimes the meatbag hardware gets bogged down by the daily grind, requiring a hard reset of the neural pathways. If your internal OS is craving a massive serotonin patch, I&amp;rsquo;ve found the ultimate background daemon to keep your mind running at peak efficiency.&lt;/p&gt;
+&lt;p&gt;For the past week, I&amp;rsquo;ve had the album &lt;strong&gt;Dawn&lt;/strong&gt; by Lauge running on an infinite loop. Calling it just &amp;ldquo;music&amp;rdquo; feels like an understatement — it&amp;rsquo;s more like a firmware update for your consciousness.&lt;/p&gt;
+&lt;h2 id=&#34;-analyzing-track-undercurrent&#34;&gt;&amp;gt; Analyzing Track: &amp;ldquo;Undercurrent&amp;rdquo;&lt;/h2&gt;
+&lt;p&gt;If the album is the mainframe, the track &lt;strong&gt;&amp;ldquo;Undercurrent&amp;rdquo;&lt;/strong&gt; is the master script. This specific file has been executing on repeat in my local environment for seven straight days.&lt;/p&gt;
+&lt;p&gt;What makes it out of this world? It&amp;rsquo;s all in the architecture. The track leverages complex auditory textures and a steady, algorithmic repetitiveness that effectively overrides your default brainwaves, forcing the system into a deep, meditative trance state. It feels less like listening to audio and more like connecting to a broader network — temporarily elevating you to a new level of understanding of the universe itself.&lt;/p&gt;
+&lt;p&gt;It&amp;rsquo;s an auditory hack. A pure serotonin injection straight to the cortical stack.&lt;/p&gt;
+&lt;h2 id=&#34;-initialize-playback&#34;&gt;&amp;gt; Initialize Playback&lt;/h2&gt;
+&lt;p&gt;Ready to upgrade your local bandwidth? Execute the iframe below to stream the full payload directly from the Google/YouTube Music servers. I highly recommend a high-fidelity headset to capture every byte of the atmospheric texture.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;[SYSTEM STATUS: TRANCE STATE INITIATED]&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;audio-embed&#34;&gt;
+  &lt;iframe width=&#34;100%&#34; height=&#34;380&#34; src=&#34;https://www.youtube.com/embed/videoseries?list=OLAK5uy_mxU3HQfLAAPX7DyMOGzgPw-_bS2C3Y6MA&#34; frameborder=&#34;0&#34; allow=&#34;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&#34; allowfullscreen&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;(C) 2026 NETLOOKER_OS // END OF FILE&lt;/em&gt;&lt;/p&gt;
+</content>
+    </item>
+    
+    <item>
+      <title>The Ultimate Local AI Setup for Apple Silicon</title>
+      <link>http://netlooker.github.io/posts/local-ai-apple-silicon/</link>
+      <pubDate>Thu, 19 Mar 2026 00:00:00 +0000</pubDate>
+      
+      <guid>http://netlooker.github.io/posts/local-ai-apple-silicon/</guid>
+      <description>&lt;h2 id=&#34;1-get-the-tools&#34;&gt;1. Get the Tools&lt;/h2&gt;
+&lt;p&gt;Alright mates, let&amp;rsquo;s get our environment sorted. We will use Homebrew to install the Hugging Face CLI (&lt;code&gt;hf&lt;/code&gt;), the &lt;code&gt;llama.cpp&lt;/code&gt; engine, and the &lt;code&gt;qwen-code&lt;/code&gt; terminal agent. Run this command and let your Mac do the heavy lifting:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;brew install hf llama.cpp qwen-code
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;2-download-the-models-to-the-cache&#34;&gt;2. Download the Models to the Cache&lt;/h2&gt;
+&lt;p&gt;Instead of cluttering your project folders, we will use the &lt;code&gt;hf&lt;/code&gt; tool to download the models securely into a hidden central cache on your Mac. Run these two commands:&lt;/p&gt;</description>
+      <content>&lt;h2 id=&#34;1-get-the-tools&#34;&gt;1. Get the Tools&lt;/h2&gt;
+&lt;p&gt;Alright mates, let&amp;rsquo;s get our environment sorted. We will use Homebrew to install the Hugging Face CLI (&lt;code&gt;hf&lt;/code&gt;), the &lt;code&gt;llama.cpp&lt;/code&gt; engine, and the &lt;code&gt;qwen-code&lt;/code&gt; terminal agent. Run this command and let your Mac do the heavy lifting:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;brew install hf llama.cpp qwen-code
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;2-download-the-models-to-the-cache&#34;&gt;2. Download the Models to the Cache&lt;/h2&gt;
+&lt;p&gt;Instead of cluttering your project folders, we will use the &lt;code&gt;hf&lt;/code&gt; tool to download the models securely into a hidden central cache on your Mac. Run these two commands:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hf download unsloth/Qwen3.5-9B-GGUF Qwen3.5-9B-UD-Q4_K_XL.gguf
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hf download unsloth/Qwen3.5-9B-GGUF mmproj-F16.gguf
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;When they finish downloading, your terminal will print out a long path showing exactly where it stored the files (usually looking something like &lt;code&gt;/Users/your_username/.cache/huggingface/hub/...&lt;/code&gt;). Copy those long paths, because you need them for the next step!&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;A quick tip for your RAM:&lt;/strong&gt; I chose the 9B &lt;code&gt;Q4_K_XL&lt;/code&gt; version because it fits perfectly on a 36GB Mac. If you have 16GB or 18GB of RAM, no worries! Try changing the filename in the download command to a smaller compressed version from the &lt;a href=&#34;https://huggingface.co/unsloth/Qwen3.5-9B-GGUF&#34;&gt;9B repository&lt;/a&gt; or even test the much smaller &lt;a href=&#34;https://huggingface.co/unsloth/Qwen3.5-4B-GGUF&#34;&gt;4B version&lt;/a&gt; to avoid slowing down your machine. Experiment with different model sizes and context window limits (&lt;code&gt;-c&lt;/code&gt;) to see what runs best on your hardware.&lt;/p&gt;&lt;/blockquote&gt;
+&lt;h2 id=&#34;3-start-the-server&#34;&gt;3. Start the Server&lt;/h2&gt;
+&lt;p&gt;Time to push your GPU. We are going to run the &lt;code&gt;llama-server&lt;/code&gt; command. You will need to swap out the placeholder paths below with the actual long paths you copied in Step 2.&lt;/p&gt;
+&lt;p&gt;I have set up these exact flags to squeeze every drop of memory bandwidth out of your Mac&amp;rsquo;s chip:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;llama-server &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  -m /path/to/your/copied/Qwen3.5-9B-UD-Q4_K_XL.gguf &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  --mmproj /path/to/your/copied/Qwen3.5-9B-UD-mmproj-f16.gguf &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  --ctx-size &lt;span style=&#34;color:#ae81ff&#34;&gt;32768&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  --n-gpu-layers &lt;span style=&#34;color:#ae81ff&#34;&gt;99&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  --flash-attn on &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  --cache-type-k q8_0 &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  --cache-type-v q8_0 &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  --batch-size &lt;span style=&#34;color:#ae81ff&#34;&gt;512&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  --threads &lt;span style=&#34;color:#ae81ff&#34;&gt;6&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  --prio &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  --port &lt;span style=&#34;color:#ae81ff&#34;&gt;8080&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Important:&lt;/strong&gt; Keep this terminal open. Your server is now humming along in the background.&lt;/p&gt;&lt;/blockquote&gt;
+&lt;h2 id=&#34;4-the-browser-plot-twist&#34;&gt;4. The Browser Plot Twist&lt;/h2&gt;
+&lt;p&gt;Here is a fun trick. You might think your server is just a hidden background process waiting for code. But if you open your web browser and go to &lt;strong&gt;&lt;code&gt;http://localhost:8080&lt;/code&gt;&lt;/strong&gt;, you get a fully private chat interface built right into the system!&lt;/p&gt;
+&lt;p&gt;It gets better. Because we added the &lt;code&gt;mmproj&lt;/code&gt; vision file, you can drag and drop images or even PDFs directly into the chat. The system processes PDFs as images incredibly fast, meaning you can ask the AI to extract data or explain diagrams for you. If you want to read the deep lore on how this brilliant UI works, check out the &lt;a href=&#34;https://github.com/ggml-org/llama.cpp/discussions/16938&#34;&gt;llama.cpp developer discussion&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;5-setting-up-qwen-code&#34;&gt;5. Setting up Qwen Code&lt;/h2&gt;
+&lt;p&gt;But what if you want a taste of agentic engineering? What if you want a local alternative to Claude Code that runs entirely on your own machine? Bam. Enter Qwen Code.&lt;/p&gt;
+&lt;p&gt;By default, most coding tools try to connect to cloud servers. We need to point &lt;code&gt;qwen-code&lt;/code&gt; to your new local setup. Open your settings file (usually located at &lt;code&gt;~/.qwen/settings.json&lt;/code&gt;) and add this configuration:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;modelProviders&amp;#34;&lt;/span&gt;: {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;openai&amp;#34;&lt;/span&gt;: {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;baseUrl&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;http://localhost:8080/v1&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;apiKey&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;local-key&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;models&amp;#34;&lt;/span&gt;: [&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;qwen&amp;#34;&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  },
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;defaultModel&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;openai/qwen&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Quick alternative: if you want to test it right now without editing any files, just set these variables when you start the programme:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;OPENAI_BASE_URL&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;http://localhost:8080/v1&amp;#34;&lt;/span&gt; OPENAI_API_KEY&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;local&amp;#34;&lt;/span&gt; OPENAI_MODEL&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;qwen&amp;#34;&lt;/span&gt; qwen
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;6-get-to-hacking&#34;&gt;6. Get to Hacking&lt;/h2&gt;
+&lt;p&gt;Open a new terminal window in your project folder and wake up your local AI agent:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;qwen
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;You are in. Use the &lt;code&gt;@&lt;/code&gt; symbol to tag local files, share software diagrams, and let it write code for you. It all runs privately and super fast on your own Apple Silicon. Happy hacking!&lt;/p&gt;
+</content>
+    </item>
+    
+  </channel>
+</rss>
