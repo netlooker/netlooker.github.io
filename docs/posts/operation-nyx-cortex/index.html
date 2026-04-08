@@ -171,29 +171,31 @@
 <hr>
 <h2 id="-phase-0-prime-the-forge-install-nix">// PHASE 0: PRIME THE FORGE (INSTALL NIX)</h2>
 <p>Before anything else, you need one tool: <strong>Nix</strong>. Think of it as a package manager with a superpower — it pins every dependency to a cryptographic hash so the build is identical on every machine, every time. No &ldquo;works on my machine.&rdquo; No version drift.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -sSfL https://artifacts.nixos.org/nix-installer | sh -s -- install
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -sSfL https://artifacts.nixos.org/nix-installer | sh -s -- install
 </span></span></code></pre></div><p>Nix is now on your Mac.</p>
 <blockquote>
 <p><strong>What Nix does in this project — the short version:</strong></p>
 <ol>
 <li>On your Mac: drops you into a dev shell with every tool pinned (<code>just</code>, <code>node</code>, etc.)</li>
 <li>Inside the Docker build: compiles the entire container toolchain with every binary locked to a hash — automatically. You never touch it.</li>
-</ol></blockquote>
+</ol>
+</blockquote>
 <hr>
 <h2 id="-phase-1-the-clone-pull-the-blueprint">// PHASE 1: THE CLONE (PULL THE BLUEPRINT)</h2>
 <p>Pull the repo and jack into the Nix dev shell. Every tool you need is pinned — no manual installs, no version mismatch:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git clone https://github.com/netlooker/nyx.git
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git clone https://github.com/netlooker/nyx.git
 </span></span><span style="display:flex;"><span>cd nyx
 </span></span><span style="display:flex;"><span>nix develop
 </span></span></code></pre></div><p>You&rsquo;ll see:</p>
 <pre tabindex="0"><code>nyx dev shell (aarch64-darwin)
 </code></pre><p>You&rsquo;re in. Your terminal now carries <code>just</code> (the task runner), <code>node</code>, <code>python</code>, and <code>age</code>. Use <code>just</code> for everything from here.</p>
 <blockquote>
-<p><strong>Tip:</strong> Install <a href="https://direnv.net/">direnv</a> and run <code>direnv allow</code> once — the dev shell activates automatically every time you <code>cd</code> into the project.</p></blockquote>
+<p><strong>Tip:</strong> Install <a href="https://direnv.net/">direnv</a> and run <code>direnv allow</code> once — the dev shell activates automatically every time you <code>cd</code> into the project.</p>
+</blockquote>
 <hr>
 <h2 id="-phase-2-the-config-wire-the-neural-link">// PHASE 2: THE CONFIG (WIRE THE NEURAL LINK)</h2>
 <p>The agent is blind until you feed it credentials. The config is gitignored by design — your keys never leave your machine:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cp secrets/openclaw.json5.example secrets/openclaw.json5
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cp secrets/openclaw.json5.example secrets/openclaw.json5
 </span></span><span style="display:flex;"><span>$EDITOR secrets/openclaw.json5
 </span></span></code></pre></div><p><strong>[MINIMUM CONFIG — TELEGRAM UPLINK:]</strong></p>
 <p>Get a bot token from <a href="https://t.me/BotFather">@BotFather</a> on Telegram, then wire it in:</p>
@@ -227,7 +229,7 @@ agents: {
 </code></pre><hr>
 <h2 id="-phase-3-the-forge-bake-the-cortex">// PHASE 3: THE FORGE (BAKE THE CORTEX)</h2>
 <p>One command builds the entire stack:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>just build
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>just build
 </span></span></code></pre></div><p>Under the hood: a two-stage Docker build.</p>
 <ul>
 <li><strong>Stage 1 (automatic):</strong> A <code>nixos/nix</code> container spins up <em>inside</em> Docker and compiles the full toolchain — Node.js, Python, gcc, ripgrep, gh CLI — with every binary pinned to a cryptographic hash. Docker caches this layer and only reruns it when <code>flake.nix</code> or <code>flake.lock</code> change.</li>
@@ -236,7 +238,7 @@ agents: {
 <p>Updating OpenClaw or qwen-coder only triggers Stage 2. Fast.</p>
 <hr>
 <h2 id="-phase-4-boot-sequence-ignite-the-cortex">// PHASE 4: BOOT SEQUENCE (IGNITE THE CORTEX)</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>just up
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>just up
 </span></span><span style="display:flex;"><span>just logs
 </span></span></code></pre></div><p>Watch the cortex come online:</p>
 <pre tabindex="0"><code>[*] Config loaded from /config/openclaw.json5
@@ -273,12 +275,12 @@ agents: {
 <li>Send any message to your bot on Telegram — <code>/start</code> works</li>
 <li>Rip the pairing PIN from the logs:</li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker compose -f cortex/docker-compose.yml logs | grep -iE <span style="color:#e6db74">&#34;pairing|pin|code&#34;</span> | tail -5
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker compose -f cortex/docker-compose.yml logs | grep -iE <span style="color:#e6db74">&#34;pairing|pin|code&#34;</span> | tail -5
 </span></span></code></pre></div><ol start="3">
 <li>Authorize the uplink:</li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker compose -f cortex/docker-compose.yml exec cortex <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  openclaw pairing approve telegram YOUR-PIN-HERE
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker compose -f cortex/docker-compose.yml exec cortex <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  openclaw pairing approve telegram YOUR-PIN-HERE
 </span></span></code></pre></div><p>The bot responds. You&rsquo;re wired in. The cortex is yours.</p>
 <hr>
 <h2 id="-phase-6-persistence-your-data-survives-the-rebuild">// PHASE 6: PERSISTENCE (YOUR DATA SURVIVES THE REBUILD)</h2>
@@ -292,7 +294,7 @@ agents: {
 </code></pre><p>Nuke and rebuild anytime with <code>just rebuild</code>. The agent boots, reconnects to your data volume, and picks up exactly where it left off. No re-auth. No lost work.</p>
 <hr>
 <h2 id="-useful-commands">// USEFUL COMMANDS</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>just build     <span style="color:#75715e"># bake the full image (Nix base + openclaw)</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>just build     <span style="color:#75715e"># bake the full image (Nix base + openclaw)</span>
 </span></span><span style="display:flex;"><span>just up        <span style="color:#75715e"># start the cortex</span>
 </span></span><span style="display:flex;"><span>just down      <span style="color:#75715e"># shut it down</span>
 </span></span><span style="display:flex;"><span>just logs      <span style="color:#75715e"># tail live output</span>
@@ -308,7 +310,7 @@ agents: {
 [+] TOOLCHAIN: CRYPTOGRAPHICALLY PINNED
 [+] DATA EXFIL: ZERO
 </code></pre><p>Your agent is sovereign, netrunner. It lives on your silicon, thinks on your hardware, backs up to your disk. The corporate grid has no reach here.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>just up
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>just up
 </span></span></code></pre></div><hr>
 <p><em>(C) 2026 NETLOOKER_OS // END OF FILE</em></p>
 
@@ -356,19 +358,19 @@ agents: {
           RECENT_RECORDS
         </div>
         
+        <a href="http://netlooker.github.io/posts/inquisitors-harvest-fusion-chronicle/" class="related-post">
+          <div class="related-post-date">RECORD: 2026.04.01</div>
+          <div class="related-post-title">THE INQUISITOR&#39;S HARVEST: A FUSION CHRONICLE</div>
+        </a>
+        
+        <a href="http://netlooker.github.io/posts/operation-turboquant-dgx/" class="related-post">
+          <div class="related-post-date">RECORD: 2026.03.30</div>
+          <div class="related-post-title">// OPERATION: TURBOQUANT — DEPLOY VLLM ON DGX SPARK</div>
+        </a>
+        
         <a href="http://netlooker.github.io/posts/operation-cortex-upgrade/" class="related-post">
           <div class="related-post-date">RECORD: 2026.03.29</div>
           <div class="related-post-title">// OPERATION: CORTEX UPGRADE</div>
-        </a>
-        
-        <a href="http://netlooker.github.io/posts/operation-chrome-archive/" class="related-post">
-          <div class="related-post-date">RECORD: 2026.03.28</div>
-          <div class="related-post-title">// OPERATION: CHROME ARCHIVE</div>
-        </a>
-        
-        <a href="http://netlooker.github.io/posts/audio-payload-solar-fields-movements/" class="related-post">
-          <div class="related-post-date">RECORD: 2026.03.28</div>
-          <div class="related-post-title">AUDIO PAYLOAD: ELEVATING FOCUS WITH SOLAR FIELDS&#39; &#39;MOVEMENTS&#39;</div>
         </a>
         
       </div>

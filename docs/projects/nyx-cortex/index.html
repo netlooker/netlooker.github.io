@@ -185,7 +185,7 @@
 <p>Cortex is stable and in daily use. OpenClaw gateway runs on <code>:18789</code> with optional LAN-accessible dashboard. Telegram pairing is operational; WhatsApp uplink is supported. Local inference via any OpenAI-compatible endpoint (Ollama, llama.cpp) wires in through the config. Multi-architecture builds confirmed on <code>aarch64-darwin</code> (Apple Silicon) and <code>x86_64-linux</code>.</p>
 <p>What&rsquo;s next: tighter bubblewrap sandboxing on Linux for agent subprocesses, SBOM verification hooks in CI, and an optional WhatsApp-first config template.</p>
 <h2 id="-deploy">// DEPLOY</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Install Nix (once)</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Install Nix (once)</span>
 </span></span><span style="display:flex;"><span>curl -sSfL https://artifacts.nixos.org/nix-installer | sh -s -- install
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># Clone and enter dev shell</span>
@@ -201,7 +201,7 @@
 </span></span><span style="display:flex;"><span>just build
 </span></span><span style="display:flex;"><span>just up
 </span></span><span style="display:flex;"><span>just logs
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>just restart   <span style="color:#75715e"># swap container, keep data</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>just restart   <span style="color:#75715e"># swap container, keep data</span>
 </span></span><span style="display:flex;"><span>just rebuild   <span style="color:#75715e"># scorched earth — still keeps /data</span>
 </span></span></code></pre></div><p>One command to build, one to run — the cortex either works or it tells you exactly why it doesn&rsquo;t.</p>
 

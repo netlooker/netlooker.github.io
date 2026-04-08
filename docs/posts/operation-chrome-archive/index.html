@@ -173,33 +173,33 @@
 <h2 id="-phase-1-the-forge-build-the-container">// PHASE 1: THE FORGE (BUILD THE CONTAINER)</h2>
 <p>Blackwell is bleeding-edge silicon — you can&rsquo;t run standard tools against it. We forge a specialized container based on NVIDIA&rsquo;s high-performance PyTorch image, purpose-built for Blackwell tensor cores.</p>
 <p>First, carve out your workspace and draft the Docker cipher.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mkdir -p ~/infinity-dual-build
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mkdir -p ~/infinity-dual-build
 </span></span><span style="display:flex;"><span>cd ~/infinity-dual-build
 </span></span><span style="display:flex;"><span>nano Dockerfile.infinity
 </span></span></code></pre></div><p><strong>[INJECT DOCKERFILE CODE:]</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-dockerfile" data-lang="dockerfile"><span style="display:flex;"><span><span style="color:#75715e"># Targeting the latest NVIDIA PyTorch Base for Blackwell Support</span><span style="color:#960050;background-color:#1e0010">
-</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> nvcr.io/nvidia/pytorch:25.04-py3</span><span style="color:#960050;background-color:#1e0010">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-dockerfile" data-lang="dockerfile"><span style="display:flex;"><span><span style="color:#75715e"># Targeting the latest NVIDIA PyTorch Base for Blackwell Support</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span> <span style="color:#e6db74">nvcr.io/nvidia/pytorch:25.04-py3</span><span style="color:#960050;background-color:#1e0010">
 </span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
-</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># Injecting Infinity Engine + Dependencies</span><span style="color:#960050;background-color:#1e0010">
-</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> pip install --no-cache-dir --no-deps infinity-emb <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    pip install --no-cache-dir sentence-transformers datasets <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    pip install --no-cache-dir optimum<span style="color:#f92672">==</span>1.16.2 <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    pip install --no-cache-dir fastapi uvicorn orjson pydantic aiohttp <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>        prometheus-fastapi-instrumentator rich diskcache httptools<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"># Injecting Infinity Engine + Dependencies</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">RUN</span> pip install --no-cache-dir --no-deps infinity-emb <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>    pip install --no-cache-dir sentence-transformers datasets <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>    pip install --no-cache-dir optimum<span style="color:#f92672">==</span>1.16.2 <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>    pip install --no-cache-dir fastapi uvicorn orjson pydantic aiohttp <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>        prometheus-fastapi-instrumentator rich diskcache httptools<span style="color:#960050;background-color:#1e0010">
 </span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
-</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># Port forwarding for the neural link</span><span style="color:#960050;background-color:#1e0010">
-</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">EXPOSE</span><span style="color:#e6db74"> 7997</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"># Port forwarding for the neural link</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">EXPOSE</span> <span style="color:#e6db74">7997</span><span style="color:#960050;background-color:#1e0010">
 </span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
-</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># Daemon entry point</span><span style="color:#960050;background-color:#1e0010">
-</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">ENTRYPOINT</span> [<span style="color:#e6db74">&#34;infinity_emb&#34;</span>]<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"># Daemon entry point</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">ENTRYPOINT</span> [<span style="color:#e6db74">&#34;infinity_emb&#34;</span>]<span style="color:#960050;background-color:#1e0010">
 </span></span></span></code></pre></div><p>Spark the forge and brand the image <code>spark-infinity-arm64</code> to match your ecosystem.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Ignite the forge</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Ignite the forge</span>
 </span></span><span style="display:flex;"><span>docker build -t spark-infinity-arm64 -f Dockerfile.infinity .
 </span></span></code></pre></div><hr>
 <h2 id="-phase-2-the-data-heist-fetch-the-model-weights">// PHASE 2: THE DATA HEIST (FETCH THE MODEL WEIGHTS)</h2>
 <p>Technically, Infinity can pull the model weights on first boot. We don&rsquo;t trust the corporate DNS. If the connection flatlines mid-container-init, the daemon hangs and you get nothing. We secure the chrome first — a bulletproof, resumable heist via the <code>hf</code> CLI.</p>
 <p>We mount your local cache directly into Docker later, so Infinity detects the pre-loaded weights and boots instantly. No re-download, no hang time.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Rip the standard 4B embedding model</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Rip the standard 4B embedding model</span>
 </span></span><span style="display:flex;"><span>hf download perplexity-ai/pplx-embed-v1-4b
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># Rip the specialized 4B Context model (optimized for long-form RAG)</span>
@@ -207,10 +207,10 @@
 </span></span></code></pre></div><hr>
 <h2 id="-phase-3-initializing-the-neural-archive-launch-script">// PHASE 3: INITIALIZING THE NEURAL ARCHIVE (LAUNCH SCRIPT)</h2>
 <p>This script is the operational cipher. It orders Docker to commandeer all GPUs, maps your local model vault directly into the container&rsquo;s filesystem, and initiates multi-model serving. The key exploit: by passing the <code>--model-id</code> flag twice, Infinity v2 loads <em>both</em> massive models side-by-side in VRAM, broadcasting them on a single unified API endpoint.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nano ~/start_dual_embeddings.sh
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nano ~/start_dual_embeddings.sh
 </span></span></code></pre></div><p><strong>[INJECT SHELL CODE:]</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env bash
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env bash
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># === SYSTEM PARAMS ===</span>
 </span></span><span style="display:flex;"><span>PORT<span style="color:#f92672">=</span><span style="color:#ae81ff">8081</span>
 </span></span><span style="display:flex;"><span>CONTAINER_NAME<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;spark-infinity-embeddings&#34;</span>
@@ -254,18 +254,18 @@
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># 2. --batch-size 8: Prevents memory spikes during cold boot.</span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># 3. Double --model-id flags load both models on a single API endpoint.</span>
 </span></span><span style="display:flex;"><span>docker run --name <span style="color:#e6db74">${</span>CONTAINER_NAME<span style="color:#e6db74">}</span> <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --gpus all <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -p <span style="color:#e6db74">${</span>PORT<span style="color:#e6db74">}</span>:7997 <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -v <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>HF_CACHE<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>:/root/.cache/huggingface <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -e HF_HOME<span style="color:#f92672">=</span>/root/.cache/huggingface <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  <span style="color:#e6db74">${</span>IMAGE_NAME<span style="color:#e6db74">}</span> <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  v2 <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --model-id <span style="color:#e6db74">${</span>MODEL_1<span style="color:#e6db74">}</span> <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --model-id <span style="color:#e6db74">${</span>MODEL_2<span style="color:#e6db74">}</span> <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --port <span style="color:#ae81ff">7997</span> <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --trust-remote-code <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --dtype float16 <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --batch-size <span style="color:#ae81ff">8</span> &amp;
+</span></span></span><span style="display:flex;"><span>  --gpus all <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  -p <span style="color:#e6db74">${</span>PORT<span style="color:#e6db74">}</span>:7997 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  -v <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>HF_CACHE<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>:/root/.cache/huggingface <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  -e HF_HOME<span style="color:#f92672">=</span>/root/.cache/huggingface <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  <span style="color:#e6db74">${</span>IMAGE_NAME<span style="color:#e6db74">}</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  v2 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --model-id <span style="color:#e6db74">${</span>MODEL_1<span style="color:#e6db74">}</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --model-id <span style="color:#e6db74">${</span>MODEL_2<span style="color:#e6db74">}</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --port <span style="color:#ae81ff">7997</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --trust-remote-code <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --dtype float16 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --batch-size <span style="color:#ae81ff">8</span> &amp;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>TEI_PID<span style="color:#f92672">=</span>$!
 </span></span><span style="display:flex;"><span>
@@ -282,7 +282,7 @@
 </span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;========================================================&#34;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>wait $TEI_PID
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Make the cipher executable and jack it in</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Make the cipher executable and jack it in</span>
 </span></span><span style="display:flex;"><span>chmod +x ~/start_dual_embeddings.sh
 </span></span><span style="display:flex;"><span>./start_dual_embeddings.sh
 </span></span></code></pre></div><hr>
@@ -290,16 +290,16 @@
 <p>Once the terminal broadcasts <code>[+] CHROME ARCHIVE IS ONLINE!</code>, your single endpoint on port <code>8081</code> acts as a neural router for both models. No dual endpoints, no separate processes — you route your query by specifying the model identifier in the POST payload. Clean, fast, surgical.</p>
 <p>Open a new terminal on your cyberdeck and run both diagnostics.</p>
 <h3 id="test-1-the-standard-encoder">TEST 1: The Standard Encoder</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -X POST http://192.168.129.130:8081/v1/embeddings <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>-H <span style="color:#e6db74">&#34;Content-Type: application/json&#34;</span> <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>-d <span style="color:#e6db74">&#39;{
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -X POST http://192.168.129.130:8081/v1/embeddings <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>-H <span style="color:#e6db74">&#34;Content-Type: application/json&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>-d <span style="color:#e6db74">&#39;{
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  &#34;model&#34;: &#34;perplexity-ai/pplx-embed-v1-4b&#34;,
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  &#34;input&#34;: &#34;Initialize the Chrome Archive cipher.&#34;
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">}&#39;</span>
 </span></span></code></pre></div><h3 id="test-2-the-context-encoder">TEST 2: The Context Encoder</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -X POST http://192.168.129.130:8081/v1/embeddings <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>-H <span style="color:#e6db74">&#34;Content-Type: application/json&#34;</span> <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>-d <span style="color:#e6db74">&#39;{
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -X POST http://192.168.129.130:8081/v1/embeddings <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>-H <span style="color:#e6db74">&#34;Content-Type: application/json&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>-d <span style="color:#e6db74">&#39;{
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  &#34;model&#34;: &#34;perplexity-ai/pplx-embed-context-v1-4b&#34;,
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  &#34;input&#34;: &#34;Provide the complete technical specifications for the unified memory bus.&#34;
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">}&#39;</span>
@@ -352,19 +352,19 @@
           RECENT_RECORDS
         </div>
         
+        <a href="http://netlooker.github.io/posts/inquisitors-harvest-fusion-chronicle/" class="related-post">
+          <div class="related-post-date">RECORD: 2026.04.01</div>
+          <div class="related-post-title">THE INQUISITOR&#39;S HARVEST: A FUSION CHRONICLE</div>
+        </a>
+        
+        <a href="http://netlooker.github.io/posts/operation-turboquant-dgx/" class="related-post">
+          <div class="related-post-date">RECORD: 2026.03.30</div>
+          <div class="related-post-title">// OPERATION: TURBOQUANT — DEPLOY VLLM ON DGX SPARK</div>
+        </a>
+        
         <a href="http://netlooker.github.io/posts/operation-cortex-upgrade/" class="related-post">
           <div class="related-post-date">RECORD: 2026.03.29</div>
           <div class="related-post-title">// OPERATION: CORTEX UPGRADE</div>
-        </a>
-        
-        <a href="http://netlooker.github.io/posts/operation-nyx-cortex/" class="related-post">
-          <div class="related-post-date">RECORD: 2026.03.29</div>
-          <div class="related-post-title">// OPERATION: NYX CORTEX</div>
-        </a>
-        
-        <a href="http://netlooker.github.io/posts/audio-payload-solar-fields-movements/" class="related-post">
-          <div class="related-post-date">RECORD: 2026.03.28</div>
-          <div class="related-post-title">AUDIO PAYLOAD: ELEVATING FOCUS WITH SOLAR FIELDS&#39; &#39;MOVEMENTS&#39;</div>
         </a>
         
       </div>

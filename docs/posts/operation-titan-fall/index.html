@@ -170,7 +170,7 @@
 <h2 id="-sector-1-the-mainframe-dgx-server">// SECTOR 1: THE MAINFRAME (DGX SERVER)</h2>
 <h3 id="01-forge-the-daemon-compile-llamacpp">01. FORGE THE DAEMON (COMPILE LLAMA.CPP)</h3>
 <p>To squeeze every drop of blood out of those Blackwell tensor cores, we need to compile the engine from scratch with native CUDA hooks.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Carve out a sector in your local storage</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Carve out a sector in your local storage</span>
 </span></span><span style="display:flex;"><span>mkdir -p ~/sandboxes
 </span></span><span style="display:flex;"><span>cd ~/sandboxes
 </span></span><span style="display:flex;"><span>
@@ -189,20 +189,20 @@
 <li><strong>Symlink Magic:</strong> It stores raw data in a hashed vault and links it — no duplicate files burning your NVMe.</li>
 <li><strong>Burn Protocol:</strong> Run <code>hf cache ls</code> and <code>hf cache rm</code> to safely zero-out massive models without ghost data left behind.</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pip install -U <span style="color:#e6db74">&#34;huggingface_hub[cli]&#34;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pip install -U <span style="color:#e6db74">&#34;huggingface_hub[cli]&#34;</span>
 </span></span></code></pre></div><h3 id="03-hijack-the-neural-net-download-122b--vision">03. HIJACK THE NEURAL NET (DOWNLOAD 122B + VISION)</h3>
 <p>A 75GB model shatters the standard 50GB file limit. The architects sliced it into three physical chunks inside a subfolder. We use the <code>--include</code> protocol to rip the entire folder structure, plus the vision projector so the construct isn&rsquo;t blind.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Pull the split 122B MoE brain</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Pull the split 122B MoE brain</span>
 </span></span><span style="display:flex;"><span>hf download unsloth/Qwen3.5-122B-A10B-GGUF --include <span style="color:#e6db74">&#34;UD-Q4_K_XL/*&#34;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># Pull the optics (F16)</span>
 </span></span><span style="display:flex;"><span>hf download unsloth/Qwen3.5-122B-A10B-GGUF mmproj-F16.gguf
 </span></span></code></pre></div><h3 id="04-initiate-the-construct-launch-script">04. INITIATE THE CONSTRUCT (LAUNCH SCRIPT)</h3>
 <p>This script acts as the overseer. It crawls your cache for the split files, feeds Part 1 to the engine (which auto-chains the rest), and locks the KV Cache to a massive <strong>262,144 tokens</strong> — pushing your 128GB unified memory to the absolute bleeding edge.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nano ~/start_titan.sh
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nano ~/start_titan.sh
 </span></span></code></pre></div><p><strong>[INJECT CODE:]</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env bash
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env bash
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># === SYSTEM PARAMS ===</span>
 </span></span><span style="display:flex;"><span>PORT<span style="color:#f92672">=</span><span style="color:#ae81ff">8007</span>
 </span></span><span style="display:flex;"><span>LLAMA_DIR<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$HOME<span style="color:#e6db74">/sandboxes/llama.cpp&#34;</span>
@@ -236,14 +236,14 @@
 </span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;========================================================&#34;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>$LLAMA_DIR/build/bin/llama-server <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -m <span style="color:#e6db74">&#34;</span>$MODEL_PATH<span style="color:#e6db74">&#34;</span> <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --mmproj <span style="color:#e6db74">&#34;</span>$MMPROJ_PATH<span style="color:#e6db74">&#34;</span> <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --host 0.0.0.0 <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --port $PORT <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --n-gpu-layers <span style="color:#ae81ff">99</span> <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --ctx-size <span style="color:#ae81ff">262144</span> <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --flash-attn on <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --parallel <span style="color:#ae81ff">1</span> &amp;
+</span></span></span><span style="display:flex;"><span>  -m <span style="color:#e6db74">&#34;</span>$MODEL_PATH<span style="color:#e6db74">&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --mmproj <span style="color:#e6db74">&#34;</span>$MMPROJ_PATH<span style="color:#e6db74">&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --host 0.0.0.0 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --port $PORT <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --n-gpu-layers <span style="color:#ae81ff">99</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --ctx-size <span style="color:#ae81ff">262144</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --flash-attn on <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --parallel <span style="color:#ae81ff">1</span> &amp;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>LLAMA_PID<span style="color:#f92672">=</span>$!
 </span></span><span style="display:flex;"><span>
@@ -258,7 +258,7 @@
 </span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;========================================================&#34;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>wait $LLAMA_PID
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Make the daemon executable and spark it</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Make the daemon executable and spark it</span>
 </span></span><span style="display:flex;"><span>chmod +x ~/start_titan.sh
 </span></span><span style="display:flex;"><span>./start_titan.sh
 </span></span></code></pre></div><hr>
@@ -266,7 +266,7 @@
 <p>The DGX mainframe is already humming, broadcasting its 122B neural net on port <code>8007</code>. Now we need to rig your local Linux terminal to bypass the corporate cloud and pipe all your local codebase data directly into the Titan.</p>
 <h3 id="01-install-the-runtime-node--qwen-code">01. INSTALL THE RUNTIME (NODE + QWEN CODE)</h3>
 <p>The terminal agent requires a Node 20 runtime to interface with your local filesystem. If your deck doesn&rsquo;t have it, flash it via NVM.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Flash the runtime environment</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Flash the runtime environment</span>
 </span></span><span style="display:flex;"><span>curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
 </span></span><span style="display:flex;"><span>source ~/.bashrc
 </span></span><span style="display:flex;"><span>nvm install <span style="color:#ae81ff">20</span>
@@ -276,10 +276,10 @@
 </span></span><span style="display:flex;"><span>npm install -g @qwen-code/qwen-code@latest
 </span></span></code></pre></div><h3 id="02-hardwire-the-subnet-config">02. HARDWIRE THE SUBNET (CONFIG)</h3>
 <p>We are severing the default cloud API routing and hardcoding the DGX Titan&rsquo;s local IP directly into the agent&rsquo;s cortex. Replace <code>192.168.x.x</code> with the actual LAN address of your DGX box.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mkdir -p ~/.qwen
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mkdir -p ~/.qwen
 </span></span><span style="display:flex;"><span>nano ~/.qwen/settings.json
 </span></span></code></pre></div><p><strong>[INJECT CODE:]</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;security&#34;</span>: {
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;auth&#34;</span>: {
 </span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;selectedType&#34;</span>: <span style="color:#e6db74">&#34;openai&#34;</span>,
@@ -293,7 +293,7 @@
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><h3 id="03-jack-in">03. JACK IN</h3>
 <p>Navigate to the root directory of whatever codebase you want to tear apart and trigger the uplink.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cd /path/to/your/target/repo
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cd /path/to/your/target/repo
 </span></span><span style="display:flex;"><span>qwen
 </span></span></code></pre></div><p>Neural link established. The Titan is yours.</p>
 
@@ -347,19 +347,19 @@
           RECENT_RECORDS
         </div>
         
+        <a href="http://netlooker.github.io/posts/inquisitors-harvest-fusion-chronicle/" class="related-post">
+          <div class="related-post-date">RECORD: 2026.04.01</div>
+          <div class="related-post-title">THE INQUISITOR&#39;S HARVEST: A FUSION CHRONICLE</div>
+        </a>
+        
+        <a href="http://netlooker.github.io/posts/operation-turboquant-dgx/" class="related-post">
+          <div class="related-post-date">RECORD: 2026.03.30</div>
+          <div class="related-post-title">// OPERATION: TURBOQUANT — DEPLOY VLLM ON DGX SPARK</div>
+        </a>
+        
         <a href="http://netlooker.github.io/posts/operation-cortex-upgrade/" class="related-post">
           <div class="related-post-date">RECORD: 2026.03.29</div>
           <div class="related-post-title">// OPERATION: CORTEX UPGRADE</div>
-        </a>
-        
-        <a href="http://netlooker.github.io/posts/operation-nyx-cortex/" class="related-post">
-          <div class="related-post-date">RECORD: 2026.03.29</div>
-          <div class="related-post-title">// OPERATION: NYX CORTEX</div>
-        </a>
-        
-        <a href="http://netlooker.github.io/posts/operation-chrome-archive/" class="related-post">
-          <div class="related-post-date">RECORD: 2026.03.28</div>
-          <div class="related-post-title">// OPERATION: CHROME ARCHIVE</div>
         </a>
         
       </div>

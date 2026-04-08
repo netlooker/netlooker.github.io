@@ -4,55 +4,16 @@
     <title>Markdown on Netlooker&#39;s Notes</title>
     <link>http://netlooker.github.io/tags/markdown/</link>
     <description>Recent content in Markdown on Netlooker&#39;s Notes</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
-    <lastBuildDate>Sun, 29 Mar 2026 14:24:52 +0000</lastBuildDate><atom:link href="http://netlooker.github.io/tags/markdown/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 29 Mar 2026 14:24:52 +0000</lastBuildDate>
+    <atom:link href="http://netlooker.github.io/tags/markdown/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Synapse</title>
       <link>http://netlooker.github.io/projects/synapse/</link>
       <pubDate>Sun, 29 Mar 2026 14:24:52 +0000</pubDate>
-      
       <guid>http://netlooker.github.io/projects/synapse/</guid>
-      <description>&lt;p&gt;Synapse is a semantic cortex for markdown archives. It crawls a folder of notes, carves the signal into chunks, embeds the note stream, and maps hidden links that plain keyword search leaves buried in the subnet. The mission is simple: turn a loose markdown vault into a live retrieval layer that can surface weak signals, broken graph edges, and connections the human eye misses under load.&lt;/p&gt;
-&lt;h2 id=&#34;-tech-stack&#34;&gt;// TECH STACK&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;Python 3.12&lt;/code&gt; — runs the indexing, search, discovery, and transport daemons.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;sqlite-vec&lt;/code&gt; — stores local vector memory in a lightweight SQLite-backed layer.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;Perplexity embeddings&lt;/code&gt; — power note-level and contextual chunk-level retrieval.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;Infinity&lt;/code&gt; — serves the high-end &lt;code&gt;4B&lt;/code&gt; embedding models over a local-compatible endpoint.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;Ollama&lt;/code&gt; — provides fallback local embeddings and reasoning-model access on silicon.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;FastAPI&lt;/code&gt; — exposes Synapse over HTTP and OpenAPI for web clients and PWAs.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;MCP&lt;/code&gt; — exposes the same tool surface to agent runtimes.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;PydanticAI&lt;/code&gt; — drives &lt;code&gt;Cipher&lt;/code&gt;, the reasoning shell over the deterministic core.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;-architecture&#34;&gt;// ARCHITECTURE&lt;/h2&gt;
-&lt;p&gt;The stack runs in three bands. The retrieval core scans markdown, extracts metadata, chunks notes, writes vectors, and scores search and discovery results with deterministic Python services. &lt;code&gt;Cipher&lt;/code&gt; rides above that layer and handles audit, explanation, and maintenance review without taking over the mechanics. On the edge, MCP and HTTP both hit the same service layer, so agents and apps talk to one grid instead of two drifting clones.&lt;/p&gt;</description>
-      <content>&lt;p&gt;Synapse is a semantic cortex for markdown archives. It crawls a folder of notes, carves the signal into chunks, embeds the note stream, and maps hidden links that plain keyword search leaves buried in the subnet. The mission is simple: turn a loose markdown vault into a live retrieval layer that can surface weak signals, broken graph edges, and connections the human eye misses under load.&lt;/p&gt;
-&lt;h2 id=&#34;-tech-stack&#34;&gt;// TECH STACK&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;Python 3.12&lt;/code&gt; — runs the indexing, search, discovery, and transport daemons.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;sqlite-vec&lt;/code&gt; — stores local vector memory in a lightweight SQLite-backed layer.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;Perplexity embeddings&lt;/code&gt; — power note-level and contextual chunk-level retrieval.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;Infinity&lt;/code&gt; — serves the high-end &lt;code&gt;4B&lt;/code&gt; embedding models over a local-compatible endpoint.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;Ollama&lt;/code&gt; — provides fallback local embeddings and reasoning-model access on silicon.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;FastAPI&lt;/code&gt; — exposes Synapse over HTTP and OpenAPI for web clients and PWAs.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;MCP&lt;/code&gt; — exposes the same tool surface to agent runtimes.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;PydanticAI&lt;/code&gt; — drives &lt;code&gt;Cipher&lt;/code&gt;, the reasoning shell over the deterministic core.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;-architecture&#34;&gt;// ARCHITECTURE&lt;/h2&gt;
-&lt;p&gt;The stack runs in three bands. The retrieval core scans markdown, extracts metadata, chunks notes, writes vectors, and scores search and discovery results with deterministic Python services. &lt;code&gt;Cipher&lt;/code&gt; rides above that layer and handles audit, explanation, and maintenance review without taking over the mechanics. On the edge, MCP and HTTP both hit the same service layer, so agents and apps talk to one grid instead of two drifting clones.&lt;/p&gt;
-&lt;h2 id=&#34;-status&#34;&gt;// STATUS&lt;/h2&gt;
-&lt;p&gt;Synapse is live and usable. It indexes generic markdown folders, stores note and chunk embeddings, runs semantic search in &lt;code&gt;note&lt;/code&gt;, &lt;code&gt;chunk&lt;/code&gt;, and &lt;code&gt;hybrid&lt;/code&gt; modes, and exposes aligned MCP and HTTP interfaces. A built-in &lt;code&gt;synapse-smoke&lt;/code&gt; command now lets agents dry-run provider wiring, indexing, retrieval, validation, and maintenance checks against a fixture vault using a fresh temporary DB by default. The current lane focuses on tuning discovery quality on larger corpora, expanding vector-index audit inside &lt;code&gt;Cipher&lt;/code&gt;, and preparing the seam for a second backend beyond &lt;code&gt;sqlite-vec&lt;/code&gt;.&lt;/p&gt;
-&lt;h2 id=&#34;-deploy&#34;&gt;// DEPLOY&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;uv sync
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cp config/synapse.example.toml config/synapse.toml
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;uv run synapse-smoke --config config/synapse.toml
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;uv run synapse-index --config config/synapse.toml --cortex ~/notes --db ~/notes/.synapse.sqlite
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;uv run synapse-search --config config/synapse.toml --db ~/notes/.synapse.sqlite --mode hybrid &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;weak signals across notes&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;uv run synapse-discover --config config/synapse.toml --db ~/notes/.synapse.sqlite --threshold 0.20 --max &lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Jack in, dry-run the stack, index the vault, and let the grid start whispering back.&lt;/p&gt;
-</content>
+      <description>&lt;p&gt;Synapse is a semantic cortex for markdown archives. It crawls a folder of notes, carves the signal into chunks, embeds the note stream, and maps hidden links that plain keyword search leaves buried in the subnet. The mission is simple: turn a loose markdown vault into a live retrieval layer that can surface weak signals, broken graph edges, and connections the human eye misses under load.&lt;/p&gt;&#xA;&lt;h2 id=&#34;-tech-stack&#34;&gt;// TECH STACK&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;code&gt;Python 3.12&lt;/code&gt; — runs the indexing, search, discovery, and transport daemons.&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;sqlite-vec&lt;/code&gt; — stores local vector memory in a lightweight SQLite-backed layer.&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;Perplexity embeddings&lt;/code&gt; — power note-level and contextual chunk-level retrieval.&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;Infinity&lt;/code&gt; — serves the high-end &lt;code&gt;4B&lt;/code&gt; embedding models over a local-compatible endpoint.&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;Ollama&lt;/code&gt; — provides fallback local embeddings and reasoning-model access on silicon.&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;FastAPI&lt;/code&gt; — exposes Synapse over HTTP and OpenAPI for web clients and PWAs.&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;MCP&lt;/code&gt; — exposes the same tool surface to agent runtimes.&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;PydanticAI&lt;/code&gt; — drives &lt;code&gt;Cipher&lt;/code&gt;, the reasoning shell over the deterministic core.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;-architecture&#34;&gt;// ARCHITECTURE&lt;/h2&gt;&#xA;&lt;p&gt;The stack runs in three bands. The retrieval core scans markdown, extracts metadata, chunks notes, writes vectors, and scores search and discovery results with deterministic Python services. &lt;code&gt;Cipher&lt;/code&gt; rides above that layer and handles audit, explanation, and maintenance review without taking over the mechanics. On the edge, MCP and HTTP both hit the same service layer, so agents and apps talk to one grid instead of two drifting clones.&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

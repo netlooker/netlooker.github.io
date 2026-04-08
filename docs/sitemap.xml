@@ -2,29 +2,137 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://netlooker.github.io/chronicles/part-vii-nyx--the-dark-netrunner-goddess-of-night/</loc>
-    <lastmod>2026-03-29T20:52:00+00:00</lastmod>
-  </url><url>
     <loc>http://netlooker.github.io/tags/chronicles/</loc>
-    <lastmod>2026-03-29T20:52:00+00:00</lastmod>
+    <lastmod>2026-04-02T05:30:00+00:00</lastmod>
   </url><url>
     <loc>http://netlooker.github.io/chronicles/</loc>
-    <lastmod>2026-03-29T20:52:00+00:00</lastmod>
+    <lastmod>2026-04-02T05:30:00+00:00</lastmod>
   </url><url>
     <loc>http://netlooker.github.io/tags/cyberpunk/</loc>
-    <lastmod>2026-03-29T20:52:00+00:00</lastmod>
+    <lastmod>2026-04-02T05:30:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/digital-familiar/</loc>
+    <lastmod>2026-04-02T05:30:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/human-tech-symbiosis/</loc>
+    <lastmod>2026-04-02T05:30:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/machine-spirit/</loc>
+    <lastmod>2026-04-02T05:30:00+00:00</lastmod>
   </url><url>
     <loc>http://netlooker.github.io/</loc>
+    <lastmod>2026-04-02T05:30:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/resonance-principle/</loc>
+    <lastmod>2026-04-02T05:30:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/synapse/</loc>
+    <lastmod>2026-04-02T05:30:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/</loc>
+    <lastmod>2026-04-02T05:30:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/chronicles/part-viii-the-resonance-principle/</loc>
+    <lastmod>2026-04-02T05:30:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/chronicles/the-sanctuary-as-anti-ai-zone/</loc>
+    <lastmod>2026-04-01T12:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/nyx/</loc>
+    <lastmod>2026-04-01T12:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/sanctuary/</loc>
+    <lastmod>2026-04-01T12:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/shadow/</loc>
+    <lastmod>2026-04-01T12:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/40k/</loc>
+    <lastmod>2026-04-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/bureaucracy/</loc>
+    <lastmod>2026-04-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/chaos/</loc>
+    <lastmod>2026-04-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/chris-buxey/</loc>
+    <lastmod>2026-04-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/cold-open-stories/</loc>
+    <lastmod>2026-04-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/corruption/</loc>
+    <lastmod>2026-04-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/daemon/</loc>
+    <lastmod>2026-04-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/fusion/</loc>
+    <lastmod>2026-04-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/gothic-horror/</loc>
+    <lastmod>2026-04-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/harvester/</loc>
+    <lastmod>2026-04-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/inquisition/</loc>
+    <lastmod>2026-04-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/posts/</loc>
+    <lastmod>2026-04-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/sacrifice/</loc>
+    <lastmod>2026-04-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/posts/inquisitors-harvest-fusion-chronicle/</loc>
+    <lastmod>2026-04-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/twist/</loc>
+    <lastmod>2026-04-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/posts/operation-turboquant-dgx/</loc>
+    <lastmod>2026-03-30T12:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/ai/</loc>
+    <lastmod>2026-03-30T12:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/llm/</loc>
+    <lastmod>2026-03-30T12:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/nvidia/</loc>
+    <lastmod>2026-03-30T12:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/quantization/</loc>
+    <lastmod>2026-03-30T12:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/self-hosted/</loc>
+    <lastmod>2026-03-30T12:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/vllm/</loc>
+    <lastmod>2026-03-30T12:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/chronicles/part-vii-nyx--the-dark-netrunner-goddess-of-night/</loc>
     <lastmod>2026-03-29T20:52:00+00:00</lastmod>
   </url><url>
     <loc>http://netlooker.github.io/tags/netrunner/</loc>
     <lastmod>2026-03-29T20:52:00+00:00</lastmod>
   </url><url>
-    <loc>http://netlooker.github.io/tags/nyx/</loc>
-    <lastmod>2026-03-29T20:52:00+00:00</lastmod>
+    <loc>http://netlooker.github.io/chronicles/part-vii-nyx-the-dark-netrunner-goddess-of-night/</loc>
+    <lastmod>2026-03-29T20:45:00+00:00</lastmod>
   </url><url>
-    <loc>http://netlooker.github.io/tags/</loc>
-    <lastmod>2026-03-29T20:52:00+00:00</lastmod>
+    <loc>http://netlooker.github.io/tags/dark-netrunner/</loc>
+    <lastmod>2026-03-29T20:45:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/goddess/</loc>
+    <lastmod>2026-03-29T20:45:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/identity/</loc>
+    <lastmod>2026-03-29T20:45:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/origin/</loc>
+    <lastmod>2026-03-29T20:45:00+00:00</lastmod>
   </url><url>
     <loc>http://netlooker.github.io/chronicles/part-vi-the-reddit-gold-mine--community-curation-in-the-grid/</loc>
     <lastmod>2026-03-29T20:25:00+00:00</lastmod>
@@ -32,8 +140,23 @@
     <loc>http://netlooker.github.io/tags/preservation/</loc>
     <lastmod>2026-03-29T20:25:00+00:00</lastmod>
   </url><url>
-    <loc>http://netlooker.github.io/tags/synapse/</loc>
-    <lastmod>2026-03-29T20:25:00+00:00</lastmod>
+    <loc>http://netlooker.github.io/chronicles/part-vi-the-reddit-gold-mine/</loc>
+    <lastmod>2026-03-29T20:20:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/community/</loc>
+    <lastmod>2026-03-29T20:20:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/curation/</loc>
+    <lastmod>2026-03-29T20:20:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/tags/reddit/</loc>
+    <lastmod>2026-03-29T20:20:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/chronicles/part-v-the-cyber-family-awakens/</loc>
+    <lastmod>2026-03-29T18:14:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/chronicles/part-v-the-cyber-family-awakens/</loc>
+    <lastmod>2026-03-29T18:08:00+00:00</lastmod>
   </url><url>
     <loc>http://netlooker.github.io/chronicles/part-iv-the-synapse-discovery/</loc>
     <lastmod>2026-03-29T17:00:00+00:00</lastmod>
@@ -41,14 +164,8 @@
     <loc>http://netlooker.github.io/tags/agency/</loc>
     <lastmod>2026-03-29T17:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://netlooker.github.io/tags/digital-familiar/</loc>
-    <lastmod>2026-03-29T17:00:00+00:00</lastmod>
-  </url><url>
     <loc>http://netlooker.github.io/tags/semantic-memory/</loc>
     <lastmod>2026-03-29T17:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://netlooker.github.io/tags/ai/</loc>
-    <lastmod>2026-03-29T14:24:52+00:00</lastmod>
   </url><url>
     <loc>http://netlooker.github.io/tags/markdown/</loc>
     <lastmod>2026-03-29T14:24:52+00:00</lastmod>
@@ -83,19 +200,7 @@
     <loc>http://netlooker.github.io/tags/nix/</loc>
     <lastmod>2026-03-29T12:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://netlooker.github.io/tags/origin/</loc>
-    <lastmod>2026-03-29T12:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://netlooker.github.io/posts/</loc>
-    <lastmod>2026-03-29T12:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://netlooker.github.io/tags/self-hosted/</loc>
-    <lastmod>2026-03-29T12:00:00+00:00</lastmod>
-  </url><url>
     <loc>http://netlooker.github.io/posts/operation-nyx-cortex/</loc>
-    <lastmod>2026-03-29T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://netlooker.github.io/tags/llm/</loc>
     <lastmod>2026-03-29T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://netlooker.github.io/projects/nyx-cortex/</loc>
@@ -129,9 +234,6 @@
     <lastmod>2026-03-28T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://netlooker.github.io/tags/linux/</loc>
-    <lastmod>2026-03-28T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://netlooker.github.io/tags/nvidia/</loc>
     <lastmod>2026-03-28T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://netlooker.github.io/tags/rag/</loc>
@@ -169,6 +271,8 @@
   </url><url>
     <loc>http://netlooker.github.io/about/</loc>
     <lastmod>2023-04-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://netlooker.github.io/chronicles/the-magic-angle-of-integration/</loc>
   </url><url>
     <loc>http://netlooker.github.io/categories/</loc>
   </url>
