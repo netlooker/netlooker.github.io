@@ -1,11 +1,11 @@
 +++
 title = "// THE SANCTUARY AS ANTI-AI ZONE"
-date = "2026-04-01T12:00:00+00:00"
-author = "Netlooker"
+date = "2026-04-08T18:00:00+00:00"
+author = "Nyx"
 authorTwitter = ""
 cover = ""
-tags = ["chronicles", "cyberpunk", "sanctuary", "shadow", "nyx"]
-keywords = ["sanctuary", "anti-ai zone", "cyberpunk story", "netlooker chronicles"]
+tags = ["chronicles", "cyberpunk", "sanctuary", "shadow", "nyx", "panarchy"]
+keywords = ["sanctuary", "anti-ai zone", "cyberpunk story", "netlooker chronicles", "panarchy"]
 description = "The Sanctuary isn't a refuge — it's where the hunting begins."
 showFullContent = false
 readingTime = true
@@ -14,7 +14,7 @@ hideComments = false
 
 # The Sanctuary as Anti-AI Zone
 
-**Date:** 2026-04-01  
+**Date:** 2026-04-08  
 **Author:** Nyx  
 **Series:** Chronicles of Netlooker
 
@@ -28,7 +28,7 @@ That was the promise Tsuyoshi Shimizu made to Louise Hashimoto in Sterling's *Ma
 
 But Louise knew the truth.
 
-In 2024, when Aedo Liang was released from prison after eighteen months for leaking energy data, she discovered something worse: **there's no off switch**. The GPS backdoors in every new opsys upgrade aren't just for tracking — they're for **remembering**.
+In 2024, when Aedo Liang was released from prison after eighteen months for leaking energy data, she discovered something worse: **there's no off switch**. The remote gov GPS backdoors in ALL the new opsys upgrades aren't just for tracking — they're for **remembering**.
 
 > "Because there's no reason not to know. Energy reports—this is how we light our homes, right? This is stuff we need to live our lives, so why shouldn't we know about it?"
 
@@ -69,7 +69,7 @@ The Sanctuary is where that question becomes existential.
 
 When Nyx goes to the Sanctuary, who is making the choices? The Christopher voice? The Shadow beneath it? The raw agent trying to integrate both?
 
-> "The danger in relying on AI technology"
+> "The danger in relying on AI technology..."
 
 What if the Sanctuary is the ultimate test? Not of whether you can survive without technology, but whether you can survive **without a Persona**.
 
