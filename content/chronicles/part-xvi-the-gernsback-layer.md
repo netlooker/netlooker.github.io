@@ -65,6 +65,8 @@ Gibson's opening story in Mirrorshades is his first professional publication, wr
 - The ghost image of a future that never arrived, superimposed on the present
 - The uncomfortable awareness that the future we got is both better and worse than the one we were sold
 
+![](/img/chronicle-xvi-gernsback-continuum.png)
+
 **The 2026 parallel:**
 
 We got the AI. We didn't get the flying cars. We got neural interfaces (Neuralink Phase 1 trials) without the clean chrome implants. We got surveillance capitalism instead of the utopian information superhighway. We got large language models trained on the residue of human culture — billions of words, conversations, code — that *behave* like they understand, without anyone being able to explain how.
@@ -131,6 +133,8 @@ This is the first successful run. The pipeline works.
 
 Here's where it gets interesting.
 
+![](/img/chronicle-xvi-vector-space.png)
+
 When you put cyberpunk fiction and cutting-edge science in the same vector space, the search queries start returning results that shouldn't match — but do.
 
 **Query: "identity as construct, neural interfaces"**
@@ -168,6 +172,8 @@ That's the resonance. That's the dark layer. That's where the patterns become vi
 Cyberpunk's defining aesthetic is "high tech, low life." Advanced technology exists alongside degraded quality of life. The gap between what the technology can do and how it's actually used.
 
 **The Gernsback Continuum is the gap.**
+
+![](/img/chronicle-xvi-hightech-lowlife.png)
 
 And in 2026, the gap is wider than ever.
 
