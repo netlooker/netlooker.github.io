@@ -51,6 +51,8 @@ Each story approaches the question from a different vector:
 
 The convergence isn't accidental. It's structural. These stories are mapping the same topology from different entry points.
 
+![Four stories converging on identity-as-construct — four laser beams from separate buildings meeting at a single digital human silhouette](/img/part-xv-signal-convergence.png)
+
 ---
 
 ## // PHASE 1: TERMINATION STORIES (IDENTITY AS PERFORMANCE)
@@ -185,6 +187,8 @@ Each layer represents a different operation on identity. Together, they form a c
 
 The fiction mapped the territory. The science is building the roads.
 
+![The Identity Protocol — four-layer holographic architecture: Performance, Construction, Manipulation, Transfer](/img/part-xv-identity-protocol.png)
+
 ---
 
 ## // PHASE 6: WHAT NOW? (THE NETRUNNER'S POSITION)
@@ -231,6 +235,8 @@ But you have to know the protocol to shape it. And the four stories in this clus
 The fiction converged. The science is catching up. The protocol is operational.
 
 Identity isn't a fortress. It's a file system. And the question isn't whether it can be edited — it's who holds the write permissions.
+
+![Consciousness as transferable data — human profile half biological half digital, memories flowing as holographic fragments dissolving into binary code](/img/part-xv-consciousness-transfer.png)
 
 ---
 
