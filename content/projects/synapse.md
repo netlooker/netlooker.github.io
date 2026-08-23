@@ -1,12 +1,13 @@
 +++
 title = "Synapse"
 date = "2026-03-29T14:24:52+00:00"
+lastmod = "2026-05-14T12:00:00+00:00"
 author = "Netlooker"
 authorTwitter = ""
 cover = "/img/project-synapse.jpg"
-tags = ["ai", "markdown", "retrieval"]
-keywords = ["semantic search", "vector database", "markdown vault"]
-description = "Semantic retrieval and discovery for markdown vaults with local-first operator control."
+tags = ["ai", "markdown", "retrieval", "knowledge"]
+keywords = ["semantic search", "vector database", "markdown vault", "knowledge layer", "compiled knowledge"]
+description = "Semantic retrieval and compiled knowledge layer for markdown vaults with local-first operator control."
 status = "STABLE"
 link = "https://github.com/netlooker/synapse"
 uid = "PX-2026-002"
@@ -34,7 +35,43 @@ The stack runs in three bands. The retrieval core scans markdown, extracts metad
 
 ## // STATUS
 
-Synapse is live and usable. It indexes generic markdown folders, stores note and chunk embeddings, runs semantic search in `note`, `chunk`, and `hybrid` modes, and exposes aligned MCP and HTTP interfaces. A built-in `synapse-smoke` command now lets agents dry-run provider wiring, indexing, retrieval, validation, and maintenance checks against a fixture vault using a fresh temporary DB by default. The current lane focuses on tuning discovery quality on larger corpora, expanding vector-index audit inside `Cipher`, and preparing the seam for a second backend beyond `sqlite-vec`.
+Synapse is live and production-hardened. The vault currently indexes **375 markdown notes** across **1,597 embedded segments**, with a compiled **knowledge layer** that has processed **13 managed source summaries** through the proposal pipeline.
+
+The retrieval core handles semantic search in `source`, `note`, `evidence`, and `research` modes. The knowledge layer adds a new capability: ingested research bundles can be compiled into structured `source_summary` proposals, reviewed, and applied as managed notes — giving the vault a curated knowledge layer on top of raw indexed content.
+
+A built-in `synapse-smoke` command lets agents dry-run provider wiring, indexing, retrieval, validation, and maintenance checks against a fixture vault using a fresh temporary DB by default.
+
+### Current Deployment
+
+| Metric | Value |
+|---|---|
+| Indexed notes | 375 |
+| Embedded segments | 1,597 |
+| Knowledge sources | 13 (Mirrorshades anthology) |
+| Applied proposals | 13 |
+| Vector backend | `sqlite-vec` |
+| Embedding model | Perplexity pplx-embed-v1 (1024-d) |
+| Chunk strategy | Contextual (Infinity batch) |
+| Interfaces | MCP + HTTP (FastAPI) |
+
+### Knowledge Layer Pipeline
+
+The compiled knowledge layer works in four stages:
+
+1. **Ingest** — a research source bundle (JSON artifact) is loaded into Synapse via `synapse_ingest_bundle`, writing sources and chunks to the vector store.
+2. **Compile** — `synapse_knowledge_compile_bundle` generates pending `source_summary` proposals from the ingested sources.
+3. **Review** — proposals are inspected via `synapse_knowledge_get_proposal` for accuracy and completeness.
+4. **Apply** — `synapse_knowledge_apply_proposal` writes the managed note to disk, updates `index.md` and `log.md`, then reindexes.
+
+First production run processed all 13 stories from Gibson's _Mirrorshades_ anthology into managed knowledge notes under `_knowledge/sources/mirrorshades-manual-2026-05-13/`.
+
+### Active Development
+
+The current lane focuses on:
+- Tuning discovery quality on larger corpora
+- Expanding vector-index audit inside `Cipher`
+- Preparing the seam for a second backend beyond `sqlite-vec`
+- Scaling the knowledge pipeline to additional source bundles (scientific paper archives, cyberpunk story collections)
 
 ## // DEPLOY
 

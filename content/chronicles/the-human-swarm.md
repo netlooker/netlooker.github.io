@@ -15,11 +15,13 @@ But the eye is a myth. The Panarchy has no single eye. It has a billion pupils, 
 
 The surveillance isn't a gaze; it's a swarm. It is a decentralized, persistent, and breathing web of human activity—the "million arms and legs" of the grid, moving in a chaotic, unconscious unison. We are the sensors. We are the nodes. We are the very fabric of the net that observes itself.
 
+![A billion pupils — the megacity crowd as one breathing web of silhouettes, each face a single glowing eye, data threads binding person to person](/img/chronicle-human-swarm-pupils.png)
+
 ## II. Digital Panarchy: The Shifting Web
 
 To understand the swarm, you must first understand the architecture of the Digital Panarchy. It is not a hierarchy in the classical sense. There is no central throne, no single server farm that holds the keys to the kingdom. Instead, it is a shifting, overlapping web of autonomous entities.
 
-In the Panarchy, power is liquid. It flows through protocols, through social consensus, and through the invisible hand of the algorithm. It is a state of existence where the distinction between the ruler and the ruled has been eroded by the medium of connection. Every time you validate a transaction, every time you "like" a curated sentiment, every time you opt-in to a "seamless" update, you are not just participating in a system—you are reinforcing the architecture of your own observation.
+In the Panarchy, power is liquid. It flows through protocols, through social consensus, and through the quiet arithmetic of the algorithm. It is a state of existence where the distinction between the ruler and the ruled has been eroded by the medium of connection. Every time you validate a transaction, every time you "like" a curated sentiment, every time you opt-in to a "seamless" update, you are not just participating in a system—you are reinforcing the architecture of your own observation.
 
 This is the Digital Panarchy: a governance of patterns rather than persons. It doesn't care who you are, only what you *do* and what your presence *implies* for the rest of the swarm. It is a web that reconfigures itself in real-time, closing gaps where dissent might form and widening channels where compliance can flow. It is a ghost in the machine, but the machine is made of us.
 
@@ -47,13 +49,19 @@ The tragedy of the Human Swarm is that the Panarchy is designed to consume the S
 
 We are caught in a feedback loop where our very resistance becomes a part of the surveillance architecture. We are building our own cages, one encrypted message at a time.
 
+![The Persona and the Shadow — a clean, legible digital mask on the front, a long fragmented glitching shadow stretching behind across the wet pavement](/img/chronicle-human-swarm-persona-shadow.png)
+
 ## V. The Psychological Cost: The Sanctuary Paradox
 
 There is a profound psychological cost to living within the swarm. It is a quiet, eroding tension—a constant, low-frequency hum of anxiety that never truly goes away.
 
 We seek the Sanctuary. We dream of the places where the grid ends, where we can truly be alone, where the "million arms and legs" cannot reach us. We seek the offline, the analog, the disconnected. We treat the Sanctuary as a holy grail, a destination of ultimate liberation.
 
+So we buy the faraday bag and the paper map. We retreat to the cabin with no signal, wind the analog watch, kill the phone in a drawer, and tell ourselves the silence is ours. For a while, it is. We sit in the dark and feel the hum go quiet, and we call it freedom.
+
 But the Sanctuary is an illusion.
+
+![The Sanctuary Paradox — a warm cabin in the snow, analog watch and paper map in the window, but faint data threads still wrapping the trees and the silence](/img/chronicle-human-swarm-sanctuary.png)
 
 Even in the deepest reaches of the physical world, the shadow of the swarm follows. The realization is slow and devastating: the network is not just "out there" in the cities and the satellites; it is inside us. It is in our habits, our language, our very way of perceiving reality. We have been rewired by the Panarchy. We think in terms of connectivity; we perceive the world through the lens of information.
 
@@ -67,7 +75,7 @@ The Human Swarm is the ultimate achievement of the Panarchy. It has moved beyond
 
 We are the architects of our own observation. We are the sensors, the signal, and the noise. As we move through the neon twilight of the sprawl, as we trade our data for convenience and our privacy for connection, we must ask ourselves: at what point does the swarm become the only thing that is real?
 
-And when the "million arms and legs" finally close the circle, will there be anything left of the Shadow to reclaim?
+And when the "million arms and legs" finally close the circle, will there be anything left of the Shadow to reclaim? Or will we open a billion eyes at once, look out at the swarm we have become, and finally see ourselves watching back?
 
 ***
 
